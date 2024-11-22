@@ -11,74 +11,71 @@ const CameraScreen = ({navigation}) => {
   const [imageUri, setImageUri] = useState(null);
 
   const selectImage = async () => {
-    try {
-      const image = await openPicker({
-        cropping: true,
-        width: moderateScale(1024),
-        height: moderateScale(1024),
-      });
-      const aspectRatioHeight = (image.height / image.width) * 1024;
+    openPicker({
+      cropping: false,
+    })
+      .then(async image => {
+        const resizedImage = await ImageEditor.cropImage(image.path, {
+          offset: {x: 0, y: 0},
+          size: {width: 1024, height: (image.height / image.width) * 1024},
+        });
 
-      const croppedImage = await ImageEditor.cropImage(image.path, {
-        offset: {x: 0.2 * image.width, y: 0.25 * aspectRatioHeight},
-        size: {
-          width: 0.6 * image.width,
-          height: 0.5 * aspectRatioHeight,
-        },
-      });
+        const croppedImage = await ImageEditor.cropImage(resizedImage.uri, {
+          offset: {x: 0.2 * resizedImage.width, y: 0.25 * resizedImage.height},
+          size: {
+            width: 0.6 * resizedImage.width,
+            height: 0.5 * resizedImage.height,
+          },
+        });
+        const processedImage = await ImageEditor.cropImage(croppedImage.uri, {
+          offset: {x: 0, y: 0},
+          size: {width: resizedImage.width, height: resizedImage.height},
+        });
 
-      const processedImage = await ImageEditor.cropImage(croppedImage.uri, {
-        offset: {x: 0, y: 0},
-        size: {width: image.width, height: aspectRatioHeight},
+        setImageUri(processedImage.uri);
+        navigation.navigate('cameraResult', {imageUrl: processedImage.uri});
+      })
+      .catch(error => {
+        console.log('Camera error: ', error);
       });
-
-      setImageUri(processedImage.uri);
-      navigation.navigate('cameraResult', {imageUrl: processedImage.uri});
-    } catch (error) {
-      console.log('Gallery error: ', error);
-      setIsProcessing(false);
-    }
   };
 
   const captureImage = async () => {
-    try {
-      const image = await openCamera({
-        cropping: true,
-        width: moderateScale(1024),
-        height: moderateScale(1024),
+    await openCamera({
+      cropping: false,
+    })
+      .then(async image => {
+        const resizedImage = await ImageEditor.cropImage(image.path, {
+          offset: {x: 0, y: 0},
+          size: {width: 1024, height: (image.height / image.width) * 1024},
+        });
+
+        const croppedImage = await ImageEditor.cropImage(resizedImage.uri, {
+          offset: {x: 0.2 * resizedImage.width, y: 0.25 * resizedImage.height},
+          size: {
+            width: 0.6 * resizedImage.width,
+            height: 0.5 * resizedImage.height,
+          },
+        });
+        const processedImage = await ImageEditor.cropImage(croppedImage.uri, {
+          offset: {x: 0, y: 0},
+          size: {width: resizedImage.width, height: resizedImage.height},
+        });
+
+        setImageUri(processedImage.uri);
+        navigation.navigate('cameraResult', {imageUrl: processedImage.uri});
+      })
+      .catch(error => {
+        console.log('Camera error: ', error);
+        setIsProcessing(false);
       });
-
-      const aspectRatioHeight = (image.height / image.width) * 1024;
-
-      const croppedImage = await ImageEditor.cropImage(image.path, {
-        offset: {x: 0.2 * image.width, y: 0.25 * aspectRatioHeight},
-        size: {
-          width: 0.6 * image.width,
-          height: 0.5 * aspectRatioHeight,
-        },
-      });
-
-      const processedImage = await ImageEditor.cropImage(croppedImage.uri, {
-        offset: {x: 0, y: 0},
-        size: {width: image.width, height: aspectRatioHeight},
-      });
-
-      setImageUri(processedImage.uri);
-      navigation.navigate('cameraResult', {imageUrl: processedImage.uri});
-    } catch (error) {
-      console.log('Camera error: ', error);
-      setIsProcessing(false);
-    }
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Scan the label</Text>
       <View style={styles.imageContainer}>
-        <Image
-          source={ScanImage}
-          style={styles.image}
-        />
+        <Image source={ScanImage} style={styles.image} />
       </View>
       <Text style={styles.subText}>Focus on the ingredients list.</Text>
       <View style={styles.buttonView}>
@@ -126,7 +123,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
     textAlign: 'center',
     color: '#B0B0B0',
-    letterSpacing: 0.32, 
+    letterSpacing: 0.32,
   },
   galleryImage: {
     height: 24,
