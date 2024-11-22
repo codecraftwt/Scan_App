@@ -7,13 +7,10 @@ import {openCamera, openPicker} from 'react-native-image-crop-picker';
 const ScanImage = require('../Assets/helper.png');
 const galleryImage = require('../Assets/Group-9.png');
 
-const CameraScreen = () => {
+const CameraScreen = ({navigation}) => {
   const [imageUri, setImageUri] = useState(null);
-  const [isProcessing, setIsProcessing] = useState(false);
 
-  // Step 1: Select Image from Library or Camera
   const selectImage = async () => {
-    setIsProcessing(true);
     try {
       const image = await openPicker({
         cropping: true,
@@ -36,16 +33,14 @@ const CameraScreen = () => {
       });
 
       setImageUri(processedImage.uri);
-      setIsProcessing(false);
+      navigation.navigate('cameraResult', {imageUrl: processedImage.uri});
     } catch (error) {
       console.log('Gallery error: ', error);
       setIsProcessing(false);
     }
   };
 
-  // Step 2: Capture New Image using Camera
   const captureImage = async () => {
-    setIsProcessing(true);
     try {
       const image = await openCamera({
         cropping: true,
@@ -69,7 +64,7 @@ const CameraScreen = () => {
       });
 
       setImageUri(processedImage.uri);
-      setIsProcessing(false);
+      navigation.navigate('cameraResult', {imageUrl: processedImage.uri});
     } catch (error) {
       console.log('Camera error: ', error);
       setIsProcessing(false);
@@ -81,14 +76,14 @@ const CameraScreen = () => {
       <Text style={styles.title}>Scan the label</Text>
       <View style={styles.imageContainer}>
         <Image
-          source={imageUri ? {uri: imageUri} : ScanImage}
+          source={ScanImage}
           style={styles.image}
         />
       </View>
       <Text style={styles.subText}>Focus on the ingredients list.</Text>
       <View style={styles.buttonView}>
         <TouchableOpacity style={styles.button} onPress={captureImage}>
-          <Text style={styles.buttonText}>Take a Photo</Text>
+          <Text style={styles.buttonText}>Scan now</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={selectImage}>
           <Image source={galleryImage} style={styles.galleryImage} />
@@ -131,6 +126,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
     textAlign: 'center',
     color: '#B0B0B0',
+    letterSpacing: 0.32, 
   },
   galleryImage: {
     height: 24,
@@ -153,9 +149,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonText: {
+    fontFamily: 'Supreme Variable, sans-serif',
     fontWeight: '800',
     fontSize: 16,
     color: '#161616',
+    textTransform: 'uppercase',
+    letterSpacing: 2.08,
   },
   processingText: {
     color: '#FFFFFF',

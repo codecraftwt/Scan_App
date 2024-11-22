@@ -2,6 +2,7 @@ import * as React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {TouchableOpacity, Text, StyleSheet} from 'react-native';
 import CameraScreen from '../Screens/CameraScreen';
+import CameraResult from '../Screens/CameraResult';
 
 const Stack = createNativeStackNavigator();
 
@@ -11,6 +12,18 @@ const stackArray = [
     component: props => (
       // <ComponentWrapper>
       <CameraScreen {...props} />
+      // </ComponentWrapper>
+    ),
+    headerProps: {
+      title: 'pro',
+      showBack: false,
+    },
+  },
+  {
+    name: 'cameraResult',
+    component: props => (
+      // <ComponentWrapper>
+      <CameraResult {...props} />
       // </ComponentWrapper>
     ),
     headerProps: {
