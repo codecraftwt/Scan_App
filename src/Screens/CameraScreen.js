@@ -11,7 +11,6 @@ import {
 import ImageEditor from '@react-native-community/image-editor';
 import {openCamera, openPicker} from 'react-native-image-crop-picker';
 import LottieView from 'lottie-react-native';
-// import {SyncLoader} from '../Assets/App_Constants';
 import SyncLoader from '../Assets/loader.json';
 
 const ScanImage = require('../Assets/images/helper.png');
@@ -171,8 +170,8 @@ const styles = StyleSheet.create({
     letterSpacing: 0.32,
   },
   galleryImage: {
-    height: 24,
-    width: 28,
+    height: 28,
+    width: 32,
     tintColor: '#FFFFFF',
   },
   buttonView: {
@@ -184,7 +183,7 @@ const styles = StyleSheet.create({
     marginTop: 65,
   },
   button: {
-    width: 230,
+    width: 245,
     height: 60,
     borderRadius: 13,
     backgroundColor: '#83FFB4',
@@ -193,11 +192,12 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontFamily: 'Supreme Variable, sans-serif',
-    fontWeight: '900',
+    fontWeight: '800',
     fontSize: 16,
     color: '#161616',
     textTransform: 'uppercase',
     letterSpacing: 2.08,
+    lineHeight:21.6
   },
   processingText: {
     color: '#FFFFFF',

@@ -80,9 +80,11 @@ const CameraResult = () => {
             onViewableItemsChanged={onViewableItemsChanged.current}
             viewabilityConfig={viewabilityConfig}
           />
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttontext}>Scan new label</Text>
-          </TouchableOpacity>
+          <View style={styles.buttoncontainer}>
+            <TouchableOpacity style={styles.button}>
+              <Text style={styles.buttontext}>Scan new label</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </>
@@ -157,6 +159,12 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter',
     fontWeight: '400',
     fontSize: 18,
+  },
+  buttoncontainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    paddingTop: 25,
   },
   button: {
     width: 270,
