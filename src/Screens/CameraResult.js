@@ -13,17 +13,22 @@ import {
 const sample = require('../Assets/images/sample.png');
 const mark = require('../Assets/images/Ellipse.png');
 const markSymbol = require('../Assets/images/Vector.png');
+const bgImage = require('../Assets/images/Ellipse1.png');
 
 const CameraResult = () => {
   const route = useRoute();
   const {imageUrl} = route.params;
   const [highlightedRows, setHighlightedRows] = useState([]);
+
   const viewabilityConfig = {
     itemVisiblePercentThreshold: 50,
   };
 
   const onViewableItemsChanged = useRef(({viewableItems}) => {
-    const topThree = viewableItems.slice(0, 3).map(item => item.item.id);
+    const topThree = viewableItems
+      .slice(0, 3)
+      .map(item => String(item.item.id));
+    console.log('Top three visible items:', topThree);
     setHighlightedRows(topThree);
   });
 
@@ -45,9 +50,6 @@ const CameraResult = () => {
         <View style={styles.markContainer}>
           <Image source={mark} style={styles.mark} />
           <Image source={markSymbol} style={styles.markSymbol} />
-        </View>
-        <View style={styles.bgContaniner}>
-
         </View>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>No match!</Text>
@@ -106,7 +108,7 @@ const styles = StyleSheet.create({
     height: 230,
     width: 130,
     borderWidth: 3,
-    borderColor: '#FFFFFF',
+    borderColor: '#83FFCB',
     borderRadius: 15,
   },
   title: {
@@ -114,7 +116,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 24,
     color: '#FFFFFF',
-    lineHeight:22
+    lineHeight: 22,
   },
   flatListContent: {
     paddingBottom: 20,
@@ -192,9 +194,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 38,
   },
-  bgContaniner:{
-    width:280,
-    height:31,
-    backgroundColor:'#5A5A5A70'
-  }
 });

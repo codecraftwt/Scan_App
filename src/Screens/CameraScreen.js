@@ -10,7 +10,8 @@ import {
 import ImageEditor from '@react-native-community/image-editor';
 import {openCamera, openPicker} from 'react-native-image-crop-picker';
 import LottieView from 'lottie-react-native';
-import {SyncLoader} from '../Assets/App_Constants';
+// import {SyncLoader} from '../Assets/App_Constants';
+import SyncLoader from '../Assets/loader.json';
 
 const ScanImage = require('../Assets/images/helper.png');
 const galleryImage = require('../Assets/images/Group-9.png');
@@ -88,8 +89,7 @@ const CameraScreen = ({navigation}) => {
     <View style={styles.container}>
       {isProcessing ? (
         <View style={styles.loaderContainer}>
-          <LottieView source={SyncLoader} autoPlay loop />
-          <Text style={styles.processingText}>Processing...</Text>
+          <LottieView source={SyncLoader} style={styles.lottie} autoPlay loop />
         </View>
       ) : (
         <>
@@ -123,12 +123,19 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    width: '100%',
+    height: '100%',
+  },
+  lottie: {
+    width: '100%',
+    height: '100%',
   },
   title: {
     fontFamily: 'Inter',
     fontSize: 22,
     fontWeight: '700',
-    marginBottom: 40,
+    marginBottom: 20,
+    marginTop: 20,
     textAlign: 'center',
     color: '#FFFFFF',
     lineHeight: 26,
@@ -138,6 +145,7 @@ const styles = StyleSheet.create({
     height: 400,
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: 30,
   },
   image: {
     width: 245,
@@ -164,7 +172,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 50,
+    marginTop: 65,
   },
   button: {
     width: 230,
