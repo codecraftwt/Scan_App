@@ -6,7 +6,6 @@ import {Provider} from 'react-redux';
 import store from './src/Redux/store';
 import {w} from 'walstar-rn-responsive';
 import Navigation from './src/Navigations/index';
-import {StatusBar} from 'react-native';
 
 const App = () => {
   const toastConfig = {
@@ -40,7 +39,6 @@ const App = () => {
     // <Provider store={store}>
     <PaperProvider>
       <NavigationContainer>
-        <StatusBar barStyle="light-content" backgroundColor="#000000" />
         <Navigation />
         <Toast config={toastConfig} />
       </NavigationContainer>

@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ActivityIndicator,
+  StatusBar,
 } from 'react-native';
 import ImageEditor from '@react-native-community/image-editor';
 import {openCamera, openPicker} from 'react-native-image-crop-picker';
@@ -86,29 +87,37 @@ const CameraScreen = ({navigation}) => {
   };
 
   return (
-    <View style={styles.container}>
-      {isProcessing ? (
-        <View style={styles.loaderContainer}>
-          <LottieView source={SyncLoader} style={styles.lottie} autoPlay loop />
-        </View>
-      ) : (
-        <>
-          <Text style={styles.title}>Scan the label</Text>
-          <View style={styles.imageContainer}>
-            <Image source={ScanImage} style={styles.image} />
+    <>
+      <StatusBar barStyle="light-content" backgroundColor="#000000" />
+      <View style={styles.container}>
+        {isProcessing ? (
+          <View style={styles.loaderContainer}>
+            <LottieView
+              source={SyncLoader}
+              style={styles.lottie}
+              autoPlay
+              loop
+            />
           </View>
-          <Text style={styles.subText}>Focus on the ingredients list.</Text>
-          <View style={styles.buttonView}>
-            <TouchableOpacity style={styles.button} onPress={captureImage}>
-              <Text style={styles.buttonText}>Scan now</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={selectImage}>
-              <Image source={galleryImage} style={styles.galleryImage} />
-            </TouchableOpacity>
-          </View>
-        </>
-      )}
-    </View>
+        ) : (
+          <>
+            <Text style={styles.title}>Scan the label</Text>
+            <View style={styles.imageContainer}>
+              <Image source={ScanImage} style={styles.image} />
+            </View>
+            <Text style={styles.subText}>Focus on the ingredients list.</Text>
+            <View style={styles.buttonView}>
+              <TouchableOpacity style={styles.button} onPress={captureImage}>
+                <Text style={styles.buttonText}>Scan now</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={selectImage}>
+                <Image source={galleryImage} style={styles.galleryImage} />
+              </TouchableOpacity>
+            </View>
+          </>
+        )}
+      </View>
+    </>
   );
 };
 

@@ -4,6 +4,7 @@ import {
   Dimensions,
   FlatList,
   Image,
+  StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -26,7 +27,7 @@ const CameraResult = () => {
 
   const onViewableItemsChanged = useRef(({viewableItems}) => {
     const topThree = viewableItems
-      .slice(0, 3)
+      .slice(0, 2)
       .map(item => String(item.item.id));
     console.log('Top three visible items:', topThree);
     setHighlightedRows(topThree);
@@ -44,43 +45,47 @@ const CameraResult = () => {
   ];
 
   return (
-    <View style={styles.container}>
-      <View style={styles.upperContainer}>
-        <Image source={{uri: imageUrl}} style={styles.sampleImage} />
-        <View style={styles.markContainer}>
-          <Image source={mark} style={styles.mark} />
-          <Image source={markSymbol} style={styles.markSymbol} />
+    <>
+      <StatusBar barStyle="light-content" backgroundColor="#161616" />
+      <View style={styles.container}>
+        <View style={styles.upperContainer}>
+          <Image source={{uri: imageUrl}} style={styles.sampleImage} />
+          <View style={styles.markContainer}>
+            <Image source={mark} style={styles.mark} />
+            <Image source={markSymbol} style={styles.markSymbol} />
+          </View>
+          <View style={styles.titleContainer}>
+            <Text style={styles.title}>No match!</Text>
+            <Text style={styles.title}>That’s a good thing.</Text>
+          </View>
         </View>
-        <View style={styles.titleContainer}>
-          <Text style={styles.title}>No match!</Text>
-          <Text style={styles.title}>That’s a good thing.</Text>
+        <View style={styles.bottomContainer}>
+          <Text style={styles.listTitle}>Ingredients of interest</Text>
+          <FlatList
+            data={ingredients}
+            keyExtractor={item => item.id}
+            contentContainerStyle={styles.flatListContent}
+            renderItem={({item}) => (
+              <View style={styles.row}>
+                <Text
+                  style={[
+                    styles.listItem,
+                    highlightedRows.includes(item.id) &&
+                      styles.topThreeListItem,
+                  ]}>
+                  {item.title}
+                </Text>
+              </View>
+            )}
+            onViewableItemsChanged={onViewableItemsChanged.current}
+            viewabilityConfig={viewabilityConfig}
+          />
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttontext}>Scan new label</Text>
+          </TouchableOpacity>
         </View>
       </View>
-      <View style={styles.bottomContainer}>
-        <Text style={styles.listTitle}>Ingredients of interest</Text>
-        <FlatList
-          data={ingredients}
-          keyExtractor={item => item.id}
-          contentContainerStyle={styles.flatListContent}
-          renderItem={({item}) => (
-            <View style={styles.row}>
-              <Text
-                style={[
-                  styles.listItem,
-                  highlightedRows.includes(item.id) && styles.topThreeListItem,
-                ]}>
-                {item.title}
-              </Text>
-            </View>
-          )}
-          onViewableItemsChanged={onViewableItemsChanged.current}
-          viewabilityConfig={viewabilityConfig}
-        />
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttontext}>Scan new label</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+    </>
   );
 };
 
@@ -109,14 +114,14 @@ const styles = StyleSheet.create({
     width: 130,
     borderWidth: 3,
     borderColor: '#83FFCB',
-    borderRadius: 15,
+    borderRadius: 24,
   },
   title: {
     fontFamily: 'Inter',
     fontWeight: '700',
     fontSize: 24,
     color: '#FFFFFF',
-    lineHeight: 22,
+    lineHeight: 25,
   },
   flatListContent: {
     paddingBottom: 20,
@@ -141,7 +146,6 @@ const styles = StyleSheet.create({
     borderColor: '#242424',
   },
   listItem: {
-    fontFamily: 'Inter',
     fontWeight: '100',
     fontSize: 18,
     paddingLeft: 16,
