@@ -46,6 +46,9 @@ const CameraResult = () => {
           <Image source={mark} style={styles.mark} />
           <Image source={markSymbol} style={styles.markSymbol} />
         </View>
+        <View style={styles.bgContaniner}>
+
+        </View>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>No match!</Text>
           <Text style={styles.title}>That’s a good thing.</Text>
@@ -100,34 +103,35 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   sampleImage: {
-    height: 220,
-    width: 123,
+    height: 230,
+    width: 130,
     borderWidth: 3,
     borderColor: '#FFFFFF',
     borderRadius: 15,
   },
   title: {
     fontFamily: 'Inter',
-    fontWeight: '800',
+    fontWeight: '700',
     fontSize: 24,
     color: '#FFFFFF',
+    lineHeight:22
   },
   flatListContent: {
     paddingBottom: 20,
   },
   listTitle: {
-    paddingLeft: 25,
+    paddingLeft: 16,
     paddingBottom: 15,
     fontFamily: 'Inter',
-    fontWeight: '500',
-    fontSize: 18,
+    fontWeight: '400',
+    fontSize: 13,
     color: '#545454',
     alignItems: 'flex-start',
     textTransform: 'uppercase',
     letterSpacing: 4.14,
   },
   row: {
-    height: 50,
+    height: 60,
     width: Dimensions.get('window').width,
     justifyContent: 'center',
     borderTopWidth: 1,
@@ -137,55 +141,60 @@ const styles = StyleSheet.create({
   listItem: {
     fontFamily: 'Inter',
     fontWeight: '100',
-    fontSize: 20,
-    paddingLeft: 25,
+    fontSize: 18,
+    paddingLeft: 16,
     color: '#FFFFFF',
     alignItems: 'flex-start',
     letterSpacing: 1.8,
   },
   topThreeListItem: {
     fontFamily: 'Inter',
-    fontWeight: '700',
-    fontSize: 20,
+    fontWeight: '400',
+    fontSize: 18,
   },
   button: {
     width: 270,
     height: 60,
-    marginBottom: 20,
+    marginBottom: 15,
     borderRadius: 15,
     borderColor: '#FFFFFF',
-    borderWidth: 2,
+    borderWidth: 1.5,
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
   },
   buttontext: {
     fontFamily: 'Supreme Variable, sans-serif',
-    fontWeight: '800',
+    fontWeight: '700',
     fontSize: 16,
     color: '#FFFFFF',
     textTransform: 'uppercase',
     letterSpacing: 2.08,
   },
   mark: {
-    width: 75,
-    height: 75,
+    width: 120,
+    height: 120,
   },
   markSymbol: {
     position: 'absolute',
-    bottom: 22,
-    right: 12,
-    width: 30,
-    height: 25,
+    bottom: 38,
+    right: 27,
+    width: 35,
+    height: 40,
   },
   markContainer: {
     position: 'absolute',
-    bottom: 95,
-    right: 17,
+    bottom: 65,
+    right: -5,
   },
   titleContainer: {
     justifyContent: 'center',
     alignItems: 'center',
     paddingTop: 38,
   },
+  bgContaniner:{
+    width:280,
+    height:31,
+    backgroundColor:'#5A5A5A70'
+  }
 });
