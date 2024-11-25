@@ -3,9 +3,10 @@ import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import ImageEditor from '@react-native-community/image-editor';
 import {h, moderateScale} from 'walstar-rn-responsive';
 import {openCamera, openPicker} from 'react-native-image-crop-picker';
+import { SyncLoader } from '../Assets/App_Constants';
 
-const ScanImage = require('../Assets/helper.png');
-const galleryImage = require('../Assets/Group-9.png');
+const ScanImage = require('../Assets/images/helper.png');
+const galleryImage = require('../Assets/images/Group-9.png');
 
 const CameraScreen = ({navigation}) => {
   const [imageUri, setImageUri] = useState(null);

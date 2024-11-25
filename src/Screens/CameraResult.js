@@ -9,10 +9,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { SyncLoader } from '../Assets/App_Constants';
 
-const sample = require('../Assets/sample.png');
-const mark = require('../Assets/Ellipse.png');
-const markSymbol = require('../Assets/Vector.png');
+const sample = require('../Assets/images/sample.png');
+const mark = require('../Assets/images/Ellipse.png');
+const markSymbol = require('../Assets/images/Vector.png');
 
 const CameraResult = () => {
   const route = useRoute();
