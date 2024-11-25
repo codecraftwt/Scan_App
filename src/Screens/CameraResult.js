@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { SyncLoader } from '../Assets/App_Constants';
 
 const sample = require('../Assets/images/sample.png');
 const mark = require('../Assets/images/Ellipse.png');
@@ -142,7 +141,7 @@ const styles = StyleSheet.create({
     paddingLeft: 25,
     color: '#FFFFFF',
     alignItems: 'flex-start',
-    letterSpacing: 1.8, 
+    letterSpacing: 1.8,
   },
   topThreeListItem: {
     fontFamily: 'Inter',

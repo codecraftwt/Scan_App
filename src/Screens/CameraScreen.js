@@ -1,92 +1,99 @@
 import React, {useState} from 'react';
-import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import ImageEditor from '@react-native-community/image-editor';
-import {h, moderateScale} from 'walstar-rn-responsive';
 import {openCamera, openPicker} from 'react-native-image-crop-picker';
-import { SyncLoader } from '../Assets/App_Constants';
 
 const ScanImage = require('../Assets/images/helper.png');
 const galleryImage = require('../Assets/images/Group-9.png');
 
 const CameraScreen = ({navigation}) => {
   const [imageUri, setImageUri] = useState(null);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const processImage = async (imagePath, img) => {
+
+    const cropWidth = img.width * 0.9; 
+    const cropHeight = img.height * 0.8; 
+  
+    const cropX = img.width * 0.1; 
+    const cropY = img.height * 0.2; 
+  
+    const resizedImage = await ImageEditor.cropImage(imagePath, {
+      offset: {x: 0, y: 0},  
+      size: {width: img.width, height: img.height}, 
+    });
+  
+    const croppedImage = await ImageEditor.cropImage(resizedImage.uri, {
+      offset: {
+        x: (cropX * img.width) / img.width, 
+        y: (cropY * img.height) / img.height, 
+      },
+      size: {
+        width: (cropWidth * img.width) / img.width, 
+        height: (cropHeight * img.height) / img.height, 
+      },
+    });
+    return croppedImage.uri;
+  };
 
   const selectImage = async () => {
-    openPicker({
-      cropping: false,
-    })
-      .then(async image => {
-        const resizedImage = await ImageEditor.cropImage(image.path, {
-          offset: {x: 0, y: 0},
-          size: {width: 1024, height: (image.height / image.width) * 1024},
-        });
-
-        const croppedImage = await ImageEditor.cropImage(resizedImage.uri, {
-          offset: {x: 0.2 * resizedImage.width, y: 0.25 * resizedImage.height},
-          size: {
-            width: 0.6 * resizedImage.width,
-            height: 0.5 * resizedImage.height,
-          },
-        });
-        const processedImage = await ImageEditor.cropImage(croppedImage.uri, {
-          offset: {x: 0, y: 0},
-          size: {width: resizedImage.width, height: resizedImage.height},
-        });
-
-        setImageUri(processedImage.uri);
-        navigation.navigate('cameraResult', {imageUrl: processedImage.uri});
-      })
-      .catch(error => {
-        console.log('Camera error: ', error);
-      });
+    setIsProcessing(true);
+    try {
+      const image = await openPicker({cropping: false});
+      const processedImageUri = await processImage(image.path, image); 
+      setImageUri(processedImageUri);
+      await navigation.navigate('cameraResult', {imageUrl: processedImageUri});
+    } catch (error) {
+      console.log('Picker error: ', error);
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   const captureImage = async () => {
-    await openCamera({
-      cropping: false,
-    })
-      .then(async image => {
-        const resizedImage = await ImageEditor.cropImage(image.path, {
-          offset: {x: 0, y: 0},
-          size: {width: 1024, height: (image.height / image.width) * 1024},
-        });
-
-        const croppedImage = await ImageEditor.cropImage(resizedImage.uri, {
-          offset: {x: 0.2 * resizedImage.width, y: 0.25 * resizedImage.height},
-          size: {
-            width: 0.6 * resizedImage.width,
-            height: 0.5 * resizedImage.height,
-          },
-        });
-        const processedImage = await ImageEditor.cropImage(croppedImage.uri, {
-          offset: {x: 0, y: 0},
-          size: {width: resizedImage.width, height: resizedImage.height},
-        });
-
-        setImageUri(processedImage.uri);
-        navigation.navigate('cameraResult', {imageUrl: processedImage.uri});
-      })
-      .catch(error => {
-        console.log('Camera error: ', error);
-        setIsProcessing(false);
-      });
+    setIsProcessing(true);
+    try {
+      const image = await openCamera({cropping: false});
+      const processedImageUri = await processImage(image.path, image); 
+      setImageUri(processedImageUri);
+      await navigation.navigate('cameraResult', {imageUrl: processedImageUri}); 
+    } catch (error) {
+      console.log('Camera error: ', error);
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Scan the label</Text>
-      <View style={styles.imageContainer}>
-        <Image source={ScanImage} style={styles.image} />
-      </View>
-      <Text style={styles.subText}>Focus on the ingredients list.</Text>
-      <View style={styles.buttonView}>
-        <TouchableOpacity style={styles.button} onPress={captureImage}>
-          <Text style={styles.buttonText}>Scan now</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={selectImage}>
-          <Image source={galleryImage} style={styles.galleryImage} />
-        </TouchableOpacity>
-      </View>
+      {isProcessing ? (
+        <View style={styles.loaderContainer}>
+          <ActivityIndicator size="large" color="#83FFCB" />
+          <Text style={styles.processingText}>Processing...</Text>
+        </View>
+      ) : (
+        <>
+          <Text style={styles.title}>Scan the label</Text>
+          <View style={styles.imageContainer}>
+            <Image source={ScanImage} style={styles.image} />
+          </View>
+          <Text style={styles.subText}>Focus on the ingredients list.</Text>
+          <View style={styles.buttonView}>
+            <TouchableOpacity style={styles.button} onPress={captureImage}>
+              <Text style={styles.buttonText}>Scan now</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={selectImage}>
+              <Image source={galleryImage} style={styles.galleryImage} />
+            </TouchableOpacity>
+          </View>
+        </>
+      )}
     </View>
   );
 };
@@ -97,6 +104,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#000000',
+  },
+  loaderContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   title: {
     fontFamily: 'Inter',
