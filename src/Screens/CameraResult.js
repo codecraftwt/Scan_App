@@ -20,6 +20,7 @@ const CameraResult = () => {
   const route = useRoute();
   const {imageUrl} = route.params;
   const [highlightedRows, setHighlightedRows] = useState([]);
+  const [thirdHighLightedRow, setThirdHighlightedRow] = useState([]);
 
   const viewabilityConfig = {
     itemVisiblePercentThreshold: 50,
@@ -29,8 +30,12 @@ const CameraResult = () => {
     const topThree = viewableItems
       .slice(0, 2)
       .map(item => String(item.item.id));
+    const thirdRow = viewableItems
+      .slice(2, 3)
+      .map(item => String(item.item.id));
     console.log('Top three visible items:', topThree);
     setHighlightedRows(topThree);
+    setThirdHighlightedRow(thirdRow);
   });
 
   const ingredients = [
@@ -72,7 +77,7 @@ const CameraResult = () => {
                     styles.listItem,
                     highlightedRows.includes(item.id) &&
                       styles.topThreeListItem,
-                    index === 2 && styles.thirdListItem,
+                      thirdHighLightedRow.includes(item.id) && styles.thirdListItem,
                   ]}>
                   {item.title}
                 </Text>
