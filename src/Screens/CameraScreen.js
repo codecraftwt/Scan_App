@@ -81,7 +81,9 @@ const CameraScreen = ({navigation}) => {
     } catch (error) {
       console.log('Camera error: ', error);
     } finally {
-      setIsProcessing(false);
+      setTimeout(() => {
+        setIsProcessing(false);
+      }, 2000);
     }
   };
 
@@ -146,7 +148,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     textAlign: 'center',
     color: '#FFFFFF',
-    lineHeight: 26,
+    lineHeight: 22,
   },
   imageContainer: {
     width: 300,
@@ -163,7 +165,6 @@ const styles = StyleSheet.create({
   subText: {
     fontFamily: 'Inter',
     fontSize: 16,
-    fontWeight: '400',
     marginTop: 50,
     textAlign: 'center',
     color: '#B0B0B0',
@@ -191,13 +192,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonText: {
-    fontFamily: 'Supreme Variable, sans-serif',
-    fontWeight: '800',
+    fontFamily: 'Supreme Variable',
     fontSize: 16,
     color: '#161616',
     textTransform: 'uppercase',
     letterSpacing: 2.08,
-    lineHeight:21.6
+    lineHeight: 21.6,
   },
   processingText: {
     color: '#FFFFFF',
