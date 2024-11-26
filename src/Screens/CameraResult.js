@@ -65,13 +65,14 @@ const CameraResult = () => {
             data={ingredients}
             keyExtractor={item => item.id}
             contentContainerStyle={styles.flatListContent}
-            renderItem={({item}) => (
+            renderItem={({item, index}) => (
               <View style={styles.row}>
                 <Text
                   style={[
                     styles.listItem,
                     highlightedRows.includes(item.id) &&
                       styles.topThreeListItem,
+                    index === 2 && styles.thirdListItem,
                   ]}>
                   {item.title}
                 </Text>
@@ -159,6 +160,14 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter',
     fontWeight: '400',
     fontSize: 18,
+  },
+  thirdListItem: {
+    fontWeight: '300',
+    fontSize: 18,
+    paddingLeft: 16,
+    color: '#FFFFFF',
+    alignItems: 'flex-start',
+    letterSpacing: 1.8,
   },
   buttoncontainer: {
     justifyContent: 'center',
