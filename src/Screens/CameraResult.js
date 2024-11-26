@@ -14,7 +14,7 @@ import {
 const sample = require('../Assets/images/sample.png');
 const mark = require('../Assets/images/Ellipse.png');
 const markSymbol = require('../Assets/images/Vector.png');
-const bgImage = require('../Assets/images/Ellipse1.png');
+const bgImage = require('../Assets/images/Ellipse2.png');
 
 const CameraResult = () => {
   const route = useRoute();
@@ -54,6 +54,7 @@ const CameraResult = () => {
             <Image source={mark} style={styles.mark} />
             <Image source={markSymbol} style={styles.markSymbol} />
           </View>
+          <Image source={bgImage} style={styles.bgImage}/>
           <View style={styles.titleContainer}>
             <Text style={styles.title}>No match!</Text>
             <Text style={styles.title}>That’s a good thing.</Text>
@@ -205,5 +206,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingTop: 38,
+  },
+  middleContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    top: 250,
+    width: 250, // width starts large
+    height: 100, // height starts smaller
+    borderRadius: 100, // gives the oval shape
+    overflow: 'hidden', // ensures anything outside the oval is clipped
+    // backgroundColor:'#FFFFFF'
+  },
+  bgImage: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    top: 250,
+    tintColor: 'rgba(255, 255, 255, 0.4)',
+    height:75,
+    width:350
   },
 });
