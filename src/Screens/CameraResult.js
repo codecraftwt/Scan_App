@@ -59,6 +59,10 @@ const CameraResult = () => {
             <Image source={mark} style={styles.mark} />
             <Image source={markSymbol} style={styles.markSymbol} />
           </View>
+          <Image
+            source={bgImage}
+            style={styles.bgImage}
+          />
           <View style={styles.titleContainer}>
             <Text style={styles.title}>No match!</Text>
             <Text style={styles.title}>That’s a good thing.</Text>
@@ -77,7 +81,8 @@ const CameraResult = () => {
                     styles.listItem,
                     highlightedRows.includes(item.id) &&
                       styles.topThreeListItem,
-                      thirdHighLightedRow.includes(item.id) && styles.thirdListItem,
+                    thirdHighLightedRow.includes(item.id) &&
+                      styles.thirdListItem,
                   ]}>
                   {item.title}
                 </Text>
@@ -126,10 +131,10 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: 'Inter',
-    fontWeight: '700',
-    fontSize: 24,
+    fontSize: 22,
     color: '#FFFFFF',
     lineHeight: 25,
+    fontWeight:'700'
   },
   flatListContent: {
     paddingBottom: 20,
@@ -219,5 +224,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingTop: 38,
+  },
+  bgImage: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    top: 240,
+    tintColor: 'rgba(190, 190, 190, 0.6)',
+    height: 60,
+    width: '80%',
+    marginTop: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 3,
   },
 });

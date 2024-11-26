@@ -53,28 +53,30 @@ const CameraScreen = ({navigation}) => {
       return croppedImage?.uri;
     } catch (error) {
       console.log('Error during image processing: ', error.message);
-      return null; // In case of error, return null
+      return null; 
     }
   };
 
   const selectImage = async () => {
-    setIsProcessing(true);
     try {
       const image = await openPicker({cropping: false});
+      setIsProcessing(true);
       const processedImageUri = await processImage(image.path, image);
       setImageUri(processedImageUri);
       await navigation.navigate('cameraResult', {imageUrl: processedImageUri});
     } catch (error) {
       console.log('Picker error: ', error);
     } finally {
-      setIsProcessing(false);
+      setTimeout(() => {
+        setIsProcessing(false);
+      }, 2000);
     }
   };
 
   const captureImage = async () => {
-    setIsProcessing(true);
     try {
       const image = await openCamera({cropping: false});
+      setIsProcessing(true);
       const processedImageUri = await processImage(image.path, image);
       setImageUri(processedImageUri);
       await navigation.navigate('cameraResult', {imageUrl: processedImageUri});
@@ -98,6 +100,7 @@ const CameraScreen = ({navigation}) => {
               style={styles.lottie}
               autoPlay
               loop
+              resizeMode='cover'
             />
           </View>
         ) : (
