@@ -53,7 +53,7 @@ const CameraScreen = ({navigation}) => {
       return croppedImage?.uri;
     } catch (error) {
       console.log('Error during image processing: ', error.message);
-      return null; 
+      return null;
     }
   };
 
@@ -85,7 +85,7 @@ const CameraScreen = ({navigation}) => {
     } finally {
       setTimeout(() => {
         setIsProcessing(false);
-      }, 2000);
+      }, 10000);
     }
   };
 
@@ -100,7 +100,7 @@ const CameraScreen = ({navigation}) => {
               style={styles.lottie}
               autoPlay
               loop
-              resizeMode='cover'
+              resizeMode='contain'
             />
           </View>
         ) : (
@@ -146,12 +146,11 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: 'Inter',
     fontSize: 22,
+    color: '#FFFFFF',
+    lineHeight: 25,
     fontWeight: '700',
     marginBottom: 20,
     marginTop: 20,
-    textAlign: 'center',
-    color: '#FFFFFF',
-    lineHeight: 22,
   },
   imageContainer: {
     width: 300,

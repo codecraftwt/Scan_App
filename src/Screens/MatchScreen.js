@@ -12,14 +12,12 @@ import {
   View,
 } from 'react-native';
 
-const sample = require('../Assets/images/sample.png');
-const mark = require('../Assets/images/Ellipse.png');
-const markSymbol = require('../Assets/images/Vector.png');
-const bgImage = require('../Assets/images/Ellipse1.png');
+const supplementResult = require('../Assets/images/suplementResultImg.png');
+const lineCircle = require('../Assets/images/LineCircle.png');
+const line = require('../Assets/images/GroupLine.png');
+const bgScreenImage = require('../Assets/images/bgScreenImg.png');
 
-const CameraResult = () => {
-  const route = useRoute();
-  const {imageUrl} = route.params;
+const MatchScreen = () => {
   const [highlightedRows, setHighlightedRows] = useState([]);
 
   const viewabilityConfig = {
@@ -49,15 +47,14 @@ const CameraResult = () => {
       <StatusBar barStyle="light-content" backgroundColor="#161616" />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.upperContainer}>
-          <Image source={{uri: imageUrl}} style={styles.sampleImage} />
+          <Image source={supplementResult} style={styles.sampleImage} />
           <View style={styles.markContainer}>
-            <Image source={mark} style={styles.mark} />
-            <Image source={markSymbol} style={styles.markSymbol} />
+            <Image source={lineCircle} style={styles.lineCircle} />
+            <Image source={line} style={styles.line} />
           </View>
-          <Image source={bgImage} style={styles.bgImage} />
           <View style={styles.titleContainer}>
-            <Text style={styles.title}>No match!</Text>
-            <Text style={styles.title}>That’s a good thing.</Text>
+            <Text style={styles.title}>This product contains a</Text>
+            <Text style={styles.title}>flagged ingredient.</Text>
           </View>
         </View>
         <View style={styles.bottomContainer}>
@@ -95,7 +92,7 @@ const CameraResult = () => {
   );
 };
 
-export default CameraResult;
+export default MatchScreen;
 
 const styles = StyleSheet.create({
   scrollContainer: {
@@ -119,7 +116,7 @@ const styles = StyleSheet.create({
     height: 230,
     width: 130,
     borderWidth: 3,
-    borderColor: '#83FFCB',
+    borderColor: 'rgba(253, 204, 95, 1)',
     borderRadius: 24,
   },
   title: {
@@ -190,56 +187,38 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     letterSpacing: 2.08,
   },
-  mark: {
+  lineCircle: {
     width: 120,
     height: 120,
   },
-  markSymbol: {
+  line: {
     position: 'absolute',
     bottom: 38,
-    right: 27,
+    right: 24,
     width: 35,
     height: 40,
   },
   markContainer: {
     position: 'absolute',
     bottom: 65,
-    right: -15,
+    right: 5,
   },
   titleContainer: {
     justifyContent: 'center',
     alignItems: 'center',
     paddingTop: 38,
   },
-  bgImage: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
-    top: 240,
-    tintColor: 'rgba(190, 190, 190, 0.6)',
-    height: 60,
-    width: '80%',
-    marginTop: 20,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 3,
-  },
   transparentOverlay: {
     position: 'relative',
-    height: 20, 
+    height: 20,
     width: '100%',
-    backgroundColor: 'rgba(0, 0, 0, 0)', 
+    backgroundColor: 'rgba(0, 0, 0, 0)',
     zIndex: 1,
   },
   transparentView: {
     position: 'absolute',
     bottom: 0,
-    height: 50, 
+    height: 50,
     width: '100%',
     backgroundColor: 'rgba(23, 23, 23, 0.8)',
   },
