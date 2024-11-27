@@ -70,7 +70,7 @@ export const PublicRoute = props => {
   return (
     <Stack.Navigator
       screenOptions={{gestureEnabled: false}}
-      initialRouteName="cameraScreen">
+      initialRouteName="match">
       {stackArray.map((item, index) => {
         const isHeader = true;
         return (

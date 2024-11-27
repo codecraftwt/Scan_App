@@ -57,6 +57,16 @@ const MatchScreen = () => {
             <Text style={styles.title}>flagged ingredient.</Text>
           </View>
         </View>
+        <View style={styles.cardDiv}>
+          <View style={styles.cardContainer}>
+            <Text style={styles.cardTitle}>Titanium dioxide</Text>
+            <Text style={styles.cardPara}>
+              Titanium oxide is banned in foods in the EU and California.
+              Nanoparticles of titanium oxide (nano-TiO₂) is often used in
+              sunscreen.
+            </Text>
+          </View>
+        </View>
         <View style={styles.bottomContainer}>
           <Text style={styles.listTitle}>Ingredients of interest</Text>
           <FlatList
@@ -194,13 +204,13 @@ const styles = StyleSheet.create({
   line: {
     position: 'absolute',
     bottom: 38,
-    right: 24,
-    width: 35,
+    right: 30,
+    width: 28,
     height: 40,
   },
   markContainer: {
     position: 'absolute',
-    bottom: 65,
+    bottom: 0,
     right: 5,
   },
   titleContainer: {
@@ -221,5 +231,40 @@ const styles = StyleSheet.create({
     height: 50,
     width: '100%',
     backgroundColor: 'rgba(23, 23, 23, 0.8)',
+  },
+  cardDiv: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 30,
+    paddingTop: 30,
+    paddingBottom: 30,
+    paddingHorizontal: 15,
+  },
+  cardContainer: {
+    height: 150,
+    width: 350,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(75, 75, 75, 0.1)',
+  },
+  cardTitle: {
+    fontFamily: 'Inter',
+    fontWeight: '600',
+    fontSize: 14,
+    lineHeight: 17,
+    letterSpacing: 2.5,
+    color: 'rgba(255, 220, 164, 1)',
+    textTransform: 'uppercase',
+    marginBottom: 10,
+  },
+  cardPara: {
+    fontFamily: 'Inter',
+    fontWeight: '400',
+    fontSize: 16,
+    lineHeight: 21,
+    letterSpacing: 0.32,
+    color: 'rgba(255, 255, 255, 1)',
+    paddingHorizontal: 20,
   },
 });

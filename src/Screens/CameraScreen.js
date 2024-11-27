@@ -85,7 +85,7 @@ const CameraScreen = ({navigation}) => {
     } finally {
       setTimeout(() => {
         setIsProcessing(false);
-      }, 10000);
+      }, 2000);
     }
   };
 
@@ -100,7 +100,7 @@ const CameraScreen = ({navigation}) => {
               style={styles.lottie}
               autoPlay
               loop
-              resizeMode='contain'
+              resizeMode="contain"
             />
           </View>
         ) : (
@@ -138,6 +138,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     height: '100%',
+    backgroundColor: '#1C1C1C',
   },
   lottie: {
     width: '100%',
