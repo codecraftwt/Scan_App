@@ -5,6 +5,7 @@ import CameraScreen from '../Screens/CameraScreen';
 import CameraResult from '../Screens/CameraResult';
 import NoMatchScreen from '../Screens/NoMatchScreen';
 import MatchScreen from '../Screens/MatchScreen';
+import MatchRejectedScreen from '../Screens/MatchRejectedScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -57,6 +58,18 @@ const stackArray = [
       showBack: false,
     },
   },
+  {
+    name: 'matchRejectedScreen',
+    component: props => (
+      // <ComponentWrapper>
+      <MatchRejectedScreen {...props} />
+      // </ComponentWrapper>
+    ),
+    headerProps: {
+      title: 'pro',
+      showBack: false,
+    },
+  },
 ];
 
 export const PublicRoute = props => {
@@ -70,7 +83,7 @@ export const PublicRoute = props => {
   return (
     <Stack.Navigator
       screenOptions={{gestureEnabled: false}}
-      initialRouteName="match">
+      initialRouteName="noMatch">
       {stackArray.map((item, index) => {
         const isHeader = true;
         return (

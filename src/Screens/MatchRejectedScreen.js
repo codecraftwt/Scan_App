@@ -13,11 +13,11 @@ import {
 } from 'react-native';
 
 const supplementResult = require('../Assets/images/suplementResultImg.png');
-const mark = require('../Assets/images/Ellipse.png');
-const markSymbol = require('../Assets/images/Vector.png');
-const bgScreenImage = require('../Assets/images/bgImage.png');
+const crossCircle = require('../Assets/images/CrossCircle.png');
+const crossMark = require('../Assets/images/CrossMark.png');
+const bgScreenImage = require('../Assets/images/bgScreenImg.png');
 
-const NoMatchScreen = () => {
+const MatchRejectedScreen = () => {
   const [highlightedRows, setHighlightedRows] = useState([]);
 
   const viewabilityConfig = {
@@ -49,19 +49,34 @@ const NoMatchScreen = () => {
         <ImageBackground
           source={bgScreenImage}
           style={styles.backgroundImage}
-          // resizeMode="cover"
-        >
+          resizeMode="cover">
           <View style={styles.upperContainer}>
             <View style={styles.sampleImageContainer}>
               <Image source={supplementResult} style={styles.sampleImage} />
               <View style={styles.markContainer}>
-                <Image source={mark} style={styles.mark} />
-                <Image source={markSymbol} style={styles.markSymbol} />
+                <Image source={crossCircle} style={styles.crossCircle} />
+                <Image source={crossMark} style={styles.crossMark} />
               </View>
             </View>
             <View style={styles.titleContainer}>
-              <Text style={styles.title}>No match!</Text>
-              <Text style={styles.title}>That’s a good thing.</Text>
+              <Text style={styles.title}>This product contains a</Text>
+              <Text style={styles.title}>flagged ingredient.</Text>
+            </View>
+          </View>
+          <View style={styles.cardDiv}>
+            <View style={styles.cardContainer}>
+              <Text style={styles.cardTitle}>Titanium dioxide</Text>
+              <Text style={styles.cardPara}>
+                Titanium oxide is banned in foods in the EU and California.
+                Nanoparticles of titanium oxide (nano-TiO₂) is often used in
+                sunscreen.
+              </Text>
+            </View>
+            <View style={styles.cardContainer}>
+              <Text style={styles.cardTitle}>Sodium Metabisulfite</Text>
+              <Text style={styles.cardPara}>
+                Sodium Metabisulfite is on a Hazardous Substance List.
+              </Text>
             </View>
           </View>
           <View style={styles.bottomContainer}>
@@ -103,29 +118,20 @@ const NoMatchScreen = () => {
   );
 };
 
-export default NoMatchScreen;
+export default MatchRejectedScreen;
 
 const styles = StyleSheet.create({
   scrollContainer: {
     flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(22, 22, 22, 1)',
+    backgroundColor: '#171717',
   },
   upperContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     marginTop:40
-  },
-  bottomContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-    width: '100%',
-  },
-  flatListView: {
-    height: 225,
   },
   sampleImageContainer: {
     position: 'relative',
@@ -134,7 +140,7 @@ const styles = StyleSheet.create({
     height: 230,
     width: 130,
     borderWidth: 3,
-    borderColor: '#83FFCB',
+    borderColor: 'rgba(249, 92, 92, 1)',
     borderRadius: 24,
   },
   markContainer: {
@@ -142,16 +148,22 @@ const styles = StyleSheet.create({
     bottom: -50,
     right: -48,
   },
-  mark: {
+  crossCircle: {
     width: 120,
     height: 120,
   },
-  markSymbol: {
+  crossMark: {
     position: 'absolute',
-    bottom: 38,
-    right: 27,
-    width: 35,
+    bottom: 42,
+    right: 30,
+    width: 28,
     height: 40,
+  },
+  bottomContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    width: '100%',
   },
   title: {
     fontFamily: 'Inter',
@@ -159,6 +171,9 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     lineHeight: 25,
     fontWeight: '700',
+  },
+  flatListView: {
+    height: 225,
   },
   flatListContent: {
     paddingBottom: 20,
@@ -240,10 +255,49 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: 'rgba(23, 23, 23, 0.8)',
   },
+  cardDiv: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 15,
+    paddingBottom: 30,
+    paddingHorizontal: 15,
+  },
+  cardContainer: {
+    width: 350,
+    borderRadius: 8,
+    backgroundColor: 'rgba(75, 75, 75, 0.1)',
+    marginTop: 10,
+    padding: 15,
+    minHeight: 60,
+  },
+  cardTitle: {
+    fontFamily: 'Inter',
+    fontWeight: '600',
+    fontSize: 14,
+    lineHeight: 17,
+    letterSpacing: 2.5,
+    color: 'rgba(255, 170, 182, 1)',
+    textTransform: 'uppercase',
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  cardPara: {
+    fontFamily: 'Inter',
+    fontWeight: '400',
+    fontSize: 16,
+    lineHeight: 21,
+    letterSpacing: 0.32,
+    color: 'rgba(216, 216, 216, 1)',
+    paddingHorizontal: 10,
+    alignSelf: 'flex-start',
+    textAlign: 'left',
+    flexWrap: 'wrap',
+    width: '100%',
+  },
   backgroundImage: {
     flex: 1,
     width: '100%',
-    height: '48%',
+    height: '45%',
     justifyContent: 'center',
     borderBottomLeftRadius: 40,
     borderBottomRightRadius: 40,
