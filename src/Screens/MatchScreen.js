@@ -18,7 +18,10 @@ const lineCircle = require('../Assets/images/LineCircle.png');
 const line = require('../Assets/images/GroupLine.png');
 const bgScreenImage = require('../Assets/images/bgScreenImg.png');
 
-const MatchScreen = () => {
+const MatchScreen = ({navigation}) => {
+  const route = useRoute();
+  const {imageUrl, originalImageUrl} = route.params;
+
   const [highlightedRows, setHighlightedRows] = useState([]);
 
   const viewabilityConfig = {
@@ -48,12 +51,12 @@ const MatchScreen = () => {
       <StatusBar barStyle="light-content" backgroundColor="#161616" />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <ImageBackground
-          source={bgScreenImage}
+          source={{uri:originalImageUrl}}
           style={styles.backgroundImage}
           resizeMode="cover">
           <View style={styles.upperContainer}>
             <View style={styles.sampleImageContainer}>
-              <Image source={supplementResult} style={styles.sampleImage} />
+              <Image source={{uri: imageUrl}} style={styles.sampleImage} />
               <View style={styles.markContainer}>
                 <Image source={lineCircle} style={styles.lineCircle} />
                 <Image source={line} style={styles.line} />
@@ -102,7 +105,9 @@ const MatchScreen = () => {
               <View style={styles.transparentView}></View>
             </View>
             <View style={styles.buttoncontainer}>
-              <TouchableOpacity style={styles.button}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.navigate('matchRejectedScreen')}>
                 <Text style={styles.buttontext}>Scan new label</Text>
               </TouchableOpacity>
             </View>
@@ -126,7 +131,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop:40
+    marginTop: 40,
   },
   sampleImageContainer: {
     position: 'relative',
@@ -271,7 +276,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 17,
     letterSpacing: 2.5,
-    color: 'rgba(255, 170, 182, 1)',
+    color: 'rgba(255, 220, 164, 1)',
     textTransform: 'uppercase',
     marginBottom: 10,
     textAlign: 'center',
@@ -297,5 +302,11 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 40,
     borderBottomRightRadius: 40,
     overflow: 'hidden',
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject, // Full-screen overlay
+    backgroundColor: 'rgba(0, 0, 0, 0.4)', // Semi-transparent black
+    zIndex: 1, // Make sure it stays above content
+    filter: 'blur(8px)', // Apply blur effect (if supported)
   },
 });

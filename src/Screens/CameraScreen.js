@@ -63,7 +63,10 @@ const CameraScreen = ({navigation}) => {
       setIsProcessing(true);
       const processedImageUri = await processImage(image.path, image);
       setImageUri(processedImageUri);
-      await navigation.navigate('cameraResult', {imageUrl: processedImageUri});
+      await navigation.navigate('match', {
+        imageUrl: processedImageUri,
+        originalImageUrl: image.path,
+      });
     } catch (error) {
       console.log('Picker error: ', error);
     } finally {
@@ -79,7 +82,10 @@ const CameraScreen = ({navigation}) => {
       setIsProcessing(true);
       const processedImageUri = await processImage(image.path, image);
       setImageUri(processedImageUri);
-      await navigation.navigate('cameraResult', {imageUrl: processedImageUri});
+      await navigation.navigate('match', {
+        imageUrl: processedImageUri,
+        originalImageUrl: image.path,
+      });
     } catch (error) {
       console.log('Camera error: ', error);
     } finally {

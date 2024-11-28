@@ -17,7 +17,7 @@ const crossCircle = require('../Assets/images/CrossCircle.png');
 const crossMark = require('../Assets/images/CrossMark.png');
 const bgScreenImage = require('../Assets/images/bgScreenImg.png');
 
-const MatchRejectedScreen = () => {
+const MatchRejectedScreen = ({navigation}) => {
   const [highlightedRows, setHighlightedRows] = useState([]);
 
   const viewabilityConfig = {
@@ -107,7 +107,9 @@ const MatchRejectedScreen = () => {
               <View style={styles.transparentView}></View>
             </View>
             <View style={styles.buttoncontainer}>
-              <TouchableOpacity style={styles.button}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.navigate('noMatch')}>
                 <Text style={styles.buttontext}>Scan new label</Text>
               </TouchableOpacity>
             </View>
@@ -131,7 +133,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop:40
+    marginTop: 40,
   },
   sampleImageContainer: {
     position: 'relative',
