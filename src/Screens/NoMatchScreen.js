@@ -20,16 +20,14 @@ const bgScreenImage = require('../Assets/images/bgImage.png');
 const NoMatchScreen = () => {
   const [highlightedRows, setHighlightedRows] = useState([]);
 
-  const viewabilityConfig = {
-    itemVisiblePercentThreshold: 50,
-  };
+  const scrollViewRef = useRef(null);
 
-  const onViewableItemsChanged = useRef(({viewableItems}) => {
-    const topThree = viewableItems
-      .slice(0, 2)
-      .map(item => String(item.item.id));
-    setHighlightedRows(topThree);
-  });
+  const handleScroll = event => {
+    const contentOffsetY = event.nativeEvent.contentOffset.y;
+    const rowHeight = 60;
+    const visibleIndex = Math.floor(contentOffsetY / rowHeight);
+    setHighlightedRows([String(visibleIndex + 1), String(visibleIndex + 2)]);
+  };
 
   const ingredients = [
     {id: '1', title: 'Wheat'},
@@ -67,12 +65,14 @@ const NoMatchScreen = () => {
           <View style={styles.bottomContainer}>
             <Text style={styles.listTitle}>Ingredients of interest</Text>
             <View style={styles.flatListView}>
-              <FlatList
-                data={ingredients}
-                keyExtractor={item => item.id}
-                contentContainerStyle={styles.flatListContent}
-                renderItem={({item, index}) => (
-                  <View style={styles.row}>
+            <ScrollView
+                style={styles.ingredientList}
+                nestedScrollEnabled={true}
+                onScroll={handleScroll}
+                scrollEventThrottle={16}
+                ref={scrollViewRef}>
+                {ingredients.map(item => (
+                  <View style={styles.row} key={item.id}>
                     <Text
                       style={[
                         styles.listItem,
@@ -82,11 +82,8 @@ const NoMatchScreen = () => {
                       {item.title}
                     </Text>
                   </View>
-                )}
-                onViewableItemsChanged={onViewableItemsChanged.current}
-                viewabilityConfig={viewabilityConfig}
-                nestedScrollEnabled={true}
-              />
+                ))}
+              </ScrollView>
             </View>
             <View style={styles.transparentOverlay}>
               <View style={styles.transparentView}></View>

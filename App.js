@@ -2,8 +2,8 @@ import React from 'react';
 import {PaperProvider} from 'react-native-paper';
 import {NavigationContainer} from '@react-navigation/native';
 import Toast, {BaseToast} from 'react-native-toast-message';
-import {Provider} from 'react-redux';
-import store from './src/Redux/store';
+// import {Provider} from 'react-redux';
+// import store from './src/Redux/store';
 import {w} from 'walstar-rn-responsive';
 import Navigation from './src/Navigations/index';
 

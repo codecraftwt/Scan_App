@@ -1,8 +1,6 @@
-import {useRoute} from '@react-navigation/native';
 import React, {useRef, useState} from 'react';
 import {
   Dimensions,
-  FlatList,
   Image,
   ImageBackground,
   ScrollView,
@@ -12,6 +10,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import {BlurView} from '@react-native-community/blur';
+import {useRoute} from '@react-navigation/native';
 
 const supplementResult = require('../Assets/images/suplementResultImg.png');
 const lineCircle = require('../Assets/images/LineCircle.png');
@@ -24,16 +24,14 @@ const MatchScreen = ({navigation}) => {
 
   const [highlightedRows, setHighlightedRows] = useState([]);
 
-  const viewabilityConfig = {
-    itemVisiblePercentThreshold: 50,
-  };
+  const scrollViewRef = useRef(null);
 
-  const onViewableItemsChanged = useRef(({viewableItems}) => {
-    const topThree = viewableItems
-      .slice(0, 2)
-      .map(item => String(item.item.id));
-    setHighlightedRows(topThree);
-  });
+  const handleScroll = event => {
+    const contentOffsetY = event.nativeEvent.contentOffset.y;
+    const rowHeight = 60;
+    const visibleIndex = Math.floor(contentOffsetY / rowHeight);
+    setHighlightedRows([String(visibleIndex + 1), String(visibleIndex + 2)]);
+  };
 
   const ingredients = [
     {id: '1', title: 'Wheat'},
@@ -51,9 +49,14 @@ const MatchScreen = ({navigation}) => {
       <StatusBar barStyle="light-content" backgroundColor="#161616" />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <ImageBackground
-          source={{uri:originalImageUrl}}
+          source={{uri: originalImageUrl}}
           style={styles.backgroundImage}
           resizeMode="cover">
+          <BlurView
+            // style={styles.absoluteBlur}
+            blurType={'light'} // Adjust the blur style here
+            blurAmount={5} // Adjust the blur intensity here
+          />
           <View style={styles.upperContainer}>
             <View style={styles.sampleImageContainer}>
               <Image source={{uri: imageUrl}} style={styles.sampleImage} />
@@ -79,13 +82,16 @@ const MatchScreen = ({navigation}) => {
           </View>
           <View style={styles.bottomContainer}>
             <Text style={styles.listTitle}>Ingredients of interest</Text>
+
             <View style={styles.flatListView}>
-              <FlatList
-                data={ingredients}
-                keyExtractor={item => item.id}
-                contentContainerStyle={styles.flatListContent}
-                renderItem={({item, index}) => (
-                  <View style={styles.row}>
+              <ScrollView
+                style={styles.ingredientList}
+                nestedScrollEnabled={true}
+                onScroll={handleScroll}
+                scrollEventThrottle={16}
+                ref={scrollViewRef}>
+                {ingredients.map(item => (
+                  <View style={styles.row} key={item.id}>
                     <Text
                       style={[
                         styles.listItem,
@@ -95,11 +101,8 @@ const MatchScreen = ({navigation}) => {
                       {item.title}
                     </Text>
                   </View>
-                )}
-                onViewableItemsChanged={onViewableItemsChanged.current}
-                viewabilityConfig={viewabilityConfig}
-                nestedScrollEnabled={true}
-              />
+                ))}
+              </ScrollView>
             </View>
             <View style={styles.transparentOverlay}>
               <View style={styles.transparentView}></View>
@@ -303,10 +306,9 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 40,
     overflow: 'hidden',
   },
-  overlay: {
-    ...StyleSheet.absoluteFillObject, // Full-screen overlay
-    backgroundColor: 'rgba(0, 0, 0, 0.4)', // Semi-transparent black
-    zIndex: 1, // Make sure it stays above content
-    filter: 'blur(8px)', // Apply blur effect (if supported)
+  absoluteBlur: {
+    ...StyleSheet.absoluteFillObject, // Full-screen overlay for the blur
+    zIndex: 0, // Keep the blur behind all content
+    height: '100%',
   },
 });

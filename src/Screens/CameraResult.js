@@ -22,16 +22,14 @@ const CameraResult = () => {
   const {imageUrl} = route.params;
   const [highlightedRows, setHighlightedRows] = useState([]);
 
-  const viewabilityConfig = {
-    itemVisiblePercentThreshold: 50,
-  };
+  const scrollViewRef = useRef(null);
 
-  const onViewableItemsChanged = useRef(({viewableItems}) => {
-    const topThree = viewableItems
-      .slice(0, 2)
-      .map(item => String(item.item.id));
-    setHighlightedRows(topThree);
-  });
+  const handleScroll = event => {
+    const contentOffsetY = event.nativeEvent.contentOffset.y;
+    const rowHeight = 60;
+    const visibleIndex = Math.floor(contentOffsetY / rowHeight);
+    setHighlightedRows([String(visibleIndex + 1), String(visibleIndex + 2)]);
+  };
 
   const ingredients = [
     {id: '1', title: 'Wheat'},
@@ -62,12 +60,14 @@ const CameraResult = () => {
         </View>
         <View style={styles.bottomContainer}>
           <Text style={styles.listTitle}>Ingredients of interest</Text>
-          <FlatList
-            data={ingredients}
-            keyExtractor={item => item.id}
-            contentContainerStyle={styles.flatListContent}
-            renderItem={({item, index}) => (
-              <View style={styles.row}>
+          <ScrollView
+            style={styles.ingredientList}
+            nestedScrollEnabled={true}
+            onScroll={handleScroll}
+            scrollEventThrottle={16}
+            ref={scrollViewRef}>
+            {ingredients.map(item => (
+              <View style={styles.row} key={item.id}>
                 <Text
                   style={[
                     styles.listItem,
@@ -77,10 +77,8 @@ const CameraResult = () => {
                   {item.title}
                 </Text>
               </View>
-            )}
-            onViewableItemsChanged={onViewableItemsChanged.current}
-            viewabilityConfig={viewabilityConfig}
-          />
+            ))}
+          </ScrollView>
           <View style={styles.transparentOverlay}>
             <View style={styles.transparentView}></View>
           </View>
@@ -231,15 +229,15 @@ const styles = StyleSheet.create({
   },
   transparentOverlay: {
     position: 'relative',
-    height: 20, 
+    height: 20,
     width: '100%',
-    backgroundColor: 'rgba(0, 0, 0, 0)', 
+    backgroundColor: 'rgba(0, 0, 0, 0)',
     zIndex: 1,
   },
   transparentView: {
     position: 'absolute',
     bottom: 0,
-    height: 50, 
+    height: 50,
     width: '100%',
     backgroundColor: 'rgba(23, 23, 23, 0.8)',
   },
