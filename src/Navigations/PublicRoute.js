@@ -2,6 +2,10 @@ import * as React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {TouchableOpacity, Text, StyleSheet} from 'react-native';
 import CameraScreen from '../Screens/CameraScreen';
+import CameraResult from '../Screens/CameraResult';
+import NoMatchScreen from '../Screens/NoMatchScreen';
+import MatchScreen from '../Screens/MatchScreen';
+import MatchRejectedScreen from '../Screens/MatchRejectedScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -11,6 +15,54 @@ const stackArray = [
     component: props => (
       // <ComponentWrapper>
       <CameraScreen {...props} />
+      // </ComponentWrapper>
+    ),
+    headerProps: {
+      title: 'pro',
+      showBack: false,
+    },
+  },
+  {
+    name: 'cameraResult',
+    component: props => (
+      // <ComponentWrapper>
+      <CameraResult {...props} />
+      // </ComponentWrapper>
+    ),
+    headerProps: {
+      title: 'pro',
+      showBack: false,
+    },
+  },
+  {
+    name: 'noMatch',
+    component: props => (
+      // <ComponentWrapper>
+      <NoMatchScreen {...props} />
+      // </ComponentWrapper>
+    ),
+    headerProps: {
+      title: 'pro',
+      showBack: false,
+    },
+  },
+  {
+    name: 'match',
+    component: props => (
+      // <ComponentWrapper>
+      <MatchScreen {...props} />
+      // </ComponentWrapper>
+    ),
+    headerProps: {
+      title: 'pro',
+      showBack: false,
+    },
+  },
+  {
+    name: 'matchRejectedScreen',
+    component: props => (
+      // <ComponentWrapper>
+      <MatchRejectedScreen {...props} />
       // </ComponentWrapper>
     ),
     headerProps: {
