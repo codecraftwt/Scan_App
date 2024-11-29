@@ -1,3 +1,4 @@
+import {useRoute} from '@react-navigation/native';
 import React, {useRef, useState} from 'react';
 import {
   Dimensions,
@@ -11,6 +12,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 
 const supplementResult = require('../Assets/images/suplementResultImg.png');
 const crossCircle = require('../Assets/images/CrossCircle.png');
@@ -18,6 +20,8 @@ const crossMark = require('../Assets/images/CrossMark.png');
 const bgScreenImage = require('../Assets/images/bgScreenImg.png');
 
 const MatchRejectedScreen = ({navigation}) => {
+  const route = useRoute();
+  const {imageUrl, originalImageUrl} = route.params;
   const [highlightedRows, setHighlightedRows] = useState([]);
 
   const scrollViewRef = useRef(null);
@@ -45,12 +49,12 @@ const MatchRejectedScreen = ({navigation}) => {
       <StatusBar barStyle="light-content" backgroundColor="#161616" />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <ImageBackground
-          source={bgScreenImage}
+          source={{uri: originalImageUrl}}
           style={styles.backgroundImage}
-          resizeMode="cover">
+          blurRadius={7}>
           <View style={styles.upperContainer}>
             <View style={styles.sampleImageContainer}>
-              <Image source={supplementResult} style={styles.sampleImage} />
+              <Image source={{uri: imageUrl}} style={styles.sampleImage} />
               <View style={styles.markContainer}>
                 <Image source={crossCircle} style={styles.crossCircle} />
                 <Image source={crossMark} style={styles.crossMark} />
@@ -60,58 +64,63 @@ const MatchRejectedScreen = ({navigation}) => {
               <Text style={styles.title}>This product contains a</Text>
               <Text style={styles.title}>flagged ingredient.</Text>
             </View>
-          </View>
-          <View style={styles.cardDiv}>
-            <View style={styles.cardContainer}>
-              <Text style={styles.cardTitle}>Titanium dioxide</Text>
-              <Text style={styles.cardPara}>
-                Titanium oxide is banned in foods in the EU and California.
-                Nanoparticles of titanium oxide (nano-TiO₂) is often used in
-                sunscreen.
-              </Text>
-            </View>
-            <View style={styles.cardContainer}>
-              <Text style={styles.cardTitle}>Sodium Metabisulfite</Text>
-              <Text style={styles.cardPara}>
-                Sodium Metabisulfite is on a Hazardous Substance List.
-              </Text>
-            </View>
-          </View>
-          <View style={styles.bottomContainer}>
-            <Text style={styles.listTitle}>Ingredients of interest</Text>
-            <View style={styles.flatListView}>
-            <ScrollView
-                style={styles.ingredientList}
-                nestedScrollEnabled={true}
-                onScroll={handleScroll}
-                scrollEventThrottle={16}
-                ref={scrollViewRef}>
-                {ingredients.map(item => (
-                  <View style={styles.row} key={item.id}>
-                    <Text
-                      style={[
-                        styles.listItem,
-                        highlightedRows.includes(item.id) &&
-                          styles.topThreeListItem,
-                      ]}>
-                      {item.title}
-                    </Text>
-                  </View>
-                ))}
-              </ScrollView>
-            </View>
-            <View style={styles.transparentOverlay}>
-              <View style={styles.transparentView}></View>
-            </View>
-            <View style={styles.buttoncontainer}>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => navigation.navigate('noMatch')}>
-                <Text style={styles.buttontext}>Scan new label</Text>
-              </TouchableOpacity>
+            <View style={styles.cardDiv}>
+              <View style={styles.cardContainer}>
+                <Text style={styles.cardTitle}>Titanium dioxide</Text>
+                <Text style={styles.cardPara}>
+                  Titanium oxide is banned in foods in the EU and California.
+                  Nanoparticles of titanium oxide (nano-TiO₂) is often used in
+                  sunscreen.
+                </Text>
+              </View>
+              <View style={styles.cardContainer}>
+                <Text style={styles.cardTitle}>Sodium Metabisulfite</Text>
+                <Text style={styles.cardPara}>
+                  Sodium Metabisulfite is on a Hazardous Substance List.
+                </Text>
+              </View>
             </View>
           </View>
         </ImageBackground>
+        <View style={styles.bottomContainer}>
+          <Text style={styles.listTitle}>Ingredients of interest</Text>
+          <View style={styles.flatListView}>
+            <ScrollView
+              style={styles.ingredientList}
+              nestedScrollEnabled={true}
+              onScroll={handleScroll}
+              scrollEventThrottle={16}
+              ref={scrollViewRef}>
+              {ingredients.map(item => (
+                <View style={styles.row} key={item.id}>
+                  <Text
+                    style={[
+                      styles.listItem,
+                      highlightedRows.includes(item.id) &&
+                        styles.topThreeListItem,
+                    ]}>
+                    {item.title}
+                  </Text>
+                </View>
+              ))}
+            </ScrollView>
+          </View>
+          <View style={styles.transparentOverlay}>
+            <View style={styles.transparentView}></View>
+          </View>
+          <View style={styles.buttoncontainer}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() =>
+                navigation.navigate('noMatch', {
+                  imageUrl: imageUrl,
+                  originalImageUrl: originalImageUrl,
+                })
+              }>
+              <Text style={styles.buttontext}>Scan new label</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </ScrollView>
     </>
   );
@@ -126,14 +135,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#171717',
   },
+  backgroundImage: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    overflow: 'hidden',
+  },
   upperContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 40,
+    backgroundColor: '#000000c0',
   },
   sampleImageContainer: {
     position: 'relative',
+    marginTop: 25,
   },
   sampleImage: {
     height: 230,
@@ -292,14 +309,5 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     flexWrap: 'wrap',
     width: '100%',
-  },
-  backgroundImage: {
-    flex: 1,
-    width: '100%',
-    height: '45%',
-    justifyContent: 'center',
-    borderBottomLeftRadius: 40,
-    borderBottomRightRadius: 40,
-    overflow: 'hidden',
   },
 });

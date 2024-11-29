@@ -1,4 +1,5 @@
-import React, {useRef, useState} from 'react';
+import {useRoute} from '@react-navigation/native';
+import React, {useRef, useState, useEffect} from 'react';
 import {
   Dimensions,
   Image,
@@ -10,8 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {BlurView} from '@react-native-community/blur';
-import {useRoute} from '@react-navigation/native';
+import LinearGradient from 'react-native-linear-gradient';
 
 const supplementResult = require('../Assets/images/suplementResultImg.png');
 const lineCircle = require('../Assets/images/LineCircle.png');
@@ -51,12 +51,8 @@ const MatchScreen = ({navigation}) => {
         <ImageBackground
           source={{uri: originalImageUrl}}
           style={styles.backgroundImage}
-          resizeMode="cover">
-          <BlurView
-            // style={styles.absoluteBlur}
-            blurType={'light'} // Adjust the blur style here
-            blurAmount={5} // Adjust the blur intensity here
-          />
+          resizeMode="cover"
+          blurRadius={7}>
           <View style={styles.upperContainer}>
             <View style={styles.sampleImageContainer}>
               <Image source={{uri: imageUrl}} style={styles.sampleImage} />
@@ -70,52 +66,58 @@ const MatchScreen = ({navigation}) => {
               <Text style={styles.title}>flagged ingredient.</Text>
             </View>
           </View>
-          <View style={styles.cardDiv}>
-            <View style={styles.cardContainer}>
-              <Text style={styles.cardTitle}>Titanium dioxide</Text>
-              <Text style={styles.cardPara}>
-                Titanium oxide is banned in foods in the EU and California.
-                Nanoparticles of titanium oxide (nano-TiO₂) is often used in
-                sunscreen.
-              </Text>
+          <LinearGradient colors={['#000000c0', '#161616', '#161616']}>
+            <View style={styles.cardDiv}>
+              <View style={styles.cardContainer}>
+                <Text style={styles.cardTitle}>Titanium dioxide</Text>
+                <Text style={styles.cardPara}>
+                  Titanium oxide is banned in foods in the EU and California.
+                  Nanoparticles of titanium oxide (nano-TiO₂) is often used in
+                  sunscreen.
+                </Text>
+              </View>
             </View>
-          </View>
-          <View style={styles.bottomContainer}>
-            <Text style={styles.listTitle}>Ingredients of interest</Text>
-
-            <View style={styles.flatListView}>
-              <ScrollView
-                style={styles.ingredientList}
-                nestedScrollEnabled={true}
-                onScroll={handleScroll}
-                scrollEventThrottle={16}
-                ref={scrollViewRef}>
-                {ingredients.map(item => (
-                  <View style={styles.row} key={item.id}>
-                    <Text
-                      style={[
-                        styles.listItem,
-                        highlightedRows.includes(item.id) &&
-                          styles.topThreeListItem,
-                      ]}>
-                      {item.title}
-                    </Text>
-                  </View>
-                ))}
-              </ScrollView>
-            </View>
-            <View style={styles.transparentOverlay}>
-              <View style={styles.transparentView}></View>
-            </View>
-            <View style={styles.buttoncontainer}>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => navigation.navigate('matchRejectedScreen')}>
-                <Text style={styles.buttontext}>Scan new label</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
+          </LinearGradient>
         </ImageBackground>
+        <View style={styles.bottomContainer}>
+          <Text style={styles.listTitle}>Ingredients of interest</Text>
+          <View style={styles.flatListView}>
+            <ScrollView
+              style={styles.ingredientList}
+              nestedScrollEnabled={true}
+              onScroll={handleScroll}
+              scrollEventThrottle={16}
+              ref={scrollViewRef}>
+              {ingredients.map(item => (
+                <View style={styles.row} key={item.id}>
+                  <Text
+                    style={[
+                      styles.listItem,
+                      highlightedRows.includes(item.id) &&
+                        styles.topThreeListItem,
+                    ]}>
+                    {item.title}
+                  </Text>
+                </View>
+              ))}
+            </ScrollView>
+          </View>
+          <View style={styles.transparentOverlay}>
+            <View style={styles.transparentView}></View>
+          </View>
+          <View style={styles.buttoncontainer}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() =>
+                navigation.navigate('matchRejectedScreen', {
+                  imageUrl: imageUrl,
+                  originalImageUrl: originalImageUrl,
+                })
+              }>
+              <Text style={styles.buttontext}>Scan new label</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </ScrollView>
     </>
   );
@@ -128,16 +130,24 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#171717',
+    backgroundColor: '#161616',
+  },
+  backgroundImage: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    overflow: 'hidden',
   },
   upperContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 40,
+    backgroundColor: '#000000c0',
   },
   sampleImageContainer: {
     position: 'relative',
+    marginTop: 25,
   },
   sampleImage: {
     height: 230,
@@ -296,19 +306,5 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     flexWrap: 'wrap',
     width: '100%',
-  },
-  backgroundImage: {
-    flex: 1,
-    width: '100%',
-    height: '45%',
-    justifyContent: 'center',
-    borderBottomLeftRadius: 40,
-    borderBottomRightRadius: 40,
-    overflow: 'hidden',
-  },
-  absoluteBlur: {
-    ...StyleSheet.absoluteFillObject, // Full-screen overlay for the blur
-    zIndex: 0, // Keep the blur behind all content
-    height: '100%',
   },
 });

@@ -6,6 +6,8 @@ import CameraResult from '../Screens/CameraResult';
 import NoMatchScreen from '../Screens/NoMatchScreen';
 import MatchScreen from '../Screens/MatchScreen';
 import MatchRejectedScreen from '../Screens/MatchRejectedScreen';
+import TermsAndConditions from '../Screens/TermsAndConditions';
+import SplashScreen from '../Screens/SplashScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -70,6 +72,30 @@ const stackArray = [
       showBack: false,
     },
   },
+  {
+    name: 'terms&consitions',
+    component: props => (
+      // <ComponentWrapper>
+      <TermsAndConditions {...props} />
+      // </ComponentWrapper>
+    ),
+    headerProps: {
+      title: 'pro',
+      showBack: false,
+    },
+  },
+  {
+    name: 'splashScreen',
+    component: props => (
+      // <ComponentWrapper>
+      <SplashScreen {...props} />
+      // </ComponentWrapper>
+    ),
+    headerProps: {
+      title: 'pro',
+      showBack: false,
+    },
+  },
 ];
 
 export const PublicRoute = props => {
@@ -83,7 +109,7 @@ export const PublicRoute = props => {
   return (
     <Stack.Navigator
       screenOptions={{gestureEnabled: false}}
-      initialRouteName="cameraScreen">
+      initialRouteName="splashScreen">
       {stackArray.map((item, index) => {
         const isHeader = true;
         return (

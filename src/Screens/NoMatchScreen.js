@@ -1,3 +1,4 @@
+import {useRoute} from '@react-navigation/native';
 import React, {useRef, useState} from 'react';
 import {
   Dimensions,
@@ -11,13 +12,16 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 
 const supplementResult = require('../Assets/images/suplementResultImg.png');
 const mark = require('../Assets/images/Ellipse.png');
 const markSymbol = require('../Assets/images/Vector.png');
 const bgScreenImage = require('../Assets/images/bgImage.png');
 
-const NoMatchScreen = () => {
+const NoMatchScreen = ({navigation}) => {
+  const route = useRoute();
+  const {imageUrl, originalImageUrl} = route.params;
   const [highlightedRows, setHighlightedRows] = useState([]);
 
   const scrollViewRef = useRef(null);
@@ -45,13 +49,13 @@ const NoMatchScreen = () => {
       <StatusBar barStyle="light-content" backgroundColor="#161616" />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <ImageBackground
-          source={bgScreenImage}
+          source={{uri: originalImageUrl}}
           style={styles.backgroundImage}
-          // resizeMode="cover"
-        >
+          resizeMode="cover"
+          blurRadius={7}>
           <View style={styles.upperContainer}>
             <View style={styles.sampleImageContainer}>
-              <Image source={supplementResult} style={styles.sampleImage} />
+              <Image source={{uri: imageUrl}} style={styles.sampleImage} />
               <View style={styles.markContainer}>
                 <Image source={mark} style={styles.mark} />
                 <Image source={markSymbol} style={styles.markSymbol} />
@@ -61,40 +65,44 @@ const NoMatchScreen = () => {
               <Text style={styles.title}>No match!</Text>
               <Text style={styles.title}>That’s a good thing.</Text>
             </View>
-          </View>
-          <View style={styles.bottomContainer}>
-            <Text style={styles.listTitle}>Ingredients of interest</Text>
-            <View style={styles.flatListView}>
-            <ScrollView
-                style={styles.ingredientList}
-                nestedScrollEnabled={true}
-                onScroll={handleScroll}
-                scrollEventThrottle={16}
-                ref={scrollViewRef}>
-                {ingredients.map(item => (
-                  <View style={styles.row} key={item.id}>
-                    <Text
-                      style={[
-                        styles.listItem,
-                        highlightedRows.includes(item.id) &&
-                          styles.topThreeListItem,
-                      ]}>
-                      {item.title}
-                    </Text>
-                  </View>
-                ))}
-              </ScrollView>
-            </View>
-            <View style={styles.transparentOverlay}>
-              <View style={styles.transparentView}></View>
-            </View>
-            <View style={styles.buttoncontainer}>
-              <TouchableOpacity style={styles.button}>
-                <Text style={styles.buttontext}>Scan new label</Text>
-              </TouchableOpacity>
-            </View>
+            <LinearGradient
+              colors={['#000000c0', '#161616', '#161616', '#161616']}>
+              <View style={{height: 20, width: '100%'}}></View>
+            </LinearGradient>
           </View>
         </ImageBackground>
+        <View style={styles.bottomContainer}>
+          <Text style={styles.listTitle}>Ingredients of interest</Text>
+          <View style={styles.flatListView}>
+            <ScrollView
+              style={styles.ingredientList}
+              nestedScrollEnabled={true}
+              onScroll={handleScroll}
+              scrollEventThrottle={16}
+              ref={scrollViewRef}>
+              {ingredients.map(item => (
+                <View style={styles.row} key={item.id}>
+                  <Text
+                    style={[
+                      styles.listItem,
+                      highlightedRows.includes(item.id) &&
+                        styles.topThreeListItem,
+                    ]}>
+                    {item.title}
+                  </Text>
+                </View>
+              ))}
+            </ScrollView>
+          </View>
+          <View style={styles.transparentOverlay}>
+            <View style={styles.transparentView}></View>
+          </View>
+          <View style={styles.buttoncontainer}>
+            <TouchableOpacity style={styles.button}>
+              <Text style={styles.buttontext}>Scan new label</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </ScrollView>
     </>
   );
@@ -113,7 +121,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop:40
+    backgroundColor: '#000000c0',
   },
   bottomContainer: {
     flex: 1,
@@ -126,6 +134,7 @@ const styles = StyleSheet.create({
   },
   sampleImageContainer: {
     position: 'relative',
+    marginTop: 25,
   },
   sampleImage: {
     height: 230,
@@ -240,10 +249,8 @@ const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
     width: '100%',
-    height: '48%',
+    height: '100%',
     justifyContent: 'center',
-    borderBottomLeftRadius: 40,
-    borderBottomRightRadius: 40,
     overflow: 'hidden',
   },
 });
