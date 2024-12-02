@@ -11,6 +11,7 @@ import {
   View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const splashBgImg = require('../Assets/images/splashScreenBg.png');
 const logo = require('../Assets/images/logo.png');
@@ -43,18 +44,50 @@ const SplashScreen = ({navigation}) => {
             colors={['#000000c0', '#161616', '#161616']}></LinearGradient>
         </ImageBackground>
         <View style={styles.bottomContainer}>
-          <View style={styles.typesContainer}>
-            <View style={styles.subtypeContainer}>
+          <View style={styles.subtypeContainer}>
+            <View style={styles.individualTypecontainer}>
+              <Icon
+                name="checkmark-outline"
+                size={25}
+                color="rgba(131, 255, 180, 1)"
+                style={styles.icon}
+              />
               <Text style={styles.type1}>Chemicals</Text>
+            </View>
+            <View style={styles.individualTypecontainer}>
+              <Icon
+                name="checkmark-outline"
+                size={25}
+                color="rgba(131, 255, 180, 1)"
+                style={styles.icon}
+              />
               <Text style={styles.type2}>Allergens</Text>
             </View>
-            <View style={styles.subtypeContainer}>
+          </View>
+          <View style={styles.subtypeContainer}>
+            <View style={styles.individualTypecontainer}>
+              <Icon
+                name="checkmark-outline"
+                size={25}
+                color="rgba(131, 255, 180, 1)"
+                style={styles.icon}
+              />
               <Text style={styles.type1}>Vegetarian</Text>
+            </View>
+            <View style={styles.individualTypecontainer}>
+              <Icon
+                name="checkmark-outline"
+                size={25}
+                color="rgba(131, 255, 180, 1)"
+                style={styles.icon}
+              />
               <Text style={styles.type2}>Vegan</Text>
             </View>
           </View>
           <View style={styles.buttoncontainer}>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => navigation.navigate('terms&consitions')}>
               <Text style={styles.buttontext}>Get started</Text>
             </TouchableOpacity>
           </View>
@@ -157,6 +190,11 @@ const styles = StyleSheet.create({
   subtypeContainer: {
     flexDirection: 'row',
     marginBottom: 25,
+    marginLeft: 100,
+    justifyContent: 'flex-start',
+    alignContent: 'center',
+    width: '100%',
+    paddingHorizontal: 20,
   },
   type1: {
     fontFamily: 'Inter',
@@ -164,7 +202,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 23,
     color: 'rgba(255, 255, 255, 1)',
-    paddingRight: 20,
   },
   type2: {
     fontFamily: 'Inter',
@@ -172,6 +209,15 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 23,
     color: 'rgba(255, 255, 255, 1)',
-    paddingLeft: 20,
+  },
+  icon: {
+    paddingRight: 10,
+  },
+  individualTypecontainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginRight: 20,
+    justifyContent: 'center',
+    width: 'auto',
   },
 });
