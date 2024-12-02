@@ -63,8 +63,13 @@ const TermsAndConditions = ({navigation}) => {
           </View>
         </View>
       </ScrollView>
+      <View style={styles.transparentOverlay}>
+        <View style={styles.transparentView}></View>
+      </View>
       <View style={styles.buttoncontainer}>
-        <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('cameraScreen')}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate('cameraScreen')}>
           <Text style={styles.buttontext}>I AGREE</Text>
         </TouchableOpacity>
       </View>
@@ -78,7 +83,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#161616',
-    // paddingBottom: 150,
+    paddingBottom: 60,
   },
   topContainer: {
     justifyContent: 'center',
@@ -137,15 +142,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
-    marginBottom: 10,
     marginTop: 12,
     position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
     paddingBottom: 20,
-    zIndex: 10,
-    backgroundColor: 'transperent',
+    zIndex: 1,
+    backgroundColor: '#161616',
+    width: '100%',
+    height: '15%',
   },
   button: {
     width: 300,
@@ -155,6 +161,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderColor: 'rgba(131, 255, 180, 1)',
+    marginTop: 25,
   },
   buttontext: {
     fontFamily: 'Supreme Variable, sans-serif',
@@ -168,13 +175,13 @@ const styles = StyleSheet.create({
     position: 'relative',
     height: 20,
     width: '100%',
-    backgroundColor: 'rgba(0, 0, 0, 0)',
+    backgroundColor: '#161616',
     zIndex: 1,
-    marginBottom: 25,
+    marginBottom: 50,
   },
   transparentView: {
     position: 'absolute',
-    bottom: 0,
+    bottom: 50,
     height: 50,
     width: '100%',
     backgroundColor: 'rgba(23, 23, 23, 0.8)',
