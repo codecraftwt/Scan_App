@@ -12,6 +12,7 @@ import {
   View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import {globalColors} from '../Assets/themes/globalColors';
 
 const supplementResult = require('../Assets/images/suplementResultImg.png');
 const lineCircle = require('../Assets/images/LineCircle.png');
@@ -46,7 +47,10 @@ const MatchScreen = ({navigation}) => {
 
   return (
     <>
-      <StatusBar barStyle="light-content" backgroundColor="#161616" />
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor={globalColors.Charcoal}
+      />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <ImageBackground
           source={{uri: originalImageUrl}}
@@ -66,7 +70,12 @@ const MatchScreen = ({navigation}) => {
               <Text style={styles.title}>flagged ingredient.</Text>
             </View>
           </View>
-          <LinearGradient colors={['#000000c0', '#161616', '#161616']}>
+          <LinearGradient
+            colors={[
+              globalColors.TransparentBlack,
+              globalColors.Charcoal,
+              globalColors.Charcoal,
+            ]}>
             <View style={styles.cardDiv}>
               <View style={styles.cardContainer}>
                 <Text style={styles.cardTitle}>Titanium dioxide</Text>
@@ -130,7 +139,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#161616',
+    backgroundColor: globalColors.Charcoal,
   },
   backgroundImage: {
     flex: 1,
@@ -143,7 +152,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#000000c0',
+    backgroundColor: globalColors.TransparentBlack,
   },
   sampleImageContainer: {
     position: 'relative',
@@ -153,7 +162,7 @@ const styles = StyleSheet.create({
     height: 230,
     width: 130,
     borderWidth: 3,
-    borderColor: 'rgba(253, 204, 95, 1)',
+    borderColor: globalColors.GoldenYellow,
     borderRadius: 24,
   },
   markContainer: {
@@ -181,7 +190,7 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: 'Inter',
     fontSize: 22,
-    color: '#FFFFFF',
+    color: globalColors.White,
     lineHeight: 25,
     fontWeight: '700',
   },
@@ -197,7 +206,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter',
     fontWeight: '400',
     fontSize: 13,
-    color: '#545454',
+    color: globalColors.SlateGray,
     alignItems: 'flex-start',
     textTransform: 'uppercase',
     letterSpacing: 4.14,
@@ -208,13 +217,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderTopWidth: 1,
     borderBottomWidth: 1,
-    borderColor: '#242424',
+    borderColor: globalColors.JetBlack,
   },
   listItem: {
     fontWeight: '200',
     fontSize: 18,
     paddingLeft: 25,
-    color: '#FFFFFF',
+    color: globalColors.White,
     alignItems: 'flex-start',
     letterSpacing: 1.8,
   },
@@ -235,7 +244,7 @@ const styles = StyleSheet.create({
     height: 60,
     marginBottom: 15,
     borderRadius: 15,
-    borderColor: '#FFFFFF',
+    borderColor: globalColors.White,
     borderWidth: 2,
     justifyContent: 'center',
     alignItems: 'center',
@@ -245,7 +254,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Supreme Variable, sans-serif',
     fontWeight: '700',
     fontSize: 16,
-    color: '#FFFFFF',
+    color: globalColors.White,
     textTransform: 'uppercase',
     letterSpacing: 2.08,
   },
@@ -258,7 +267,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     height: 20,
     width: '100%',
-    backgroundColor: 'rgba(0, 0, 0, 0)',
+    backgroundColor: globalColors.Black,
     zIndex: 1,
   },
   transparentView: {
@@ -266,7 +275,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     height: 50,
     width: '100%',
-    backgroundColor: 'rgba(23, 23, 23, 0.8)',
+    backgroundColor: globalColors.SmokeGray,
   },
   cardDiv: {
     justifyContent: 'center',
@@ -278,7 +287,7 @@ const styles = StyleSheet.create({
   cardContainer: {
     width: 350,
     borderRadius: 8,
-    backgroundColor: 'rgba(75, 75, 75, 0.1)',
+    backgroundColor: globalColors.TransparentCharcoal,
     marginTop: 10,
     padding: 15,
     minHeight: 60,
@@ -289,7 +298,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 17,
     letterSpacing: 2.5,
-    color: 'rgba(255, 220, 164, 1)',
+    color: globalColors.PaleGold,
     textTransform: 'uppercase',
     marginBottom: 10,
     textAlign: 'center',
@@ -300,7 +309,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 21,
     letterSpacing: 0.32,
-    color: 'rgba(216, 216, 216, 1)',
+    color: globalColors.PaleGray,
     paddingHorizontal: 10,
     alignSelf: 'flex-start',
     textAlign: 'left',

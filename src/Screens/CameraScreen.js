@@ -12,6 +12,7 @@ import ImageEditor from '@react-native-community/image-editor';
 import {openCamera, openPicker} from 'react-native-image-crop-picker';
 import LottieView from 'lottie-react-native';
 import SyncLoader from '../Assets/loader.json';
+import {globalColors} from '../Assets/themes/globalColors';
 
 const ScanImage = require('../Assets/images/helper.png');
 const galleryImage = require('../Assets/images/Group-9.png');
@@ -97,7 +98,10 @@ const CameraScreen = ({navigation}) => {
 
   return (
     <>
-      <StatusBar barStyle="light-content" backgroundColor="#000000" />
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor={globalColors.Black}
+      />
       <View style={styles.container}>
         {isProcessing ? (
           <View style={styles.loaderContainer}>
@@ -136,7 +140,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#000000',
+    backgroundColor: globalColors.Black,
   },
   loaderContainer: {
     flex: 1,
@@ -144,7 +148,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     height: '100%',
-    backgroundColor: '#1C1C1C',
+    backgroundColor: globalColors.GunmetalGray,
   },
   lottie: {
     width: '100%',
@@ -153,7 +157,7 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: 'Inter',
     fontSize: 22,
-    color: '#FFFFFF',
+    color: globalColors.White,
     lineHeight: 25,
     fontWeight: '700',
     marginBottom: 20,
@@ -176,13 +180,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginTop: 50,
     textAlign: 'center',
-    color: '#B0B0B0',
+    color: globalColors.LightGray,
     letterSpacing: 0.32,
   },
   galleryImage: {
     height: 28,
     width: 32,
-    tintColor: '#FFFFFF',
+    tintColor: globalColors.White,
   },
   buttonView: {
     height: 100,
@@ -196,20 +200,20 @@ const styles = StyleSheet.create({
     width: 245,
     height: 60,
     borderRadius: 13,
-    backgroundColor: '#83FFB4',
+    backgroundColor: globalColors.MintGreen,
     justifyContent: 'center',
     alignItems: 'center',
   },
   buttonText: {
     fontFamily: 'Supreme Variable',
     fontSize: 16,
-    color: '#161616',
+    color: globalColors.CharcoalGray,
     textTransform: 'uppercase',
     letterSpacing: 2.08,
     lineHeight: 21.6,
   },
   processingText: {
-    color: '#FFFFFF',
+    color: globalColors.White,
     fontSize: 16,
     fontWeight: '600',
     marginTop: 10,

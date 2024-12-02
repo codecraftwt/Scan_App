@@ -1,8 +1,6 @@
-import {useRoute} from '@react-navigation/native';
 import React, {useRef, useState} from 'react';
 import {
   Dimensions,
-  FlatList,
   Image,
   ImageBackground,
   ScrollView,
@@ -12,7 +10,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import {useRoute} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
+import {globalColors} from '../Assets/themes/globalColors';
 
 const supplementResult = require('../Assets/images/suplementResultImg.png');
 const crossCircle = require('../Assets/images/CrossCircle.png');
@@ -46,12 +46,15 @@ const MatchRejectedScreen = ({navigation}) => {
 
   return (
     <>
-      <StatusBar barStyle="light-content" backgroundColor="#161616" />
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor={globalColors.Charcoal}
+      />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <ImageBackground
           source={{uri: originalImageUrl}}
           style={styles.backgroundImage}
-          blurRadius={7}>
+          blurRadius={5}>
           <View style={styles.upperContainer}>
             <View style={styles.sampleImageContainer}>
               <Image source={{uri: imageUrl}} style={styles.sampleImage} />
@@ -133,7 +136,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#171717',
+    backgroundColor: globalColors.EerieBlack,
   },
   backgroundImage: {
     flex: 1,
@@ -146,7 +149,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#000000c0',
+    backgroundColor: globalColors.TransparentBlack,
   },
   sampleImageContainer: {
     position: 'relative',
@@ -156,7 +159,7 @@ const styles = StyleSheet.create({
     height: 230,
     width: 130,
     borderWidth: 3,
-    borderColor: 'rgba(249, 92, 92, 1)',
+    borderColor: globalColors.VividRed,
     borderRadius: 24,
   },
   markContainer: {
@@ -184,7 +187,7 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: 'Inter',
     fontSize: 22,
-    color: '#FFFFFF',
+    color: globalColors.White,
     lineHeight: 25,
     fontWeight: '700',
   },
@@ -200,7 +203,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter',
     fontWeight: '400',
     fontSize: 13,
-    color: '#545454',
+    color: globalColors.SlateGray,
     alignItems: 'flex-start',
     textTransform: 'uppercase',
     letterSpacing: 4.14,
@@ -211,13 +214,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderTopWidth: 1,
     borderBottomWidth: 1,
-    borderColor: '#242424',
+    borderColor: globalColors.JetBlack,
   },
   listItem: {
     fontWeight: '200',
     fontSize: 18,
     paddingLeft: 25,
-    color: '#FFFFFF',
+    color: globalColors.White,
     alignItems: 'flex-start',
     letterSpacing: 1.8,
   },
@@ -238,7 +241,7 @@ const styles = StyleSheet.create({
     height: 60,
     marginBottom: 15,
     borderRadius: 15,
-    borderColor: '#FFFFFF',
+    borderColor: globalColors.White,
     borderWidth: 2,
     justifyContent: 'center',
     alignItems: 'center',
@@ -248,7 +251,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Supreme Variable, sans-serif',
     fontWeight: '700',
     fontSize: 16,
-    color: '#FFFFFF',
+    color: globalColors.White,
     textTransform: 'uppercase',
     letterSpacing: 2.08,
   },
@@ -261,7 +264,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     height: 20,
     width: '100%',
-    backgroundColor: 'rgba(0, 0, 0, 0)',
+    backgroundColor: globalColors.Black,
     zIndex: 1,
   },
   transparentView: {
@@ -269,7 +272,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     height: 50,
     width: '100%',
-    backgroundColor: 'rgba(23, 23, 23, 0.8)',
+    backgroundColor: globalColors.SmokeGray,
   },
   cardDiv: {
     justifyContent: 'center',
@@ -281,7 +284,7 @@ const styles = StyleSheet.create({
   cardContainer: {
     width: 350,
     borderRadius: 8,
-    backgroundColor: 'rgba(75, 75, 75, 0.1)',
+    backgroundColor: globalColors.TransparentCharcoal,
     marginTop: 10,
     padding: 15,
     minHeight: 60,
@@ -292,7 +295,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 17,
     letterSpacing: 2.5,
-    color: 'rgba(255, 170, 182, 1)',
+    color: globalColors.LightPink,
     textTransform: 'uppercase',
     marginBottom: 10,
     textAlign: 'center',
@@ -303,7 +306,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 21,
     letterSpacing: 0.32,
-    color: 'rgba(216, 216, 216, 1)',
+    color: globalColors.PaleGray,
     paddingHorizontal: 10,
     alignSelf: 'flex-start',
     textAlign: 'left',

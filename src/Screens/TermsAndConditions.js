@@ -9,11 +9,15 @@ import {
   StatusBar,
   ScrollView,
 } from 'react-native';
+import {globalColors} from '../Assets/themes/globalColors';
 
 const TermsAndConditions = ({navigation}) => {
   return (
     <>
-      <StatusBar barStyle="light-content" backgroundColor="#161616" />
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor={globalColors.Charcoal}
+      />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.topContainer}>
           <Text style={styles.title}>Terms & Conditions</Text>
@@ -82,7 +86,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#161616',
+    backgroundColor: globalColors.Charcoal,
     paddingBottom: 60,
   },
   topContainer: {
@@ -94,7 +98,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter',
     fontWeight: '700',
     fontSize: 22,
-    color: 'rgba(255, 255, 255, 1)',
+    color: globalColors.White,
     lineHeight: 25,
   },
   subtitle: {
@@ -102,7 +106,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontSize: 16,
     lineHeight: 22,
-    color: 'rgba(255, 255, 255, 1)',
+    color: globalColors.White,
     letterSpacing: 1.5,
     marginTop: 30,
     marginBottom: 10,
@@ -122,7 +126,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: 16,
     lineHeight: 24,
-    color: 'rgba(255, 255, 255, 1)',
+    color: globalColors.White,
     letterSpacing: 1.5,
     textAlign: 'left',
     paddingHorizontal: 25,
@@ -132,7 +136,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontSize: 16,
     lineHeight: 20,
-    color: 'rgba(176, 176, 176, 1)',
+    color: globalColors.LightGray,
     letterSpacing: 1.5,
     textAlign: 'left',
     paddingHorizontal: 25,
@@ -149,7 +153,7 @@ const styles = StyleSheet.create({
     right: 0,
     paddingBottom: 20,
     zIndex: 1,
-    backgroundColor: '#161616',
+    backgroundColor: globalColors.Charcoal,
     width: '100%',
     height: '15%',
   },
@@ -160,14 +164,14 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     justifyContent: 'center',
     alignItems: 'center',
-    borderColor: 'rgba(131, 255, 180, 1)',
+    borderColor: globalColors.MintGreen,
     marginTop: 25,
   },
   buttontext: {
     fontFamily: 'Supreme Variable, sans-serif',
     fontWeight: '700',
     fontSize: 16,
-    color: 'rgba(255, 255, 255, 1)',
+    color: globalColors.White,
     textTransform: 'uppercase',
     letterSpacing: 2.08,
   },
@@ -175,7 +179,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     height: 20,
     width: '100%',
-    backgroundColor: '#161616',
+    backgroundColor: globalColors.Charcoal,
     zIndex: 1,
     marginBottom: 50,
   },
@@ -184,7 +188,7 @@ const styles = StyleSheet.create({
     bottom: 50,
     height: 50,
     width: '100%',
-    backgroundColor: 'rgba(23, 23, 23, 0.8)',
+    backgroundColor: globalColors.SmokeGray,
   },
 });
 

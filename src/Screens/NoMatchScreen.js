@@ -1,4 +1,3 @@
-import {useRoute} from '@react-navigation/native';
 import React, {useRef, useState} from 'react';
 import {
   Dimensions,
@@ -13,6 +12,8 @@ import {
   View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import {useRoute} from '@react-navigation/native';
+import {globalColors} from '../Assets/themes/globalColors';
 
 const supplementResult = require('../Assets/images/suplementResultImg.png');
 const mark = require('../Assets/images/Ellipse.png');
@@ -46,7 +47,10 @@ const NoMatchScreen = ({navigation}) => {
 
   return (
     <>
-      <StatusBar barStyle="light-content" backgroundColor="#161616" />
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor={globalColors.Charcoal}
+      />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <ImageBackground
           source={{uri: originalImageUrl}}
@@ -66,7 +70,12 @@ const NoMatchScreen = ({navigation}) => {
               <Text style={styles.title}>That’s a good thing.</Text>
             </View>
             <LinearGradient
-              colors={['#000000c0', '#161616', '#161616', '#161616']}>
+              colors={[
+                globalColors.TransparentBlack,
+                globalColors.Charcoal,
+                globalColors.Charcoal,
+                globalColors.Charcoal,
+              ]}>
               <View style={{height: 20, width: '100%'}}></View>
             </LinearGradient>
           </View>
@@ -115,13 +124,13 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(22, 22, 22, 1)',
+    backgroundColor: globalColors.CharcoalGray,
   },
   upperContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#000000c0',
+    backgroundColor: globalColors.TransparentBlack,
   },
   bottomContainer: {
     flex: 1,
@@ -140,7 +149,7 @@ const styles = StyleSheet.create({
     height: 230,
     width: 130,
     borderWidth: 3,
-    borderColor: '#83FFCB',
+    borderColor: globalColors.PaleMint,
     borderRadius: 24,
   },
   markContainer: {
@@ -162,7 +171,7 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: 'Inter',
     fontSize: 22,
-    color: '#FFFFFF',
+    color: globalColors.White,
     lineHeight: 25,
     fontWeight: '700',
   },
@@ -175,7 +184,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter',
     fontWeight: '400',
     fontSize: 13,
-    color: '#545454',
+    color: globalColors.SlateGray,
     alignItems: 'flex-start',
     textTransform: 'uppercase',
     letterSpacing: 4.14,
@@ -186,13 +195,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderTopWidth: 1,
     borderBottomWidth: 1,
-    borderColor: '#242424',
+    borderColor: globalColors.JetBlack,
   },
   listItem: {
     fontWeight: '200',
     fontSize: 18,
     paddingLeft: 25,
-    color: '#FFFFFF',
+    color: globalColors.White,
     alignItems: 'flex-start',
     letterSpacing: 1.8,
   },
@@ -213,7 +222,7 @@ const styles = StyleSheet.create({
     height: 60,
     marginBottom: 15,
     borderRadius: 15,
-    borderColor: '#FFFFFF',
+    borderColor: globalColors.White,
     borderWidth: 2,
     justifyContent: 'center',
     alignItems: 'center',
@@ -236,7 +245,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     height: 20,
     width: '100%',
-    backgroundColor: 'rgba(0, 0, 0, 0)',
+    backgroundColor: globalColors.Black,
     zIndex: 1,
   },
   transparentView: {
@@ -244,7 +253,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     height: 50,
     width: '100%',
-    backgroundColor: 'rgba(23, 23, 23, 0.8)',
+    backgroundColor: globalColors.SmokeGray,
   },
   backgroundImage: {
     flex: 1,

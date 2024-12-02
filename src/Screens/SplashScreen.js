@@ -1,4 +1,4 @@
-import React, {useRef, useState, useEffect} from 'react';
+import React from 'react';
 import {
   Dimensions,
   Image,
@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {globalColors} from '../Assets/themes/globalColors';
 
 const splashBgImg = require('../Assets/images/splashScreenBg.png');
 const logo = require('../Assets/images/logo.png');
@@ -20,7 +21,10 @@ const text = require('../Assets/images/text.png');
 const SplashScreen = ({navigation}) => {
   return (
     <>
-      <StatusBar barStyle="light-content" backgroundColor="#161616" />
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor={globalColors.Charcoal}
+      />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <ImageBackground
           source={splashBgImg}
@@ -41,7 +45,11 @@ const SplashScreen = ({navigation}) => {
             </View>
           </View>
           <LinearGradient
-            colors={['#000000c0', '#161616', '#161616']}></LinearGradient>
+            colors={[
+              globalColors.TransparentBlack,
+              globalColors.Charcoal,
+              globalColors.Charcoal,
+            ]}></LinearGradient>
         </ImageBackground>
         <View style={styles.bottomContainer}>
           <View style={styles.subtypeContainer}>
@@ -49,7 +57,7 @@ const SplashScreen = ({navigation}) => {
               <Icon
                 name="checkmark-outline"
                 size={25}
-                color="rgba(131, 255, 180, 1)"
+                color={globalColors.MintGreen}
                 style={styles.icon}
               />
               <Text style={styles.type1}>Chemicals</Text>
@@ -58,7 +66,7 @@ const SplashScreen = ({navigation}) => {
               <Icon
                 name="checkmark-outline"
                 size={25}
-                color="rgba(131, 255, 180, 1)"
+                color={globalColors.MintGreen}
                 style={styles.icon}
               />
               <Text style={styles.type2}>Allergens</Text>
@@ -69,7 +77,7 @@ const SplashScreen = ({navigation}) => {
               <Icon
                 name="checkmark-outline"
                 size={25}
-                color="rgba(131, 255, 180, 1)"
+                color={globalColors.MintGreen}
                 style={styles.icon}
               />
               <Text style={styles.type1}>Vegetarian</Text>
@@ -78,7 +86,7 @@ const SplashScreen = ({navigation}) => {
               <Icon
                 name="checkmark-outline"
                 size={25}
-                color="rgba(131, 255, 180, 1)"
+                color={globalColors.MintGreen}
                 style={styles.icon}
               />
               <Text style={styles.type2}>Vegan</Text>
@@ -104,7 +112,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#161616',
+    backgroundColor: globalColors.Charcoal,
   },
   backgroundImage: {
     flex: 2,
@@ -117,7 +125,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    // backgroundColor: '#161616',
     marginTop: 70,
   },
   logoContainer: {
@@ -140,7 +147,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 23,
     letterSpacing: 0.36,
-    color: 'rgba(176, 176, 176, 1)',
+    color: globalColors.LightGray,
     textAlign: 'center',
     paddingHorizontal: 30,
     marginTop: 20,
@@ -154,7 +161,7 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: 'Inter',
     fontSize: 22,
-    color: '#FFFFFF',
+    color: globalColors.White,
     lineHeight: 25,
     fontWeight: '700',
   },
@@ -169,18 +176,18 @@ const styles = StyleSheet.create({
     height: 60,
     marginBottom: 15,
     borderRadius: 15,
-    borderColor: '#FFFFFF',
+    borderColor: globalColors.White,
     borderWidth: 2,
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
-    backgroundColor: 'rgba(131, 255, 180, 1)',
+    backgroundColor: globalColors.MintGreen,
   },
   buttontext: {
     fontFamily: 'Supreme Variable, sans-serif',
     fontWeight: '800',
     fontSize: 16,
-    color: 'rgba(22, 22, 22, 1)',
+    color: globalColors.CharcoalGray,
     textTransform: 'uppercase',
     letterSpacing: 2.08,
   },
@@ -201,14 +208,14 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontSize: 18,
     lineHeight: 23,
-    color: 'rgba(255, 255, 255, 1)',
+    color: globalColors.White,
   },
   type2: {
     fontFamily: 'Inter',
     fontWeight: '400',
     fontSize: 18,
     lineHeight: 23,
-    color: 'rgba(255, 255, 255, 1)',
+    color: globalColors.White,
   },
   icon: {
     paddingRight: 10,
