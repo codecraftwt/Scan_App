@@ -23,7 +23,10 @@ const bgScreenImage = require('../Assets/images/bgImage.png');
 const NoMatchScreen = ({navigation}) => {
   const route = useRoute();
   const {imageUrl, originalImageUrl} = route.params;
-  const [highlightedRows, setHighlightedRows] = useState([]);
+  const [highlightedRows, setHighlightedRows] = useState([
+    String(1),
+    String(2),
+  ]);
 
   const scrollViewRef = useRef(null);
 

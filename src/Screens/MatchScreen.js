@@ -1,4 +1,3 @@
-import {useRoute} from '@react-navigation/native';
 import React, {useRef, useState, useEffect} from 'react';
 import {
   Dimensions,
@@ -13,6 +12,7 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {globalColors} from '../Assets/themes/globalColors';
+import {useRoute} from '@react-navigation/native';
 
 const supplementResult = require('../Assets/images/suplementResultImg.png');
 const lineCircle = require('../Assets/images/LineCircle.png');
@@ -23,7 +23,10 @@ const MatchScreen = ({navigation}) => {
   const route = useRoute();
   const {imageUrl, originalImageUrl} = route.params;
 
-  const [highlightedRows, setHighlightedRows] = useState([]);
+  const [highlightedRows, setHighlightedRows] = useState([
+    String(1),
+    String(2),
+  ]);
 
   const scrollViewRef = useRef(null);
 

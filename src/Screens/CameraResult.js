@@ -20,7 +20,10 @@ const bgImage = require('../Assets/images/Ellipse1.png');
 const CameraResult = () => {
   const route = useRoute();
   const {imageUrl} = route.params;
-  const [highlightedRows, setHighlightedRows] = useState([]);
+  const [highlightedRows, setHighlightedRows] = useState([
+    String(1),
+    String(2),
+  ]);
 
   const scrollViewRef = useRef(null);
 

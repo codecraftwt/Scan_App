@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
     backgroundColor: globalColors.MintGreen,
   },
   buttontext: {
-    fontFamily: 'Supreme Variable, sans-serif',
+    fontFamily: 'Supreme Variable',
     fontWeight: '800',
     fontSize: 16,
     color: globalColors.CharcoalGray,
