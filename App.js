@@ -2,10 +2,11 @@ import React from 'react';
 import {PaperProvider} from 'react-native-paper';
 import {NavigationContainer} from '@react-navigation/native';
 import Toast, {BaseToast} from 'react-native-toast-message';
-// import {Provider} from 'react-redux';
-// import store from './src/Redux/store';
+import {Provider} from 'react-redux';
+import {store, persistor} from './src/Redux/store';
 import {w} from 'walstar-rn-responsive';
 import Navigation from './src/Navigations/index';
+import {PersistGate} from 'redux-persist/integration/react';
 
 const App = () => {
   const toastConfig = {
@@ -36,14 +37,16 @@ const App = () => {
   };
 
   return (
-    // <Provider store={store}>
-    <PaperProvider>
-      <NavigationContainer>
-        <Navigation />
-        <Toast config={toastConfig} />
-      </NavigationContainer>
-    </PaperProvider>
-    // </Provider>
+    <Provider store={store}>
+      <PaperProvider>
+        <NavigationContainer>
+          <PersistGate persistor={persistor}>
+            <Navigation />
+            <Toast config={toastConfig} />
+          </PersistGate>
+        </NavigationContainer>
+      </PaperProvider>
+    </Provider>
   );
 };
 
