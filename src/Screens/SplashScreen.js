@@ -13,6 +13,7 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {globalColors} from '../Assets/themes/globalColors';
+import {m, w} from 'walstar-rn-responsive';
 
 const splashBgImg = require('../Assets/images/splashScreenBg.png');
 const logo = require('../Assets/images/logo.png');
@@ -52,44 +53,46 @@ const SplashScreen = ({navigation}) => {
             ]}></LinearGradient>
         </ImageBackground>
         <View style={styles.bottomContainer}>
-          <View style={styles.subtypeContainer}>
-            <View style={styles.individualTypecontainer}>
-              <Icon
-                name="checkmark-outline"
-                size={25}
-                color={globalColors.MintGreen}
-                style={styles.icon}
-              />
-              <Text style={styles.type1}>Chemicals</Text>
+          <View style={styles.typeContainer}>
+            <View style={styles.subtypeContainer}>
+              <View style={styles.individualTypecontainer}>
+                <Icon
+                  name="checkmark-outline"
+                  size={25}
+                  color={globalColors.MintGreen}
+                  style={styles.icon}
+                />
+                <Text style={styles.type1}>Chemicals</Text>
+              </View>
+              <View style={styles.individualTypecontainer}>
+                <Icon
+                  name="checkmark-outline"
+                  size={25}
+                  color={globalColors.MintGreen}
+                  style={styles.icon}
+                />
+                <Text style={styles.type2}>Allergens</Text>
+              </View>
             </View>
-            <View style={styles.individualTypecontainer}>
-              <Icon
-                name="checkmark-outline"
-                size={25}
-                color={globalColors.MintGreen}
-                style={styles.icon}
-              />
-              <Text style={styles.type2}>Allergens</Text>
-            </View>
-          </View>
-          <View style={styles.subtypeContainer}>
-            <View style={styles.individualTypecontainer}>
-              <Icon
-                name="checkmark-outline"
-                size={25}
-                color={globalColors.MintGreen}
-                style={styles.icon}
-              />
-              <Text style={styles.type1}>Vegetarian</Text>
-            </View>
-            <View style={styles.individualTypecontainer}>
-              <Icon
-                name="checkmark-outline"
-                size={25}
-                color={globalColors.MintGreen}
-                style={styles.icon}
-              />
-              <Text style={styles.type2}>Vegan</Text>
+            <View style={styles.subtypeContainer}>
+              <View style={styles.individualTypecontainer}>
+                <Icon
+                  name="checkmark-outline"
+                  size={25}
+                  color={globalColors.MintGreen}
+                  style={styles.icon}
+                />
+                <Text style={styles.type1}>Vegetarian</Text>
+              </View>
+              <View style={styles.individualTypecontainer}>
+                <Icon
+                  name="checkmark-outline"
+                  size={25}
+                  color={globalColors.MintGreen}
+                  style={styles.icon}
+                />
+                <Text style={styles.type2}>Vegan</Text>
+              </View>
             </View>
           </View>
           <View style={styles.buttoncontainer}>
@@ -125,32 +128,33 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 70,
+    marginTop: m(70),
   },
   logoContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 50,
+    marginTop: m(50),
   },
   SubtextContainer: {
-    marginTop: 60,
+    marginTop: m(50),
   },
   logo: {
-    marginTop: 15,
+    marginTop: m(15),
   },
   textLogo: {
-    marginTop: 20,
+    marginTop: m(20),
   },
   subText: {
     fontFamily: 'Inter',
     fontWeight: '400',
-    fontSize: 18,
-    lineHeight: 23,
-    letterSpacing: 0.36,
+    fontSize: m(18),
+    lineHeight: m(23),
+    letterSpacing: m(0.36),
     color: globalColors.LightGray,
     textAlign: 'center',
-    paddingHorizontal: 30,
-    marginTop: 20,
+    paddingHorizontal: m(30),
+    marginTop: m(30),
+    paddingBottom: m(20),
   },
   bottomContainer: {
     flex: 1,
@@ -162,20 +166,20 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter',
     fontSize: 22,
     color: globalColors.White,
-    lineHeight: 25,
+    lineHeight: m(25),
     fontWeight: '700',
   },
   buttoncontainer: {
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
-    marginTop: 15,
+    marginTop: m(15),
   },
   button: {
-    width: 300,
-    height: 60,
-    marginBottom: 15,
-    borderRadius: 15,
+    width: m(300),
+    height: m(60),
+    marginBottom: m(15),
+    borderRadius: m(15),
     borderColor: globalColors.White,
     borderWidth: 2,
     justifyContent: 'center',
@@ -186,45 +190,49 @@ const styles = StyleSheet.create({
   buttontext: {
     fontFamily: 'Supreme Variable',
     fontWeight: '800',
-    fontSize: 16,
+    fontSize: m(16),
     color: globalColors.CharcoalGray,
     textTransform: 'uppercase',
-    letterSpacing: 2.08,
+    letterSpacing: m(2.08),
   },
   typesContainer: {
     justifyContent: 'center',
   },
   subtypeContainer: {
     flexDirection: 'row',
-    marginBottom: 25,
-    marginLeft: 100,
+    marginBottom: m(25),
+    marginLeft: w(5),
     justifyContent: 'flex-start',
     alignContent: 'center',
     width: '100%',
-    paddingHorizontal: 20,
+    paddingHorizontal: m(20),
   },
   type1: {
     fontFamily: 'Inter',
     fontWeight: '400',
-    fontSize: 18,
-    lineHeight: 23,
+    fontSize: m(18),
+    lineHeight: m(23),
     color: globalColors.White,
   },
   type2: {
     fontFamily: 'Inter',
     fontWeight: '400',
-    fontSize: 18,
-    lineHeight: 23,
+    fontSize: m(18),
+    lineHeight: m(23),
     color: globalColors.White,
   },
   icon: {
-    paddingRight: 10,
+    paddingRight: m(10),
   },
   individualTypecontainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginRight: 20,
+    marginRight: m(20),
     justifyContent: 'center',
     width: 'auto',
+  },
+  typeContainer: {
+    justifyContent: 'center',
+    paddingBottom: m(25),
   },
 });

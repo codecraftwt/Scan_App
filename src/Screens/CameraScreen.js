@@ -7,12 +7,14 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   StatusBar,
+  ScrollView,
 } from 'react-native';
 import ImageEditor from '@react-native-community/image-editor';
 import {openCamera, openPicker} from 'react-native-image-crop-picker';
 import LottieView from 'lottie-react-native';
 import SyncLoader from '../Assets/loader.json';
 import {globalColors} from '../Assets/themes/globalColors';
+import {m} from 'walstar-rn-responsive';
 
 const ScanImage = require('../Assets/images/helper.png');
 const galleryImage = require('../Assets/images/Group-9.png');
@@ -102,35 +104,37 @@ const CameraScreen = ({navigation}) => {
         barStyle="light-content"
         backgroundColor={globalColors.Black}
       />
-      <View style={styles.container}>
-        {isProcessing ? (
-          <View style={styles.loaderContainer}>
-            <LottieView
-              source={SyncLoader}
-              style={styles.lottie}
-              autoPlay
-              loop
-              resizeMode="contain"
-            />
-          </View>
-        ) : (
-          <>
-            <Text style={styles.title}>Scan the label</Text>
-            <View style={styles.imageContainer}>
-              <Image source={ScanImage} style={styles.image} />
+      <ScrollView>
+        <View style={styles.container}>
+          {isProcessing ? (
+            <View style={styles.loaderContainer}>
+              <LottieView
+                source={SyncLoader}
+                style={styles.lottie}
+                autoPlay
+                loop
+                resizeMode="contain"
+              />
             </View>
-            <Text style={styles.subText}>Focus on the ingredients list.</Text>
-            <View style={styles.buttonView}>
-              <TouchableOpacity style={styles.button} onPress={captureImage}>
-                <Text style={styles.buttonText}>Scan now</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={selectImage}>
-                <Image source={galleryImage} style={styles.galleryImage} />
-              </TouchableOpacity>
-            </View>
-          </>
-        )}
-      </View>
+          ) : (
+            <>
+              <Text style={styles.title}>Scan the label</Text>
+              <View style={styles.imageContainer}>
+                <Image source={ScanImage} style={styles.image} />
+              </View>
+              <Text style={styles.subText}>Focus on the ingredients list.</Text>
+              <View style={styles.buttonView}>
+                <TouchableOpacity style={styles.button} onPress={captureImage}>
+                  <Text style={styles.buttonText}>Scan now</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={selectImage}>
+                  <Image source={galleryImage} style={styles.galleryImage} />
+                </TouchableOpacity>
+              </View>
+            </>
+          )}
+        </View>
+      </ScrollView>
     </>
   );
 };
@@ -156,67 +160,67 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: 'Inter',
-    fontSize: 22,
+    fontSize: m(22),
     color: globalColors.White,
-    lineHeight: 25,
+    lineHeight: m(25),
     fontWeight: '700',
-    marginBottom: 20,
-    marginTop: 20,
+    marginBottom: m(20),
+    marginTop: m(20),
   },
   imageContainer: {
-    width: 300,
-    height: 400,
+    width: m(300),
+    height: m(400),
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 30,
+    marginTop: m(30),
   },
   image: {
-    width: 245,
-    height: 435,
-    borderRadius: 18,
+    width: m(245),
+    height: m(435),
+    borderRadius: m(18),
   },
   subText: {
     fontFamily: 'Inter',
-    fontSize: 16,
-    marginTop: 50,
+    fontSize: m(16),
+    marginTop: m(50),
     textAlign: 'center',
     color: globalColors.LightGray,
     letterSpacing: 0.32,
   },
   galleryImage: {
-    height: 28,
-    width: 32,
+    height: m(28),
+    width: m(32),
     tintColor: globalColors.White,
   },
   buttonView: {
-    height: 100,
-    width: 300,
+    height: m(100),
+    width: m(300),
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 65,
+    marginTop: m(65),
   },
   button: {
-    width: 245,
-    height: 60,
-    borderRadius: 13,
+    width: m(245),
+    height: m(60),
+    borderRadius: m(13),
     backgroundColor: globalColors.MintGreen,
     justifyContent: 'center',
     alignItems: 'center',
   },
   buttonText: {
     fontFamily: 'Supreme Variable',
-    fontSize: 16,
+    fontSize: m(16),
     color: globalColors.CharcoalGray,
     textTransform: 'uppercase',
     letterSpacing: 2.08,
-    lineHeight: 21.6,
+    lineHeight: m(21.6),
   },
   processingText: {
     color: globalColors.White,
-    fontSize: 16,
+    fontSize: m(16),
     fontWeight: '600',
-    marginTop: 10,
+    marginTop: m(10),
   },
 });
 
