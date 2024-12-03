@@ -13,7 +13,7 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import {globalColors} from '../Assets/themes/globalColors';
 import {useRoute} from '@react-navigation/native';
-import { m } from 'walstar-rn-responsive';
+import {m} from 'walstar-rn-responsive';
 
 const supplementResult = require('../Assets/images/suplementResultImg.png');
 const lineCircle = require('../Assets/images/LineCircle.png');
@@ -290,7 +290,9 @@ const styles = StyleSheet.create({
     borderRadius: m(8),
     backgroundColor: globalColors.TransparentCharcoal,
     marginTop: m(10),
-    padding: m(15),
+    // padding: m(15),
+    paddingVertical: m(25),
+    paddingHorizontal: m(15),
     minHeight: m(60),
   },
   cardTitle: {

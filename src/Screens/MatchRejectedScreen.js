@@ -290,7 +290,9 @@ const styles = StyleSheet.create({
     borderRadius: m(8),
     backgroundColor: globalColors.TransparentCharcoal,
     marginTop: m(10),
-    padding: m(15),
+    // padding: m(15),
+    paddingVertical:m(25),
+    paddingHorizontal:m(15),
     minHeight: m(60),
   },
   cardTitle: {

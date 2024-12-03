@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
   },
   point: {
     fontFamily: 'Inter',
-    fontWeight: '600',
+    fontWeight: '700',
     fontSize: m(16),
     lineHeight: m(24),
     color: globalColors.White,
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     letterSpacing: m(1.5),
     textAlign: 'left',
     paddingHorizontal: m(25),
-    marginTop: m(10),
+    marginTop: m(12),
   },
   buttoncontainer: {
     justifyContent: 'center',
