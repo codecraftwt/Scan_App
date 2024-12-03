@@ -1,4 +1,3 @@
-import {useRoute} from '@react-navigation/native';
 import React, {useRef, useState, useEffect} from 'react';
 import {
   Dimensions,
@@ -12,6 +11,9 @@ import {
   View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import {globalColors} from '../Assets/themes/globalColors';
+import {useRoute} from '@react-navigation/native';
+import {m} from 'walstar-rn-responsive';
 
 const supplementResult = require('../Assets/images/suplementResultImg.png');
 const lineCircle = require('../Assets/images/LineCircle.png');
@@ -22,7 +24,10 @@ const MatchScreen = ({navigation}) => {
   const route = useRoute();
   const {imageUrl, originalImageUrl} = route.params;
 
-  const [highlightedRows, setHighlightedRows] = useState([]);
+  const [highlightedRows, setHighlightedRows] = useState([
+    String(1),
+    String(2),
+  ]);
 
   const scrollViewRef = useRef(null);
 
@@ -46,7 +51,10 @@ const MatchScreen = ({navigation}) => {
 
   return (
     <>
-      <StatusBar barStyle="light-content" backgroundColor="#161616" />
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor={globalColors.Charcoal}
+      />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <ImageBackground
           source={{uri: originalImageUrl}}
@@ -66,7 +74,12 @@ const MatchScreen = ({navigation}) => {
               <Text style={styles.title}>flagged ingredient.</Text>
             </View>
           </View>
-          <LinearGradient colors={['#000000c0', '#161616', '#161616']}>
+          <LinearGradient
+            colors={[
+              globalColors.TransparentBlack,
+              globalColors.Charcoal,
+              globalColors.Charcoal,
+            ]}>
             <View style={styles.cardDiv}>
               <View style={styles.cardContainer}>
                 <Text style={styles.cardTitle}>Titanium dioxide</Text>
@@ -130,7 +143,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#161616',
+    backgroundColor: globalColors.Charcoal,
   },
   backgroundImage: {
     flex: 1,
@@ -143,34 +156,34 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#000000c0',
+    backgroundColor: globalColors.TransparentBlack,
   },
   sampleImageContainer: {
     position: 'relative',
-    marginTop: 25,
+    marginTop: m(25),
   },
   sampleImage: {
-    height: 230,
-    width: 130,
-    borderWidth: 3,
-    borderColor: 'rgba(253, 204, 95, 1)',
-    borderRadius: 24,
+    height: m(230),
+    width: m(130),
+    borderWidth: m(3),
+    borderColor: globalColors.GoldenYellow,
+    borderRadius: m(24),
   },
   markContainer: {
     position: 'absolute',
-    bottom: -50,
-    right: -48,
+    bottom: m(-50),
+    right: m(-48),
   },
   lineCircle: {
-    width: 120,
-    height: 120,
+    width: m(120),
+    height: m(120),
   },
   line: {
     position: 'absolute',
-    bottom: 38,
-    right: 30,
-    width: 28,
-    height: 40,
+    bottom: m(38),
+    right: m(30),
+    width: m(28),
+    height: m(40),
   },
   bottomContainer: {
     flex: 1,
@@ -180,63 +193,60 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: 'Inter',
-    fontSize: 22,
-    color: '#FFFFFF',
-    lineHeight: 25,
+    fontSize: m(22),
+    color: globalColors.White,
+    lineHeight: m(25),
     fontWeight: '700',
   },
   flatListView: {
-    height: 225,
-  },
-  flatListContent: {
-    paddingBottom: 20,
+    height: m(225),
   },
   listTitle: {
-    paddingLeft: 25,
-    paddingBottom: 15,
+    paddingLeft: m(25),
+    paddingBottom: m(15),
     fontFamily: 'Inter',
     fontWeight: '400',
-    fontSize: 13,
-    color: '#545454',
+    fontSize: m(13),
+    color: globalColors.SlateGray,
     alignItems: 'flex-start',
     textTransform: 'uppercase',
-    letterSpacing: 4.14,
+    letterSpacing: m(4.14),
   },
   row: {
-    height: 60,
+    height: m(60),
     width: Dimensions.get('window').width,
     justifyContent: 'center',
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: '#242424',
+    borderTopWidth: m(1),
+    borderBottomWidth: m(1),
+    borderColor: globalColors.JetBlack,
   },
   listItem: {
     fontWeight: '200',
-    fontSize: 18,
-    paddingLeft: 25,
-    color: '#FFFFFF',
+    fontSize: m(18),
+    paddingLeft: m(25),
+    color: globalColors.White,
     alignItems: 'flex-start',
-    letterSpacing: 1.8,
+    letterSpacing: m(1.8),
   },
   topThreeListItem: {
     fontFamily: 'Inter',
     fontWeight: '400',
-    fontSize: 18,
-    paddingLeft: 25,
+    fontSize: m(18),
+    paddingLeft: m(25),
   },
   buttoncontainer: {
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
-    marginBottom: 15,
+    marginBottom: m(15),
   },
   button: {
-    width: 315,
-    height: 60,
-    marginBottom: 15,
-    borderRadius: 15,
-    borderColor: '#FFFFFF',
-    borderWidth: 2,
+    width: m(315),
+    height: m(60),
+    marginBottom: m(15),
+    borderRadius: m(15),
+    borderColor: globalColors.White,
+    borderWidth: m(2),
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
@@ -244,64 +254,66 @@ const styles = StyleSheet.create({
   buttontext: {
     fontFamily: 'Supreme Variable, sans-serif',
     fontWeight: '700',
-    fontSize: 16,
-    color: '#FFFFFF',
+    fontSize: m(16),
+    color: globalColors.White,
     textTransform: 'uppercase',
-    letterSpacing: 2.08,
+    letterSpacing: m(2.08),
   },
   titleContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 38,
+    paddingTop: m(38),
   },
   transparentOverlay: {
     position: 'relative',
-    height: 20,
+    height: m(20),
     width: '100%',
-    backgroundColor: 'rgba(0, 0, 0, 0)',
+    backgroundColor: globalColors.Black,
     zIndex: 1,
   },
   transparentView: {
     position: 'absolute',
     bottom: 0,
-    height: 50,
+    height: m(50),
     width: '100%',
-    backgroundColor: 'rgba(23, 23, 23, 0.8)',
+    backgroundColor: globalColors.SmokeGray,
   },
   cardDiv: {
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 15,
-    paddingBottom: 30,
-    paddingHorizontal: 15,
+    paddingTop: m(15),
+    paddingBottom: m(30),
+    paddingHorizontal: m(15),
   },
   cardContainer: {
-    width: 350,
-    borderRadius: 8,
-    backgroundColor: 'rgba(75, 75, 75, 0.1)',
-    marginTop: 10,
-    padding: 15,
-    minHeight: 60,
+    width: m(350),
+    borderRadius: m(8),
+    backgroundColor: globalColors.TransparentCharcoal,
+    marginTop: m(10),
+    // padding: m(15),
+    paddingVertical: m(25),
+    paddingHorizontal: m(15),
+    minHeight: m(60),
   },
   cardTitle: {
     fontFamily: 'Inter',
     fontWeight: '600',
-    fontSize: 14,
-    lineHeight: 17,
-    letterSpacing: 2.5,
-    color: 'rgba(255, 220, 164, 1)',
+    fontSize: m(14),
+    lineHeight: m(17),
+    letterSpacing: m(2.5),
+    color: globalColors.PaleGold,
     textTransform: 'uppercase',
-    marginBottom: 10,
+    marginBottom: m(10),
     textAlign: 'center',
   },
   cardPara: {
     fontFamily: 'Inter',
     fontWeight: '400',
-    fontSize: 16,
-    lineHeight: 21,
+    fontSize: m(16),
+    lineHeight: m(21),
     letterSpacing: 0.32,
-    color: 'rgba(216, 216, 216, 1)',
-    paddingHorizontal: 10,
+    color: globalColors.PaleGray,
+    paddingHorizontal: m(10),
     alignSelf: 'flex-start',
     textAlign: 'left',
     flexWrap: 'wrap',

@@ -9,11 +9,16 @@ import {
   StatusBar,
   ScrollView,
 } from 'react-native';
+import {globalColors} from '../Assets/themes/globalColors';
+import { m } from 'walstar-rn-responsive';
 
 const TermsAndConditions = ({navigation}) => {
   return (
     <>
-      <StatusBar barStyle="light-content" backgroundColor="#161616" />
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor={globalColors.Charcoal}
+      />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.topContainer}>
           <Text style={styles.title}>Terms & Conditions</Text>
@@ -63,8 +68,13 @@ const TermsAndConditions = ({navigation}) => {
           </View>
         </View>
       </ScrollView>
+      <View style={styles.transparentOverlay}>
+        <View style={styles.transparentView}></View>
+      </View>
       <View style={styles.buttoncontainer}>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate('cameraScreen')}>
           <Text style={styles.buttontext}>I AGREE</Text>
         </TouchableOpacity>
       </View>
@@ -77,107 +87,109 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#161616',
-    // paddingBottom: 150,
+    backgroundColor: globalColors.Charcoal,
+    paddingBottom: m(60),
   },
   topContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 50,
+    marginTop: m(50),
   },
   title: {
     fontFamily: 'Inter',
     fontWeight: '700',
-    fontSize: 22,
-    color: 'rgba(255, 255, 255, 1)',
-    lineHeight: 25,
+    fontSize: m(22),
+    color: globalColors.White,
+    lineHeight: m(25),
   },
   subtitle: {
     fontFamily: 'Inter',
     fontWeight: '400',
-    fontSize: 16,
-    lineHeight: 22,
-    color: 'rgba(255, 255, 255, 1)',
-    letterSpacing: 1.5,
-    marginTop: 30,
-    marginBottom: 10,
+    fontSize: m(16),
+    lineHeight: m(22),
+    color: globalColors.White,
+    letterSpacing: m(1.5),
+    marginTop: m(30),
+    marginBottom: m(10),
     textAlign: 'center',
-    paddingHorizontal: 20,
+    paddingHorizontal: m(20),
   },
   middleContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 30,
+    marginBottom: m(30),
   },
   termContainer: {
-    marginTop: 30,
+    marginTop: m(30),
   },
   point: {
     fontFamily: 'Inter',
-    fontWeight: '600',
-    fontSize: 16,
-    lineHeight: 24,
-    color: 'rgba(255, 255, 255, 1)',
-    letterSpacing: 1.5,
+    fontWeight: '700',
+    fontSize: m(16),
+    lineHeight: m(24),
+    color: globalColors.White,
+    letterSpacing: m(1.5),
     textAlign: 'left',
-    paddingHorizontal: 25,
+    paddingHorizontal: m(25),
   },
   subPoint: {
     fontFamily: 'Inter',
     fontWeight: '400',
-    fontSize: 16,
-    lineHeight: 20,
-    color: 'rgba(176, 176, 176, 1)',
-    letterSpacing: 1.5,
+    fontSize: m(16),
+    lineHeight: m(20),
+    color: globalColors.LightGray,
+    letterSpacing: m(1.5),
     textAlign: 'left',
-    paddingHorizontal: 25,
-    marginTop: 10,
+    paddingHorizontal: m(25),
+    marginTop: m(12),
   },
   buttoncontainer: {
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
-    marginBottom: 10,
-    marginTop: 12,
+    marginTop: m(12),
     position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
-    paddingBottom: 20,
-    zIndex: 10,
-    backgroundColor: 'transperent',
+    paddingBottom: m(20),
+    zIndex: 1,
+    backgroundColor: globalColors.Charcoal,
+    width: '100%',
+    height: '15%',
   },
   button: {
-    width: 300,
-    height: 60,
-    borderRadius: 15,
-    borderWidth: 2,
+    width: m(300),
+    height: m(60),
+    borderRadius: m(15),
+    borderWidth: m(2),
     justifyContent: 'center',
     alignItems: 'center',
-    borderColor: 'rgba(131, 255, 180, 1)',
+    borderColor: globalColors.MintGreen,
+    marginTop: m(25),
   },
   buttontext: {
     fontFamily: 'Supreme Variable, sans-serif',
     fontWeight: '700',
-    fontSize: 16,
-    color: 'rgba(255, 255, 255, 1)',
+    fontSize: m(16),
+    color: globalColors.White,
     textTransform: 'uppercase',
     letterSpacing: 2.08,
   },
   transparentOverlay: {
     position: 'relative',
-    height: 20,
+    height: m(20),
     width: '100%',
-    backgroundColor: 'rgba(0, 0, 0, 0)',
+    backgroundColor: globalColors.Charcoal,
     zIndex: 1,
-    marginBottom: 25,
+    marginBottom: m(50),
   },
   transparentView: {
     position: 'absolute',
-    bottom: 0,
-    height: 50,
+    bottom: m(30),
+    height: m(50),
     width: '100%',
-    backgroundColor: 'rgba(23, 23, 23, 0.8)',
+    backgroundColor: globalColors.SmokeGray,
   },
 });
 
