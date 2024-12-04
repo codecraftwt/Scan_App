@@ -14,22 +14,31 @@ import LinearGradient from 'react-native-linear-gradient';
 import {globalColors} from '../Assets/themes/globalColors';
 import {useRoute} from '@react-navigation/native';
 import {m} from 'walstar-rn-responsive';
+import {useDispatch, useSelector} from 'react-redux';
+import {scanInfo} from '../Redux/slices/ScanSlice';
+import RNFS from 'react-native-fs';
+import RNFetchBlob from 'rn-fetch-blob';
 
-const supplementResult = require('../Assets/images/suplementResultImg.png');
 const lineCircle = require('../Assets/images/LineCircle.png');
 const line = require('../Assets/images/GroupLine.png');
 const bgScreenImage = require('../Assets/images/bgScreenImg.png');
 
 const MatchScreen = ({navigation}) => {
   const route = useRoute();
+  const dispatch = useDispatch();
   const {imageUrl, originalImageUrl} = route.params;
 
   const [highlightedRows, setHighlightedRows] = useState([
     String(1),
     String(2),
   ]);
-
   const scrollViewRef = useRef(null);
+
+  const ingredients = useSelector(
+    state => state?.scandata?.scanData?.ingredients,
+  );
+
+  console.log(ingredients, 'ingredients');
 
   const handleScroll = event => {
     const contentOffsetY = event.nativeEvent.contentOffset.y;
@@ -38,16 +47,36 @@ const MatchScreen = ({navigation}) => {
     setHighlightedRows([String(visibleIndex + 1), String(visibleIndex + 2)]);
   };
 
-  const ingredients = [
-    {id: '1', title: 'Wheat'},
-    {id: '2', title: 'Flour'},
-    {id: '3', title: 'Sugar'},
-    {id: '4', title: 'Salt'},
-    {id: '5', title: 'Milk'},
-    {id: '6', title: 'Butter'},
-    {id: '7', title: 'Eggs'},
-    {id: '8', title: 'Yeast'},
-  ];
+  useEffect(() => {
+    const uploadImage = async () => {
+      console.log(imageUrl, '<=== imageUrl');
+      if (imageUrl) {
+        try {
+          const fileExists = await RNFetchBlob.fs.exists(imageUrl);
+          if (!fileExists) {
+            console.error('File not found');
+            return;
+          }
+          const imageBase64 = await RNFetchBlob.fs.readFile(imageUrl, 'base64');
+          const fileObject = {
+            uri: imageUrl,
+            name: 'image.jpg',
+            type: 'image/jpeg', // You can change the MIME type (e.g., image/png for PNG files)
+          };
+
+          console.log(fileObject, '<=== fileObject');
+
+          const formData = new FormData();
+          formData.append('file', fileObject);
+
+          dispatch(scanInfo(formData));
+        } catch (error) {
+          console.error('Error converting image URL to file:', error);
+        }
+      }
+    };
+    uploadImage();
+  }, [dispatch, imageUrl]);
 
   return (
     <>
@@ -109,7 +138,7 @@ const MatchScreen = ({navigation}) => {
                       highlightedRows.includes(item.id) &&
                         styles.topThreeListItem,
                     ]}>
-                    {item.title}
+                    {item}
                   </Text>
                 </View>
               ))}

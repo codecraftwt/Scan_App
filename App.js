@@ -37,16 +37,18 @@ const App = () => {
   };
 
   return (
-    <Provider store={store}>
-      <PaperProvider>
-        <NavigationContainer>
-          <PersistGate persistor={persistor}>
-            <Navigation />
-            <Toast config={toastConfig} />
-          </PersistGate>
-        </NavigationContainer>
-      </PaperProvider>
-    </Provider>
+    <>
+      <Provider store={store}>
+        <PaperProvider>
+          <NavigationContainer>
+            <PersistGate persistor={persistor}>
+              <Navigation />
+              <Toast config={toastConfig} />
+            </PersistGate>
+          </NavigationContainer>
+        </PaperProvider>
+      </Provider>
+    </>
   );
 };
 

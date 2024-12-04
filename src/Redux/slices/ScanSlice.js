@@ -1,4 +1,6 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import {baseURL} from '../../Utils/api';
+import axios from 'axios';
 
 const initialState = {
   isLoading: false,
@@ -8,15 +10,21 @@ const initialState = {
 
 export const scanInfo = createAsyncThunk(
   'scan/scanInfo',
-  async (payload, {rejectWithValue}) => {
-    console.log(id, 'idsddd');
+  async (formData, {rejectWithValue}) => {
     try {
-      const res = await axios.post(`ingredients/`, payload);
-      console.log(res, 'response from scaninfo');
+      const res = await axios.post(`${baseURL}ingredients/`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
       return res.data;
     } catch (error) {
-      console.log(error, 'error');
-      const errorMessage = error.response?.data?.message || error.message;
+      console.error('Error in scanInfo:', error);
+      const errorMessage =
+        error.response?.data?.message || error.message || 'Unknown error';
+      console.error('Error Message:', errorMessage);
+
       return rejectWithValue(errorMessage);
     }
   },
