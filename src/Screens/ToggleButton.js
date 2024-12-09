@@ -1,6 +1,7 @@
 import {View, Text, TouchableOpacity, Animated, StyleSheet} from 'react-native';
 import React, {useRef, useState} from 'react';
 import {globalColors} from '../Assets/themes/globalColors';
+import { m } from 'walstar-rn-responsive';
 
 const ToggleButton = ({value, onValueChange}) => {
   const thumbAnim = useRef(new Animated.Value(value ? 1 : 0)).current;
@@ -49,21 +50,20 @@ export default ToggleButton;
 
 const styles = StyleSheet.create({
   switchContainer: {
-    width: 68,
-    height: 38,
-    borderRadius: 20,
+    width: m(68),
+    height: m(38),
+    borderRadius: m(20),
     justifyContent: 'center',
     backgroundColor: '#ccc',
     flexDirection: 'row',
-    padding: 2,
+    padding: m(2),
     display: 'flex',
     alignItems: 'center',
   },
   thumb: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    // backgroundColor: '#fff',
+    width: m(28),
+    height: m(28),
+    borderRadius: m(14),
     position: 'realtive',
     left: -10,
   },

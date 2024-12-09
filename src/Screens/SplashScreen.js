@@ -3,6 +3,7 @@ import {
   Dimensions,
   Image,
   ImageBackground,
+  SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -26,84 +27,86 @@ const SplashScreen = ({navigation}) => {
         barStyle="light-content"
         backgroundColor={globalColors.Charcoal}
       />
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <ImageBackground
-          source={splashBgImg}
-          style={styles.backgroundImage}
-          resizeMode="cover"
-          //   blurRadius={2}
-        >
-          <View style={styles.upperContainer}>
-            <View style={styles.logoContainer}>
-              <Image source={logo} style={styles.logo} />
-              <Image source={text} style={styles.textLogo} />
+      <SafeAreaView style={{flex: 1, backgroundColor: globalColors.Charcoal}}>
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          <ImageBackground
+            source={splashBgImg}
+            style={styles.backgroundImage}
+            resizeMode="cover"
+            //   blurRadius={2}
+          >
+            <View style={styles.upperContainer}>
+              <View style={styles.logoContainer}>
+                <Image source={logo} style={styles.logo} />
+                <Image source={text} style={styles.textLogo} />
+              </View>
+              <View style={styles.SubtextContainer}>
+                <Text style={styles.subText}>
+                  Simply scan the label of any food, household or personal care
+                  product. In any language.
+                </Text>
+              </View>
             </View>
-            <View style={styles.SubtextContainer}>
-              <Text style={styles.subText}>
-                Simply scan the label of any food, household or personal care
-                product. In any language.
-              </Text>
+            <LinearGradient
+              colors={[
+                globalColors.TransparentBlack,
+                globalColors.Charcoal,
+                globalColors.Charcoal,
+              ]}></LinearGradient>
+          </ImageBackground>
+          <View style={styles.bottomContainer}>
+            <View style={styles.typeContainer}>
+              <View style={styles.subtypeContainer}>
+                <View style={styles.individualTypecontainer}>
+                  <Icon
+                    name="checkmark-outline"
+                    size={25}
+                    color={globalColors.MintGreen}
+                    style={styles.icon}
+                  />
+                  <Text style={styles.type1}>Chemicals</Text>
+                </View>
+                <View style={styles.individualTypecontainer}>
+                  <Icon
+                    name="checkmark-outline"
+                    size={25}
+                    color={globalColors.MintGreen}
+                    style={styles.icon}
+                  />
+                  <Text style={styles.type2}>Allergens</Text>
+                </View>
+              </View>
+              <View style={styles.subtypeContainer}>
+                <View style={styles.individualTypecontainer}>
+                  <Icon
+                    name="checkmark-outline"
+                    size={25}
+                    color={globalColors.MintGreen}
+                    style={styles.icon}
+                  />
+                  <Text style={styles.type1}>Vegetarian</Text>
+                </View>
+                <View style={styles.individualTypecontainer}>
+                  <Icon
+                    name="checkmark-outline"
+                    size={25}
+                    color={globalColors.MintGreen}
+                    style={styles.icon}
+                  />
+                  <Text style={styles.type2}>Vegan</Text>
+                </View>
+              </View>
+            </View>
+            <View style={styles.buttoncontainer}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.navigate('terms&consitions')}>
+                <Text style={styles.buttontext}>Get started</Text>
+              </TouchableOpacity>
             </View>
           </View>
-          <LinearGradient
-            colors={[
-              globalColors.TransparentBlack,
-              globalColors.Charcoal,
-              globalColors.Charcoal,
-            ]}></LinearGradient>
-        </ImageBackground>
-        <View style={styles.bottomContainer}>
-          <View style={styles.typeContainer}>
-            <View style={styles.subtypeContainer}>
-              <View style={styles.individualTypecontainer}>
-                <Icon
-                  name="checkmark-outline"
-                  size={25}
-                  color={globalColors.MintGreen}
-                  style={styles.icon}
-                />
-                <Text style={styles.type1}>Chemicals</Text>
-              </View>
-              <View style={styles.individualTypecontainer}>
-                <Icon
-                  name="checkmark-outline"
-                  size={25}
-                  color={globalColors.MintGreen}
-                  style={styles.icon}
-                />
-                <Text style={styles.type2}>Allergens</Text>
-              </View>
-            </View>
-            <View style={styles.subtypeContainer}>
-              <View style={styles.individualTypecontainer}>
-                <Icon
-                  name="checkmark-outline"
-                  size={25}
-                  color={globalColors.MintGreen}
-                  style={styles.icon}
-                />
-                <Text style={styles.type1}>Vegetarian</Text>
-              </View>
-              <View style={styles.individualTypecontainer}>
-                <Icon
-                  name="checkmark-outline"
-                  size={25}
-                  color={globalColors.MintGreen}
-                  style={styles.icon}
-                />
-                <Text style={styles.type2}>Vegan</Text>
-              </View>
-            </View>
-          </View>
-          <View style={styles.buttoncontainer}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => navigation.navigate('terms&consitions')}>
-              <Text style={styles.buttontext}>Get started</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </SafeAreaView>
     </>
   );
 };

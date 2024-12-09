@@ -13,7 +13,7 @@ import {
 import {useRoute} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import {globalColors} from '../Assets/themes/globalColors';
-import { m } from 'walstar-rn-responsive';
+import {m} from 'walstar-rn-responsive';
 
 const supplementResult = require('../Assets/images/suplementResultImg.png');
 const crossCircle = require('../Assets/images/CrossCircle.png');
@@ -49,7 +49,7 @@ const MatchRejectedScreen = ({navigation}) => {
   ];
 
   return (
-    <>
+    <SafeAreaView style={styles.safeAreaContainer}>
       <StatusBar
         barStyle="light-content"
         backgroundColor={globalColors.Charcoal}
@@ -129,13 +129,16 @@ const MatchRejectedScreen = ({navigation}) => {
           </View>
         </View>
       </ScrollView>
-    </>
+    </SafeAreaView>
   );
 };
 
 export default MatchRejectedScreen;
 
 const styles = StyleSheet.create({
+  safeAreaContainer: {
+    flex: 1, // Ensure the SafeAreaView takes up the full screen
+  },
   scrollContainer: {
     flexGrow: 1,
     justifyContent: 'center',
@@ -291,8 +294,8 @@ const styles = StyleSheet.create({
     backgroundColor: globalColors.TransparentCharcoal,
     marginTop: m(10),
     // padding: m(15),
-    paddingVertical:m(25),
-    paddingHorizontal:m(15),
+    paddingVertical: m(25),
+    paddingHorizontal: m(15),
     minHeight: m(60),
   },
   cardTitle: {

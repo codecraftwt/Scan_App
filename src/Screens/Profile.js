@@ -1,5 +1,6 @@
 import {
   Dimensions,
+  SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -31,118 +32,130 @@ const Profile = ({navigation}) => {
         barStyle="light-content"
         backgroundColor={globalColors.JetBlack}
       />
-      <View style={styles.container}>
-        <View style={styles.topContainer}>
-          <Text style={styles.title}>Your profile</Text>
-          <Text style={styles.subtext}>
-            ScanAware will alert you if it finds ingredients that matches these
-            preferences.
-          </Text>
-        </View>
-        <ScrollView contentContainerStyle={styles.scrollContainer}>
-          <View style={styles.middleContainer}>
-            <View style={[styles.typeContainer, styles.row]}>
-              <Text style={styles.type}>Chemicals</Text>
-              <ToggleButton value={isSwitchOn} onValueChange={setIsSwitchOn} />
-            </View>
-            <View style={styles.mainBoxContaniner}>
-              <View style={{paddingVertical: 20}}>
-                <View style={[styles.typeContainer2]}>
-                  <Text style={styles.type}>Allergens</Text>
-                  <ToggleButton
-                    value={isSwitchOn}
-                    onValueChange={setIsSwitchOn}
-                  />
-                </View>
-                <View style={styles.unitBox}>
-                  <View style={styles.boxContainer}>
-                    <View
-                      style={[
-                        styles.boxstyle,
-                        {borderColor: globalColors.White},
-                      ]}>
-                      <InputBox icon={Milk} />
-                    </View>
-                    <View
-                      style={[
-                        styles.boxstyle,
-                        {borderColor: globalColors.MintGreen},
-                      ]}>
-                      <InputBox icon={Egg} />
-                    </View>
-                    <View
-                      style={[
-                        styles.boxstyle,
-                        {borderColor: globalColors.White},
-                      ]}>
-                      <InputBox icon={Peanut} />
-                    </View>
-                    <View
-                      style={[
-                        styles.boxstyle,
-                        {borderColor: globalColors.White},
-                      ]}>
-                      <InputBox icon={Gluten} />
-                    </View>
+      <SafeAreaView style={styles.safeAreaContainer}>
+        <View style={styles.container}>
+          <View style={styles.topContainer}>
+            <Text style={styles.title}>Your profile</Text>
+            <Text style={styles.subtext}>
+              ScanAware will alert you if it finds ingredients that matches
+              these preferences.
+            </Text>
+          </View>
+          <ScrollView contentContainerStyle={styles.scrollContainer}>
+            <View style={styles.middleContainer}>
+              <View style={[styles.typeContainer, styles.row]}>
+                <Text style={styles.type}>Chemicals</Text>
+                <ToggleButton
+                  value={isSwitchOn}
+                  onValueChange={setIsSwitchOn}
+                />
+              </View>
+              <View style={styles.mainBoxContaniner}>
+                <View style={{paddingVertical: 20}}>
+                  <View style={[styles.typeContainer2]}>
+                    <Text style={styles.type}>Allergens</Text>
+                    <ToggleButton
+                      value={isSwitchOn}
+                      onValueChange={setIsSwitchOn}
+                    />
                   </View>
-                  <View style={styles.boxContainer}>
-                    <View
-                      style={[
-                        styles.boxstyle,
-                        {borderColor: globalColors.White},
-                      ]}>
-                      <InputBox icon={Fish} />
+                  <View style={styles.unitBox}>
+                    <View style={styles.boxContainer}>
+                      <View
+                        style={[
+                          styles.boxstyle,
+                          {borderColor: globalColors.White},
+                        ]}>
+                        <InputBox icon={Milk} />
+                      </View>
+                      <View
+                        style={[
+                          styles.boxstyle,
+                          {borderColor: globalColors.MintGreen},
+                        ]}>
+                        <InputBox icon={Egg} />
+                      </View>
+                      <View
+                        style={[
+                          styles.boxstyle,
+                          {borderColor: globalColors.White},
+                        ]}>
+                        <InputBox icon={Peanut} />
+                      </View>
+                      <View
+                        style={[
+                          styles.boxstyle,
+                          {borderColor: globalColors.White},
+                        ]}>
+                        <InputBox icon={Gluten} />
+                      </View>
                     </View>
-                    <View
-                      style={[
-                        styles.boxstyle,
-                        {borderColor: globalColors.White},
-                      ]}>
-                      <InputBox icon={Soy} />
-                    </View>
-                    <View
-                      style={[
-                        styles.boxstyle,
-                        {borderColor: globalColors.White},
-                      ]}>
-                      <InputBox icon={Shellfish} />
-                    </View>
-                    <View
-                      style={[
-                        styles.boxstyle,
-                        {borderColor: globalColors.White},
-                      ]}>
-                      <InputBox icon={Tree_nut} />
+                    <View style={styles.boxContainer}>
+                      <View
+                        style={[
+                          styles.boxstyle,
+                          {borderColor: globalColors.White},
+                        ]}>
+                        <InputBox icon={Fish} />
+                      </View>
+                      <View
+                        style={[
+                          styles.boxstyle,
+                          {borderColor: globalColors.White},
+                        ]}>
+                        <InputBox icon={Soy} />
+                      </View>
+                      <View
+                        style={[
+                          styles.boxstyle,
+                          {borderColor: globalColors.White},
+                        ]}>
+                        <InputBox icon={Shellfish} />
+                      </View>
+                      <View
+                        style={[
+                          styles.boxstyle,
+                          {borderColor: globalColors.White},
+                        ]}>
+                        <InputBox icon={Tree_nut} />
+                      </View>
                     </View>
                   </View>
                 </View>
               </View>
+              <View style={[styles.typeContainer, styles.row]}>
+                <Text style={styles.type}>Vegan</Text>
+                <ToggleButton
+                  value={isSwitchOn}
+                  onValueChange={setIsSwitchOn}
+                />
+              </View>
+              <View style={[styles.typeContainer, styles.row]}>
+                <Text style={styles.type}>Vegetarian</Text>
+                <ToggleButton
+                  value={isSwitchOn}
+                  onValueChange={setIsSwitchOn}
+                />
+              </View>
             </View>
-            <View style={[styles.typeContainer, styles.row]}>
-              <Text style={styles.type}>Vegan</Text>
-              <ToggleButton value={isSwitchOn} onValueChange={setIsSwitchOn} />
-            </View>
-            <View style={[styles.typeContainer, styles.row]}>
-              <Text style={styles.type}>Vegetarian</Text>
-              <ToggleButton value={isSwitchOn} onValueChange={setIsSwitchOn} />
-            </View>
+          </ScrollView>
+          <LinearGradient
+            colors={['transparent', globalColors.Charcoal]}
+            style={styles.gradientOverlay}
+          />
+          <View style={styles.buttonsContainer}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('cameraScreen')}>
+              <Text style={styles.textButton}>SKIP</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => navigation.navigate('cameraScreen')}>
+              <Text style={styles.buttontext}>Save profile</Text>
+            </TouchableOpacity>
           </View>
-        </ScrollView>
-        <LinearGradient
-          colors={['transparent', globalColors.Charcoal]}
-          style={styles.gradientOverlay}
-        />
-        <View style={styles.buttonsContainer}>
-          <TouchableOpacity onPress={() => navigation.navigate('cameraScreen')}>
-            <Text style={styles.textButton}>SKIP</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.navigate('cameraScreen')}>
-            <Text style={styles.buttontext}>Save profile</Text>
-          </TouchableOpacity>
         </View>
-      </View>
+      </SafeAreaView>
     </>
   );
 };

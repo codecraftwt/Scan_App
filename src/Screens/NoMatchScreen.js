@@ -14,7 +14,7 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import {useRoute} from '@react-navigation/native';
 import {globalColors} from '../Assets/themes/globalColors';
-import { m } from 'walstar-rn-responsive';
+import {m} from 'walstar-rn-responsive';
 
 const supplementResult = require('../Assets/images/suplementResultImg.png');
 const mark = require('../Assets/images/Ellipse.png');
@@ -50,7 +50,7 @@ const NoMatchScreen = ({navigation}) => {
   ];
 
   return (
-    <>
+    <SafeAreaView style={{flex: 1, backgroundColor: globalColors.CharcoalGray}}>
       <StatusBar
         barStyle="light-content"
         backgroundColor={globalColors.Charcoal}
@@ -117,7 +117,7 @@ const NoMatchScreen = ({navigation}) => {
           </View>
         </View>
       </ScrollView>
-    </>
+    </SafeAreaView>
   );
 };
 

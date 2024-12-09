@@ -3,6 +3,7 @@ import {
   Dimensions,
   Image,
   ImageBackground,
+  SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -129,7 +130,7 @@ const MatchScreen = ({navigation}) => {
   };
 
   return (
-    <>
+    <SafeAreaView style={{flex: 1, backgroundColor: globalColors.Charcoal}}>
       <StatusBar
         barStyle="light-content"
         backgroundColor={globalColors.Charcoal}
@@ -224,7 +225,7 @@ const MatchScreen = ({navigation}) => {
           <Text style={styles.buttontext}>Scan new label</Text>
         </TouchableOpacity>
       </View>
-    </>
+    </SafeAreaView>
   );
 };
 
