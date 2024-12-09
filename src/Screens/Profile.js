@@ -11,7 +11,6 @@ import React, {useState} from 'react';
 import {globalColors} from '../Assets/themes/globalColors';
 import {m} from 'walstar-rn-responsive';
 import ToggleButton from './ToggleButton';
-import {SvgXml} from 'react-native-svg';
 import {Fish} from '../Assets/allergens_icons/fish';
 import {Milk} from '../Assets/allergens_icons/milk';
 import {Egg} from '../Assets/allergens_icons/egg';
@@ -21,6 +20,7 @@ import {Soy} from '../Assets/allergens_icons/soy';
 import {Shellfish} from '../Assets/allergens_icons/shellfish';
 import {Tree_nut} from '../Assets/allergens_icons/tree_nut';
 import LinearGradient from 'react-native-linear-gradient';
+import InputBox from '../Utils/inputBox';
 
 const Profile = ({navigation}) => {
   const [isSwitchOn, setIsSwitchOn] = useState(false);
@@ -56,35 +56,63 @@ const Profile = ({navigation}) => {
                 </View>
                 <View style={styles.unitBox}>
                   <View style={styles.boxContainer}>
-                    <View style={styles.boxstyle}>
-                      <SvgXml xml={Milk} style={styles.svgIcon} />
+                    <View
+                      style={[
+                        styles.boxstyle,
+                        {borderColor: globalColors.White},
+                      ]}>
+                      <InputBox icon={Milk} />
                     </View>
                     <View
                       style={[
                         styles.boxstyle,
                         {borderColor: globalColors.MintGreen},
                       ]}>
-                      <SvgXml xml={Egg} style={styles.svgIcon} />
+                      <InputBox icon={Egg} />
                     </View>
-                    <View style={styles.boxstyle}>
-                      <SvgXml xml={Peanut} style={styles.svgIcon} />
+                    <View
+                      style={[
+                        styles.boxstyle,
+                        {borderColor: globalColors.White},
+                      ]}>
+                      <InputBox icon={Peanut} />
                     </View>
-                    <View style={styles.boxstyle}>
-                      <SvgXml xml={Gluten} style={styles.svgIcon} />
+                    <View
+                      style={[
+                        styles.boxstyle,
+                        {borderColor: globalColors.White},
+                      ]}>
+                      <InputBox icon={Gluten} />
                     </View>
                   </View>
                   <View style={styles.boxContainer}>
-                    <View style={styles.boxstyle}>
-                      <SvgXml xml={Fish} style={styles.svgIcon} />
+                    <View
+                      style={[
+                        styles.boxstyle,
+                        {borderColor: globalColors.White},
+                      ]}>
+                      <InputBox icon={Fish} />
                     </View>
-                    <View style={styles.boxstyle}>
-                      <SvgXml xml={Soy} style={styles.svgIcon} />
+                    <View
+                      style={[
+                        styles.boxstyle,
+                        {borderColor: globalColors.White},
+                      ]}>
+                      <InputBox icon={Soy} />
                     </View>
-                    <View style={styles.boxstyle}>
-                      <SvgXml xml={Shellfish} style={styles.svgIcon} />
+                    <View
+                      style={[
+                        styles.boxstyle,
+                        {borderColor: globalColors.White},
+                      ]}>
+                      <InputBox icon={Shellfish} />
                     </View>
-                    <View style={styles.boxstyle}>
-                      <SvgXml xml={Tree_nut} style={styles.svgIcon} />
+                    <View
+                      style={[
+                        styles.boxstyle,
+                        {borderColor: globalColors.White},
+                      ]}>
+                      <InputBox icon={Tree_nut} />
                     </View>
                   </View>
                 </View>
@@ -101,11 +129,11 @@ const Profile = ({navigation}) => {
           </View>
         </ScrollView>
         <LinearGradient
-          colors={['transparent', globalColors.Charcoal]} // Gradient from transparent to the background color
+          colors={['transparent', globalColors.Charcoal]}
           style={styles.gradientOverlay}
         />
         <View style={styles.buttonsContainer}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('cameraScreen')}>
             <Text style={styles.textButton}>SKIP</Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -129,37 +157,37 @@ const styles = StyleSheet.create({
     backgroundColor: globalColors.Charcoal,
   },
   scrollContainer: {
-    paddingTop: 180,
-    paddingBottom: 150,
+    paddingTop: m(180),
+    paddingBottom: m(150),
   },
   middleContainer: {
     justifyContent: 'center',
     alignItems: 'flex-start',
-    marginBottom: 50,
+    marginBottom: m(50),
   },
   topContainer: {
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
-    paddingHorizontal: 25,
-    paddingVertical: 30,
+    paddingHorizontal: m(25),
+    paddingVertical: m(30),
     zIndex: 1,
     backgroundColor: globalColors.JetBlack,
   },
   title: {
     fontFamily: 'Inter',
     fontWeight: '800',
-    fontSize: 22,
-    lineHeight: 25,
+    fontSize: m(22),
+    lineHeight: m(25),
     color: globalColors.White,
-    paddingBottom: 10,
+    paddingBottom: m(10),
   },
   subtext: {
     fontFamily: 'Inter',
     fontWeight: '400',
-    fontSize: 16,
-    lineHeight: 20,
+    fontSize: m(16),
+    lineHeight: m(20),
     color: globalColors.LightGray,
     letterSpacing: 0.32,
     paddingRight: '20%',
@@ -168,13 +196,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 25,
+    paddingHorizontal: m(25),
   },
   typeContainer2: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 15,
+    paddingHorizontal: m(15),
   },
   row: {
     height: m(75),
@@ -196,30 +224,29 @@ const styles = StyleSheet.create({
   type: {
     fontFamily: 'Inter',
     fontWeight: '600',
-    fontSize: 18,
-    lineHeight: 24,
+    fontSize: m(18),
+    lineHeight: m(24),
     color: globalColors.SilverGray,
-    letterSpacing: 0.36,
+    letterSpacing: m(0.36),
   },
   unitBox: {
     flexDirection: 'column',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    paddingVertical: 10,
+    paddingVertical: m(10),
   },
   boxContainer: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    paddingVertical: 10,
+    paddingVertical: m(10),
     width: '100%',
   },
   boxstyle: {
-    height: 74,
-    width: 74,
-    borderRadius: 13,
+    height: m(74),
+    width: m(74),
+    borderRadius: m(13),
     borderWidth: 2,
-    borderColor: globalColors.White,
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
@@ -229,22 +256,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
-    marginTop: 10,
-    paddingTop: 20,
+    marginTop: m(10),
+    paddingTop: m(20),
     position: 'absolute',
-    bottom: 30,
+    bottom: m(30),
     backgroundColor: globalColors.Charcoal,
     width: '100%',
   },
   textButton: {
     fontFamily: 'Supreme Variable',
     fontWeight: '700',
-    fontSize: 16,
-    lineHeight: 21,
+    fontSize: m(16),
+    lineHeight: m(21),
     color: globalColors.White,
-    marginRight: 15,
-    letterSpacing: 2.08,
-    paddingLeft:30
+    marginRight: m(15),
+    letterSpacing: m(2.08),
+    paddingLeft: m(30),
   },
   button: {
     width: m(200),
@@ -254,7 +281,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderColor: globalColors.MintGreen,
-    marginLeft: 40,
+    marginLeft: m(40),
   },
   buttontext: {
     fontFamily: 'Supreme Variable, sans-serif',
@@ -262,15 +289,11 @@ const styles = StyleSheet.create({
     fontSize: m(16),
     color: globalColors.White,
     textTransform: 'uppercase',
-    letterSpacing: 2.08,
+    letterSpacing: m(2.08),
   },
   trueButton: {
-    width: 70,
-    height: 38,
-  },
-  svgIcon: {
-    width: 14,
-    height: 31,
+    width: m(70),
+    height: m(38),
   },
   gradientOverlay: {
     position: 'absolute',

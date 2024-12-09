@@ -106,7 +106,7 @@ const TermsAndConditions = ({navigation}) => {
       <View style={styles.buttoncontainer}>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('cameraScreen')}>
+          onPress={() => navigation.navigate('profile')}>
           <Text style={styles.buttontext}>I AGREE</Text>
         </TouchableOpacity>
       </View>

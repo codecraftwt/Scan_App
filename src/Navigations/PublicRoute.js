@@ -122,7 +122,7 @@ export const PublicRoute = props => {
   return (
     <Stack.Navigator
       screenOptions={{gestureEnabled: false}}
-      initialRouteName="profile">
+      initialRouteName="splashScreen">
       {stackArray.map((item, index) => {
         const isHeader = true;
         return (
