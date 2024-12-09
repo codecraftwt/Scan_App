@@ -8,6 +8,7 @@ import MatchScreen from '../Screens/MatchScreen';
 import MatchRejectedScreen from '../Screens/MatchRejectedScreen';
 import TermsAndConditions from '../Screens/TermsAndConditions';
 import SplashScreen from '../Screens/SplashScreen';
+import Profile from '../Screens/Profile';
 
 const Stack = createNativeStackNavigator();
 
@@ -96,6 +97,18 @@ const stackArray = [
       showBack: false,
     },
   },
+  {
+    name: 'profile',
+    component: props => (
+      // <ComponentWrapper>
+      <Profile {...props} />
+      // </ComponentWrapper>
+    ),
+    headerProps: {
+      title: 'pro',
+      showBack: false,
+    },
+  },
 ];
 
 export const PublicRoute = props => {
@@ -109,7 +122,7 @@ export const PublicRoute = props => {
   return (
     <Stack.Navigator
       screenOptions={{gestureEnabled: false}}
-      initialRouteName="splashScreen">
+      initialRouteName="profile">
       {stackArray.map((item, index) => {
         const isHeader = true;
         return (

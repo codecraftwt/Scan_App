@@ -1,5 +1,6 @@
 export const globalColors = {
   LightGray: 'rgba(176, 176, 176, 1)',
+  ExtremeLightGreay: 'rgba(181, 181, 181, 1)',
   White: 'rgba(255, 255, 255, 1)',
   MintGreen: 'rgba(131, 255, 180, 1)',
   CharcoalGray: 'rgba(22, 22, 22, 1)',
@@ -19,4 +20,7 @@ export const globalColors = {
   TransparentCharcoal: 'rgba(75, 75, 75, 0.1)',
   EerieBlack: '#171717',
   PaleMint: '#83FFCB',
+  SilverGray: 'rgba(214, 214, 214, 1)',
+  DarkGray: 'rgba(34, 34, 34, 1)',
+  JetBlack: 'rgba(27, 27, 27, 1)',
 };

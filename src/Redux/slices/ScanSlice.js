@@ -17,7 +17,6 @@ export const scanInfo = createAsyncThunk(
           'Content-Type': 'multipart/form-data',
         },
       });
-
       return res.data;
     } catch (error) {
       console.error('Error in scanInfo:', error);
