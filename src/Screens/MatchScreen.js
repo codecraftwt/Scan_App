@@ -14,14 +14,19 @@ import LinearGradient from 'react-native-linear-gradient';
 import {globalColors} from '../Assets/themes/globalColors';
 import {useRoute} from '@react-navigation/native';
 import {m} from 'walstar-rn-responsive';
+import {useDispatch, useSelector} from 'react-redux';
+import {clearStore, scanInfo} from '../Redux/slices/ScanSlice';
+import RNFetchBlob from 'rn-fetch-blob';
 
-const supplementResult = require('../Assets/images/suplementResultImg.png');
+const mark = require('../Assets/images/Ellipse.png');
+const markSymbol = require('../Assets/images/Vector.png');
 const lineCircle = require('../Assets/images/LineCircle.png');
 const line = require('../Assets/images/GroupLine.png');
 const bgScreenImage = require('../Assets/images/bgScreenImg.png');
 
 const MatchScreen = ({navigation}) => {
   const route = useRoute();
+  const dispatch = useDispatch();
   const {imageUrl, originalImageUrl} = route.params;
 
   const [highlightedRows, setHighlightedRows] = useState([
@@ -29,7 +34,20 @@ const MatchScreen = ({navigation}) => {
     String(2),
   ]);
 
-  const scrollViewRef = useRef(null);
+  const ingredients = useSelector(
+    state => state?.scandata?.scanData?.ingredients || [],
+  );
+
+  const harmfulIngredients = useSelector(
+    state => state?.scandata?.scanData?.harmful_ingredients || [],
+  );
+
+  const hasHighRisk = harmfulIngredients.some(
+    ingredient => ingredient.risk_level <= 3,
+  );
+
+  console.log(ingredients, 'ingredients');
+  console.log(harmfulIngredients, 'harmfulIngredients');
 
   const handleScroll = event => {
     const contentOffsetY = event.nativeEvent.contentOffset.y;
@@ -38,16 +56,77 @@ const MatchScreen = ({navigation}) => {
     setHighlightedRows([String(visibleIndex + 1), String(visibleIndex + 2)]);
   };
 
-  const ingredients = [
-    {id: '1', title: 'Wheat'},
-    {id: '2', title: 'Flour'},
-    {id: '3', title: 'Sugar'},
-    {id: '4', title: 'Salt'},
-    {id: '5', title: 'Milk'},
-    {id: '6', title: 'Butter'},
-    {id: '7', title: 'Eggs'},
-    {id: '8', title: 'Yeast'},
-  ];
+  const getMimeType = filePath => {
+    const fileExtension = filePath.split('.').pop().toLowerCase();
+
+    const mimeTypes = {
+      jpg: 'image/jpeg',
+      jpeg: 'image/jpeg',
+      png: 'image/png',
+      webp: 'image/webp',
+      json: 'application/json',
+      html: 'text/html',
+    };
+    return mimeTypes[fileExtension] || 'application/octet-stream';
+  };
+
+  useEffect(() => {
+    const uploadImage = async () => {
+      console.log(imageUrl, '<=== imageUrl');
+      if (imageUrl) {
+        try {
+          const fileExists = await RNFetchBlob.fs.exists(imageUrl);
+          if (!fileExists) {
+            console.error('File not found');
+            return;
+          }
+          const imageBase64 = await RNFetchBlob.fs.readFile(imageUrl, 'base64');
+          const mimeType = getMimeType(imageUrl);
+          const fileObject = {
+            uri: imageUrl,
+            name: 'image.jpg',
+            type: mimeType,
+          };
+
+          const formData = new FormData();
+          formData.append('file', fileObject);
+          dispatch(clearStore());
+
+          dispatch(scanInfo(formData));
+        } catch (error) {
+          console.error('Error converting image URL to file:', error);
+        }
+      }
+    };
+    uploadImage();
+  }, [dispatch, imageUrl]);
+
+  const renderIcon = () => {
+    if (!harmfulIngredients || harmfulIngredients.length === 0) {
+      return (
+        <>
+          <Image source={mark} style={styles.mark} />
+          <Image source={markSymbol} style={styles.markSymbol} />
+        </>
+      );
+    }
+
+    if (hasHighRisk) {
+      return (
+        <>
+          <Image source={lineCircle} style={styles.lineCircle} />
+          <Image source={line} style={styles.line} />
+        </>
+      );
+    }
+
+    return (
+      <>
+        <Image source={crossCircle} style={styles.crossCircle} />
+        <Image source={crossMark} style={styles.crossMark} />
+      </>
+    );
+  };
 
   return (
     <>
@@ -55,19 +134,34 @@ const MatchScreen = ({navigation}) => {
         barStyle="light-content"
         backgroundColor={globalColors.Charcoal}
       />
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <ScrollView
+        contentContainerStyle={styles.scrollContainer}
+        onScroll={handleScroll}
+        scrollEventThrottle={16}
+        style={styles.mainScroll}>
         <ImageBackground
           source={{uri: originalImageUrl}}
           style={styles.backgroundImage}
           resizeMode="cover"
-          blurRadius={7}>
+          blurRadius={2}>
           <View style={styles.upperContainer}>
             <View style={styles.sampleImageContainer}>
-              <Image source={{uri: imageUrl}} style={styles.sampleImage} />
-              <View style={styles.markContainer}>
-                <Image source={lineCircle} style={styles.lineCircle} />
-                <Image source={line} style={styles.line} />
-              </View>
+              <Image
+                source={{uri: imageUrl}}
+                style={[
+                  styles.sampleImage,
+                  {
+                    borderWidth: m(3),
+                    borderColor:
+                      !harmfulIngredients || harmfulIngredients.length == 0
+                        ? globalColors.MintGreen
+                        : hasHighRisk
+                        ? globalColors.GoldenYellow
+                        : globalColors.VividRed,
+                  },
+                ]}
+              />
+              <View style={styles.markContainer}>{renderIcon()}</View>
             </View>
             <View style={styles.titleContainer}>
               <Text style={styles.title}>This product contains a</Text>
@@ -95,43 +189,41 @@ const MatchScreen = ({navigation}) => {
         <View style={styles.bottomContainer}>
           <Text style={styles.listTitle}>Ingredients of interest</Text>
           <View style={styles.flatListView}>
-            <ScrollView
-              style={styles.ingredientList}
-              nestedScrollEnabled={true}
-              onScroll={handleScroll}
-              scrollEventThrottle={16}
-              ref={scrollViewRef}>
-              {ingredients.map(item => (
+            {ingredients?.map((item, index) => {
+              const rowId = String(index + 1);
+              return (
                 <View style={styles.row} key={item.id}>
                   <Text
                     style={[
                       styles.listItem,
-                      highlightedRows.includes(item.id) &&
+                      highlightedRows.includes(rowId) &&
                         styles.topThreeListItem,
                     ]}>
-                    {item.title}
+                    {item}
                   </Text>
                 </View>
-              ))}
-            </ScrollView>
-          </View>
-          <View style={styles.transparentOverlay}>
-            <View style={styles.transparentView}></View>
-          </View>
-          <View style={styles.buttoncontainer}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() =>
-                navigation.navigate('matchRejectedScreen', {
-                  imageUrl: imageUrl,
-                  originalImageUrl: originalImageUrl,
-                })
-              }>
-              <Text style={styles.buttontext}>Scan new label</Text>
-            </TouchableOpacity>
+              );
+            })}
           </View>
         </View>
       </ScrollView>
+      <LinearGradient
+        colors={['transparent', globalColors.Charcoal]}
+        style={styles.gradientOverlay}
+      />
+
+      <View style={styles.fixedButtonContainer}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() =>
+            navigation.navigate('matchRejectedScreen', {
+              imageUrl: imageUrl,
+              originalImageUrl: originalImageUrl,
+            })
+          }>
+          <Text style={styles.buttontext}>Scan new label</Text>
+        </TouchableOpacity>
+      </View>
     </>
   );
 };
@@ -144,6 +236,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: globalColors.Charcoal,
+  },
+  mainScroll: {
+    flex: 1,
   },
   backgroundImage: {
     flex: 1,
@@ -165,8 +260,7 @@ const styles = StyleSheet.create({
   sampleImage: {
     height: m(230),
     width: m(130),
-    borderWidth: m(3),
-    borderColor: globalColors.GoldenYellow,
+    // borderWidth: m(3),
     borderRadius: m(24),
   },
   markContainer: {
@@ -186,10 +280,10 @@ const styles = StyleSheet.create({
     height: m(40),
   },
   bottomContainer: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'flex-start',
     width: '100%',
+    paddingBottom: m(80),
   },
   title: {
     fontFamily: 'Inter',
@@ -199,7 +293,9 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   flatListView: {
-    height: m(225),
+    paddingHorizontal: m(0),
+    paddingBottom: m(15),
+    marginBottom: m(40),
   },
   listTitle: {
     paddingLeft: m(25),
@@ -221,7 +317,7 @@ const styles = StyleSheet.create({
     borderColor: globalColors.JetBlack,
   },
   listItem: {
-    fontWeight: '200',
+    fontWeight: '400',
     fontSize: m(18),
     paddingLeft: m(25),
     color: globalColors.White,
@@ -243,7 +339,7 @@ const styles = StyleSheet.create({
   button: {
     width: m(315),
     height: m(60),
-    marginBottom: m(15),
+    marginBottom: m(10),
     borderRadius: m(15),
     borderColor: globalColors.White,
     borderWidth: m(2),
@@ -318,5 +414,44 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     flexWrap: 'wrap',
     width: '100%',
+  },
+  gradientOverlay: {
+    position: 'absolute',
+    bottom: '14%',
+    left: 0,
+    right: 0,
+    height: m(100),
+    zIndex: 2,
+  },
+  fixedButtonContainer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    padding: m(20),
+    alignItems: 'center',
+    backgroundColor: globalColors.Charcoal,
+  },
+  mark: {
+    width: m(120),
+    height: m(120),
+  },
+  markSymbol: {
+    position: 'absolute',
+    bottom: m(38),
+    right: m(27),
+    width: m(35),
+    height: m(40),
+  },
+  crossCircle: {
+    width: m(120),
+    height: m(120),
+  },
+  crossMark: {
+    position: 'absolute',
+    bottom: m(42),
+    right: m(30),
+    width: m(28),
+    height: m(40),
   },
 });

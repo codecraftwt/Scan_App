@@ -60,7 +60,7 @@ const NoMatchScreen = ({navigation}) => {
           source={{uri: originalImageUrl}}
           style={styles.backgroundImage}
           resizeMode="cover"
-          blurRadius={7}>
+          blurRadius={2}>
           <View style={styles.upperContainer}>
             <View style={styles.sampleImageContainer}>
               <Image source={{uri: imageUrl}} style={styles.sampleImage} />

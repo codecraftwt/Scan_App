@@ -58,7 +58,7 @@ const MatchRejectedScreen = ({navigation}) => {
         <ImageBackground
           source={{uri: originalImageUrl}}
           style={styles.backgroundImage}
-          blurRadius={5}>
+          blurRadius={2}>
           <View style={styles.upperContainer}>
             <View style={styles.sampleImageContainer}>
               <Image source={{uri: imageUrl}} style={styles.sampleImage} />

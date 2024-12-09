@@ -8,6 +8,7 @@ import MatchScreen from '../Screens/MatchScreen';
 import MatchRejectedScreen from '../Screens/MatchRejectedScreen';
 import TermsAndConditions from '../Screens/TermsAndConditions';
 import SplashScreen from '../Screens/SplashScreen';
+import Profile from '../Screens/Profile';
 
 const Stack = createNativeStackNavigator();
 
@@ -89,6 +90,18 @@ const stackArray = [
     component: props => (
       // <ComponentWrapper>
       <SplashScreen {...props} />
+      // </ComponentWrapper>
+    ),
+    headerProps: {
+      title: 'pro',
+      showBack: false,
+    },
+  },
+  {
+    name: 'profile',
+    component: props => (
+      // <ComponentWrapper>
+      <Profile {...props} />
       // </ComponentWrapper>
     ),
     headerProps: {

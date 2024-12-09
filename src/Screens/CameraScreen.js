@@ -5,7 +5,6 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
-  ActivityIndicator,
   StatusBar,
   ScrollView,
 } from 'react-native';
@@ -20,7 +19,6 @@ const ScanImage = require('../Assets/images/helper.png');
 const galleryImage = require('../Assets/images/Group-9.png');
 
 const CameraScreen = ({navigation}) => {
-  const [imageUri, setImageUri] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const processImage = async (imagePath, img) => {
     try {
@@ -65,7 +63,6 @@ const CameraScreen = ({navigation}) => {
       const image = await openPicker({cropping: false});
       setIsProcessing(true);
       const processedImageUri = await processImage(image.path, image);
-      setImageUri(processedImageUri);
       await navigation.navigate('match', {
         imageUrl: processedImageUri,
         originalImageUrl: image.path,
@@ -84,7 +81,6 @@ const CameraScreen = ({navigation}) => {
       const image = await openCamera({cropping: false});
       setIsProcessing(true);
       const processedImageUri = await processImage(image.path, image);
-      setImageUri(processedImageUri);
       await navigation.navigate('match', {
         imageUrl: processedImageUri,
         originalImageUrl: image.path,
@@ -104,20 +100,20 @@ const CameraScreen = ({navigation}) => {
         barStyle="light-content"
         backgroundColor={globalColors.Black}
       />
-      <ScrollView>
-        <View style={styles.container}>
-          {isProcessing ? (
-            <View style={styles.loaderContainer}>
-              <LottieView
-                source={SyncLoader}
-                style={styles.lottie}
-                autoPlay
-                loop
-                resizeMode="contain"
-              />
-            </View>
-          ) : (
-            <>
+      {isProcessing ? (
+        <View style={styles.loaderContainer}>
+          <LottieView
+            source={SyncLoader}
+            style={styles.lottie}
+            autoPlay
+            loop
+            resizeMode="contain"
+          />
+        </View>
+      ) : (
+        <>
+          <ScrollView>
+            <View style={styles.container}>
               <Text style={styles.title}>Scan the label</Text>
               <View style={styles.imageContainer}>
                 <Image source={ScanImage} style={styles.image} />
@@ -131,10 +127,10 @@ const CameraScreen = ({navigation}) => {
                   <Image source={galleryImage} style={styles.galleryImage} />
                 </TouchableOpacity>
               </View>
-            </>
-          )}
-        </View>
-      </ScrollView>
+            </View>
+          </ScrollView>
+        </>
+      )}
     </>
   );
 };
