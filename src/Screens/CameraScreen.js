@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   StatusBar,
   ScrollView,
+  SafeAreaView,
 } from 'react-native';
 import ImageEditor from '@react-native-community/image-editor';
 import {openCamera, openPicker} from 'react-native-image-crop-picker';
@@ -96,46 +97,56 @@ const CameraScreen = ({navigation}) => {
 
   return (
     <>
-      <StatusBar
-        barStyle="light-content"
-        backgroundColor={globalColors.Black}
-      />
-      {isProcessing ? (
-        <View style={styles.loaderContainer}>
-          <LottieView
-            source={SyncLoader}
-            style={styles.lottie}
-            autoPlay
-            loop
-            resizeMode="contain"
-          />
-        </View>
-      ) : (
-        <>
-          <ScrollView>
-            <View style={styles.container}>
-              <Text style={styles.title}>Scan the label</Text>
-              <View style={styles.imageContainer}>
-                <Image source={ScanImage} style={styles.image} />
+      <SafeAreaView style={styles.safeAreaContainer}>
+        <StatusBar
+          barStyle="light-content"
+          backgroundColor={globalColors.Black}
+        />
+        {isProcessing ? (
+          <View style={styles.loaderContainer}>
+            <LottieView
+              source={SyncLoader}
+              style={styles.lottie}
+              autoPlay
+              loop
+              resizeMode="contain"
+            />
+          </View>
+        ) : (
+          <>
+            <ScrollView>
+              <View style={styles.container}>
+                <Text style={styles.title}>Scan the label</Text>
+                <View style={styles.imageContainer}>
+                  <Image source={ScanImage} style={styles.image} />
+                </View>
+                <Text style={styles.subText}>
+                  Focus on the ingredients list.
+                </Text>
+                <View style={styles.buttonView}>
+                  <TouchableOpacity
+                    style={styles.button}
+                    onPress={captureImage}>
+                    <Text style={styles.buttonText}>Scan now</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={selectImage}>
+                    <Image source={galleryImage} style={styles.galleryImage} />
+                  </TouchableOpacity>
+                </View>
               </View>
-              <Text style={styles.subText}>Focus on the ingredients list.</Text>
-              <View style={styles.buttonView}>
-                <TouchableOpacity style={styles.button} onPress={captureImage}>
-                  <Text style={styles.buttonText}>Scan now</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={selectImage}>
-                  <Image source={galleryImage} style={styles.galleryImage} />
-                </TouchableOpacity>
-              </View>
-            </View>
-          </ScrollView>
-        </>
-      )}
+            </ScrollView>
+          </>
+        )}
+      </SafeAreaView>
     </>
   );
 };
 
 const styles = StyleSheet.create({
+  safeAreaContainer: {
+    flex: 1, 
+    backgroundColor: globalColors.Black
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
