@@ -275,12 +275,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
-    marginTop: m(10),
-    paddingTop: m(20),
     position: 'absolute',
     bottom: m(0),
     backgroundColor: globalColors.Charcoal,
     width: '100%',
+    height:'15%'
   },
   textButton: {
     fontFamily: 'Supreme Variable',
@@ -316,7 +315,7 @@ const styles = StyleSheet.create({
   },
   gradientOverlay: {
     position: 'absolute',
-    bottom: '10%',
+    bottom: '15%',
     left: 0,
     right: 0,
     height: m(50),
