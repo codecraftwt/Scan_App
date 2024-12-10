@@ -23,7 +23,8 @@ const mark = require('../Assets/images/Ellipse.png');
 const markSymbol = require('../Assets/images/Vector.png');
 const lineCircle = require('../Assets/images/LineCircle.png');
 const line = require('../Assets/images/GroupLine.png');
-const bgScreenImage = require('../Assets/images/bgScreenImg.png');
+const scanIcon = require('../Assets/images/scanicon.png');
+const menuIcon = require('../Assets/images/menuicon.png');
 
 const MatchScreen = ({navigation}) => {
   const route = useRoute();
@@ -135,6 +136,11 @@ const MatchScreen = ({navigation}) => {
         barStyle="light-content"
         backgroundColor={globalColors.Charcoal}
       />
+      <View style={styles.fixedTopContainer}>
+        {/* <TouchableOpacity onPress={() => navigation.DrawerNav()}> */}
+          <Image source={menuIcon} style={styles.sidebar} />
+        {/* </TouchableOpacity> */}
+      </View>
       <ScrollView
         contentContainerStyle={styles.scrollContainer}
         onScroll={handleScroll}
@@ -212,18 +218,10 @@ const MatchScreen = ({navigation}) => {
         colors={['transparent', globalColors.Charcoal]}
         style={styles.gradientOverlay}
       />
-
       <View style={styles.fixedButtonContainer}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() =>
-            navigation.navigate('matchRejectedScreen', {
-              imageUrl: imageUrl,
-              originalImageUrl: originalImageUrl,
-            })
-          }>
-          <Text style={styles.buttontext}>Scan new label</Text>
-        </TouchableOpacity>
+        <View style={styles.scanButtonView}>
+          <Image source={scanIcon} style={styles.scanIcon} />
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -261,7 +259,6 @@ const styles = StyleSheet.create({
   sampleImage: {
     height: m(230),
     width: m(130),
-    // borderWidth: m(3),
     borderRadius: m(24),
   },
   markContainer: {
@@ -416,23 +413,6 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     width: '100%',
   },
-  gradientOverlay: {
-    position: 'absolute',
-    bottom: '14%',
-    left: 0,
-    right: 0,
-    height: m(100),
-    zIndex: 2,
-  },
-  fixedButtonContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    padding: m(20),
-    alignItems: 'center',
-    backgroundColor: globalColors.Charcoal,
-  },
   mark: {
     width: m(120),
     height: m(120),
@@ -454,5 +434,53 @@ const styles = StyleSheet.create({
     right: m(30),
     width: m(28),
     height: m(40),
+  },
+  gradientOverlay: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: m(100),
+    zIndex: 2,
+  },
+  fixedButtonContainer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    padding: m(20),
+    alignItems: 'center',
+    alignItems: 'flex-end',
+    zIndex: 2,
+  },
+  scanButtonView: {
+    width: 80,
+    height: 80,
+    borderRadius: 67,
+    backgroundColor: globalColors.JetBlack,
+    marginBottom: 15,
+    marginRight: 10,
+  },
+  scanIcon: {
+    position: 'relative',
+    bottom: m(-22),
+    right: m(-24),
+    width: m(30),
+    height: m(35),
+  },
+  fixedTopContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    padding: m(20),
+    alignItems: 'center',
+    alignItems: 'flex-end',
+    zIndex: 2,
+  },
+  sidebar: {
+    position: 'relative',
+    width: m(22),
+    height: m(25),
   },
 });

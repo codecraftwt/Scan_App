@@ -9,6 +9,7 @@ import MatchRejectedScreen from '../Screens/MatchRejectedScreen';
 import TermsAndConditions from '../Screens/TermsAndConditions';
 import SplashScreen from '../Screens/SplashScreen';
 import Profile from '../Screens/Profile';
+import DrawerNavigation from './DrawerNavigation';
 
 const Stack = createNativeStackNavigator();
 
@@ -102,6 +103,18 @@ const stackArray = [
     component: props => (
       // <ComponentWrapper>
       <Profile {...props} />
+      // </ComponentWrapper>
+    ),
+    headerProps: {
+      title: 'pro',
+      showBack: false,
+    },
+  },
+  {
+    name: 'DrawerNav',
+    component: props => (
+      // <ComponentWrapper>
+      <DrawerNavigation {...props} />
       // </ComponentWrapper>
     ),
     headerProps: {
