@@ -30,9 +30,9 @@ const Profile = ({navigation}) => {
   const handleScroll = event => {
     const offsetY = event.nativeEvent.contentOffset.y;
     if (offsetY > 0) {
-      setIsScrolling(true); // Screen is scrolling
+      setIsScrolling(true);
     } else {
-      setIsScrolling(false); // Screen is stable
+      setIsScrolling(false);
     }
   };
 
@@ -41,18 +41,21 @@ const Profile = ({navigation}) => {
       <SafeAreaView style={styles.safeAreaContainer}>
         <StatusBar
           barStyle="light-content"
-          backgroundColor={globalColors.JetBlack}
+          backgroundColor={
+            isScrolling ? globalColors.JetBlack : globalColors.Charcoal
+          }
         />
         <SafeAreaView style={styles.safeAreaContainer}>
           <View style={styles.container}>
             <View
               style={[
                 styles.topContainer,
-                {
-                  backgroundColor: isScrolling
-                    ? globalColors.JetBlack
-                    : globalColors.Charcoal,
-                },
+                isScrolling
+                  ? {
+                      backgroundColor: globalColors.JetBlack,
+                      ...styles.shadowStyle,
+                    }
+                  : {backgroundColor: globalColors.Charcoal},
               ]}>
               <Text style={styles.title}>Your profile</Text>
               <Text style={styles.subtext}>
@@ -83,63 +86,93 @@ const Profile = ({navigation}) => {
                     </View>
                     <View style={styles.unitBox}>
                       <View style={styles.boxContainer}>
-                        <View
-                          style={[
-                            styles.boxstyle,
-                            {borderColor: globalColors.DarkGray},
-                          ]}>
-                          <InputBox icon={Milk} />
+                        <View style={styles.foodContainer}>
+                          <View
+                            style={[
+                              styles.boxstyle,
+                              {borderColor: globalColors.DarkGray},
+                            ]}>
+                            <InputBox icon={Milk} />
+                          </View>
+                          <Text style={styles.foodName}>Milk</Text>
                         </View>
-                        <View
-                          style={[
-                            styles.boxstyle,
-                            {borderColor: globalColors.MintGreen},
-                          ]}>
-                          <InputBox icon={Egg} />
+                        <View style={styles.foodContainer}>
+                          <View
+                            style={[
+                              styles.boxstyle,
+                              {borderColor: globalColors.MintGreen},
+                            ]}>
+                            <InputBox icon={Egg} />
+                          </View>
+                          <Text
+                            style={[
+                              styles.foodName,
+                              {color: globalColors.White},
+                            ]}>
+                            Egg
+                          </Text>
                         </View>
-                        <View
-                          style={[
-                            styles.boxstyle,
-                            {borderColor: globalColors.DarkGray},
-                          ]}>
-                          <InputBox icon={Peanut} />
+                        <View style={styles.foodContainer}>
+                          <View
+                            style={[
+                              styles.boxstyle,
+                              {borderColor: globalColors.DarkGray},
+                            ]}>
+                            <InputBox icon={Peanut} />
+                          </View>
+                          <Text style={styles.foodName}>Peanut</Text>
                         </View>
-                        <View
-                          style={[
-                            styles.boxstyle,
-                            {borderColor: globalColors.DarkGray},
-                          ]}>
-                          <InputBox icon={Gluten} />
+                        <View style={styles.foodContainer}>
+                          <View
+                            style={[
+                              styles.boxstyle,
+                              {borderColor: globalColors.DarkGray},
+                            ]}>
+                            <InputBox icon={Gluten} />
+                          </View>
+                          <Text style={styles.foodName}>Gluten</Text>
                         </View>
                       </View>
                       <View style={styles.boxContainer}>
-                        <View
-                          style={[
-                            styles.boxstyle,
-                            {borderColor: globalColors.DarkGray},
-                          ]}>
-                          <InputBox icon={Fish} />
+                        <View style={styles.foodContainer}>
+                          <View
+                            style={[
+                              styles.boxstyle,
+                              {borderColor: globalColors.DarkGray},
+                            ]}>
+                            <InputBox icon={Fish} />
+                          </View>
+                          <Text style={styles.foodName}>Fish</Text>
                         </View>
-                        <View
-                          style={[
-                            styles.boxstyle,
-                            {borderColor: globalColors.DarkGray},
-                          ]}>
-                          <InputBox icon={Soy} />
+                        <View style={styles.foodContainer}>
+                          <View
+                            style={[
+                              styles.boxstyle,
+                              {borderColor: globalColors.DarkGray},
+                            ]}>
+                            <InputBox icon={Soy} />
+                          </View>
+                          <Text style={styles.foodName}>Soy</Text>
                         </View>
-                        <View
-                          style={[
-                            styles.boxstyle,
-                            {borderColor: globalColors.DarkGray},
-                          ]}>
-                          <InputBox icon={Shellfish} />
+                        <View style={styles.foodContainer}>
+                          <View
+                            style={[
+                              styles.boxstyle,
+                              {borderColor: globalColors.DarkGray},
+                            ]}>
+                            <InputBox icon={Shellfish} />
+                          </View>
+                          <Text style={styles.foodName}>Shellfish</Text>
                         </View>
-                        <View
-                          style={[
-                            styles.boxstyle,
-                            {borderColor: globalColors.DarkGray},
-                          ]}>
-                          <InputBox icon={Tree_nut} />
+                        <View style={styles.foodContainer}>
+                          <View
+                            style={[
+                              styles.boxstyle,
+                              {borderColor: globalColors.DarkGray},
+                            ]}>
+                            <InputBox icon={Tree_nut} />
+                          </View>
+                          <Text style={styles.foodName}>Tree Nut</Text>
                         </View>
                       </View>
                     </View>
@@ -197,7 +230,7 @@ const styles = StyleSheet.create({
     backgroundColor: globalColors.Charcoal,
   },
   scrollContainer: {
-    paddingTop: m(180),
+    paddingTop: m(160),
     paddingBottom: m(150),
   },
   middleContainer: {
@@ -213,6 +246,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: m(25),
     paddingVertical: m(30),
     zIndex: 1,
+    transition: 'background-color 0.2s ease',
+  },
+  shadowStyle: {
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
   },
   title: {
     fontFamily: 'Inter',
@@ -341,5 +382,17 @@ const styles = StyleSheet.create({
     height: m(50),
     zIndex: 1,
     // backgroundColor:'blue'
+  },
+  foodContainer: {
+    alignItems: 'center',
+  },
+  foodName: {
+    fontFamily: 'Inter',
+    fontWeight: '400',
+    fontSize: 12,
+    lineHeight: 16,
+    letterSpacing: 0.24,
+    color: globalColors.MediumGray,
+    paddingTop: 10,
   },
 });
