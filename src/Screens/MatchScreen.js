@@ -18,6 +18,8 @@ import {m} from 'walstar-rn-responsive';
 import {useDispatch, useSelector} from 'react-redux';
 import {clearStore, scanInfo} from '../Redux/slices/ScanSlice';
 import RNFetchBlob from 'rn-fetch-blob';
+import LottieView from 'lottie-react-native';
+import SyncLoader from '../Assets/loader.json';
 
 const mark = require('../Assets/images/Ellipse.png');
 const markSymbol = require('../Assets/images/Vector.png');
@@ -39,6 +41,8 @@ const MatchScreen = ({navigation}) => {
   const ingredients = useSelector(
     state => state?.scandata?.scanData?.ingredients || [],
   );
+
+  const loader = useSelector(state => state?.scandata?.isLoading);
 
   const harmfulIngredients = useSelector(
     state => state?.scandata?.scanData?.harmful_ingredients || [],
@@ -136,93 +140,107 @@ const MatchScreen = ({navigation}) => {
         barStyle="light-content"
         backgroundColor={globalColors.Charcoal}
       />
-      <View style={styles.fixedTopContainer}>
-        {/* <TouchableOpacity onPress={() => navigation.DrawerNav()}> */}
-          <Image source={menuIcon} style={styles.sidebar} />
-        {/* </TouchableOpacity> */}
-      </View>
-      <ScrollView
-        contentContainerStyle={styles.scrollContainer}
-        onScroll={handleScroll}
-        scrollEventThrottle={16}
-        style={styles.mainScroll}>
-        <ImageBackground
-          source={{uri: originalImageUrl}}
-          style={styles.backgroundImage}
-          resizeMode="cover"
-          blurRadius={2}>
-          <View style={styles.upperContainer}>
-            <View style={styles.sampleImageContainer}>
-              <Image
-                source={{uri: imageUrl}}
-                style={[
-                  styles.sampleImage,
-                  {
-                    borderWidth: m(3),
-                    borderColor:
-                      !harmfulIngredients || harmfulIngredients.length == 0
-                        ? globalColors.MintGreen
-                        : hasHighRisk
-                        ? globalColors.GoldenYellow
-                        : globalColors.VividRed,
-                  },
-                ]}
-              />
-              <View style={styles.markContainer}>{renderIcon()}</View>
-            </View>
-            <View style={styles.titleContainer}>
-              <Text style={styles.title}>This product contains a</Text>
-              <Text style={styles.title}>flagged ingredient.</Text>
-            </View>
+      {loader ? (
+        <View style={styles.loaderContainer}>
+          <LottieView
+            source={SyncLoader}
+            style={styles.lottie}
+            autoPlay
+            loop
+            resizeMode="contain"
+          />
+        </View>
+      ) : (
+        <>
+          <View style={styles.fixedTopContainer}>
+            {/* <TouchableOpacity onPress={() => navigation.DrawerNav()}> */}
+            <Image source={menuIcon} style={styles.sidebar} />
+            {/* </TouchableOpacity> */}
           </View>
-          <LinearGradient
-            colors={[
-              globalColors.TransparentBlack,
-              globalColors.Charcoal,
-              globalColors.Charcoal,
-            ]}>
-            <View style={styles.cardDiv}>
-              <View style={styles.cardContainer}>
-                <Text style={styles.cardTitle}>Titanium dioxide</Text>
-                <Text style={styles.cardPara}>
-                  Titanium oxide is banned in foods in the EU and California.
-                  Nanoparticles of titanium oxide (nano-TiO₂) is often used in
-                  sunscreen.
-                </Text>
+          <ScrollView
+            contentContainerStyle={styles.scrollContainer}
+            onScroll={handleScroll}
+            scrollEventThrottle={16}
+            style={styles.mainScroll}>
+            <ImageBackground
+              source={{uri: originalImageUrl}}
+              style={styles.backgroundImage}
+              resizeMode="cover"
+              blurRadius={2}>
+              <View style={styles.upperContainer}>
+                <View style={styles.sampleImageContainer}>
+                  <Image
+                    source={{uri: imageUrl}}
+                    style={[
+                      styles.sampleImage,
+                      {
+                        borderWidth: m(3),
+                        borderColor:
+                          !harmfulIngredients || harmfulIngredients.length == 0
+                            ? globalColors.MintGreen
+                            : hasHighRisk
+                            ? globalColors.GoldenYellow
+                            : globalColors.VividRed,
+                      },
+                    ]}
+                  />
+                  <View style={styles.markContainer}>{renderIcon()}</View>
+                </View>
+                <View style={styles.titleContainer}>
+                  <Text style={styles.title}>This product contains a</Text>
+                  <Text style={styles.title}>flagged ingredient.</Text>
+                </View>
+              </View>
+              <LinearGradient
+                colors={[
+                  globalColors.TransparentBlack,
+                  globalColors.Charcoal,
+                  globalColors.Charcoal,
+                ]}>
+                <View style={styles.cardDiv}>
+                  <View style={styles.cardContainer}>
+                    <Text style={styles.cardTitle}>Titanium dioxide</Text>
+                    <Text style={styles.cardPara}>
+                      Titanium oxide is banned in foods in the EU and
+                      California. Nanoparticles of titanium oxide (nano-TiO₂) is
+                      often used in sunscreen.
+                    </Text>
+                  </View>
+                </View>
+              </LinearGradient>
+            </ImageBackground>
+            <View style={styles.bottomContainer}>
+              <Text style={styles.listTitle}>Ingredients of interest</Text>
+              <View style={styles.flatListView}>
+                {ingredients?.map((item, index) => {
+                  const rowId = String(index + 1);
+                  return (
+                    <View style={styles.row} key={item.id}>
+                      <Text
+                        style={[
+                          styles.listItem,
+                          highlightedRows.includes(rowId) &&
+                            styles.topThreeListItem,
+                        ]}>
+                        {item}
+                      </Text>
+                    </View>
+                  );
+                })}
               </View>
             </View>
-          </LinearGradient>
-        </ImageBackground>
-        <View style={styles.bottomContainer}>
-          <Text style={styles.listTitle}>Ingredients of interest</Text>
-          <View style={styles.flatListView}>
-            {ingredients?.map((item, index) => {
-              const rowId = String(index + 1);
-              return (
-                <View style={styles.row} key={item.id}>
-                  <Text
-                    style={[
-                      styles.listItem,
-                      highlightedRows.includes(rowId) &&
-                        styles.topThreeListItem,
-                    ]}>
-                    {item}
-                  </Text>
-                </View>
-              );
-            })}
+          </ScrollView>
+          <LinearGradient
+            colors={['transparent', globalColors.Charcoal]}
+            style={styles.gradientOverlay}
+          />
+          <View style={styles.fixedButtonContainer}>
+            <View style={styles.scanButtonView}>
+              <Image source={scanIcon} style={styles.scanIcon} />
+            </View>
           </View>
-        </View>
-      </ScrollView>
-      <LinearGradient
-        colors={['transparent', globalColors.Charcoal]}
-        style={styles.gradientOverlay}
-      />
-      <View style={styles.fixedButtonContainer}>
-        <View style={styles.scanButtonView}>
-          <Image source={scanIcon} style={styles.scanIcon} />
-        </View>
-      </View>
+        </>
+      )}
     </SafeAreaView>
   );
 };
@@ -235,6 +253,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: globalColors.Charcoal,
+  },
+  loaderContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: '100%',
+    backgroundColor: globalColors.GunmetalGray,
+  },
+  lottie: {
+    width: '100%',
+    height: '100%',
   },
   mainScroll: {
     flex: 1,

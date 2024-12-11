@@ -25,6 +25,16 @@ import InputBox from '../Utils/inputBox';
 
 const Profile = ({navigation}) => {
   const [isSwitchOn, setIsSwitchOn] = useState(false);
+  const [isScrolling, setIsScrolling] = useState(false); // State to track scrolling
+
+  const handleScroll = event => {
+    const offsetY = event.nativeEvent.contentOffset.y;
+    if (offsetY > 0) {
+      setIsScrolling(true); // Screen is scrolling
+    } else {
+      setIsScrolling(false); // Screen is stable
+    }
+  };
 
   return (
     <>
@@ -35,14 +45,25 @@ const Profile = ({navigation}) => {
         />
         <SafeAreaView style={styles.safeAreaContainer}>
           <View style={styles.container}>
-            <View style={styles.topContainer}>
+            <View
+              style={[
+                styles.topContainer,
+                {
+                  backgroundColor: isScrolling
+                    ? globalColors.JetBlack
+                    : globalColors.Charcoal,
+                },
+              ]}>
               <Text style={styles.title}>Your profile</Text>
               <Text style={styles.subtext}>
                 ScanAware will alert you if it finds ingredients that matches
                 these preferences.
               </Text>
             </View>
-            <ScrollView contentContainerStyle={styles.scrollContainer}>
+            <ScrollView
+              contentContainerStyle={styles.scrollContainer}
+              onScroll={handleScroll}
+              scrollEventThrottle={16}>
               <View style={styles.middleContainer}>
                 <View style={[styles.typeContainer, styles.row]}>
                   <Text style={styles.type}>Chemicals</Text>
@@ -65,7 +86,7 @@ const Profile = ({navigation}) => {
                         <View
                           style={[
                             styles.boxstyle,
-                            {borderColor: globalColors.White},
+                            {borderColor: globalColors.DarkGray},
                           ]}>
                           <InputBox icon={Milk} />
                         </View>
@@ -79,14 +100,14 @@ const Profile = ({navigation}) => {
                         <View
                           style={[
                             styles.boxstyle,
-                            {borderColor: globalColors.White},
+                            {borderColor: globalColors.DarkGray},
                           ]}>
                           <InputBox icon={Peanut} />
                         </View>
                         <View
                           style={[
                             styles.boxstyle,
-                            {borderColor: globalColors.White},
+                            {borderColor: globalColors.DarkGray},
                           ]}>
                           <InputBox icon={Gluten} />
                         </View>
@@ -95,28 +116,28 @@ const Profile = ({navigation}) => {
                         <View
                           style={[
                             styles.boxstyle,
-                            {borderColor: globalColors.White},
+                            {borderColor: globalColors.DarkGray},
                           ]}>
                           <InputBox icon={Fish} />
                         </View>
                         <View
                           style={[
                             styles.boxstyle,
-                            {borderColor: globalColors.White},
+                            {borderColor: globalColors.DarkGray},
                           ]}>
                           <InputBox icon={Soy} />
                         </View>
                         <View
                           style={[
                             styles.boxstyle,
-                            {borderColor: globalColors.White},
+                            {borderColor: globalColors.DarkGray},
                           ]}>
                           <InputBox icon={Shellfish} />
                         </View>
                         <View
                           style={[
                             styles.boxstyle,
-                            {borderColor: globalColors.White},
+                            {borderColor: globalColors.DarkGray},
                           ]}>
                           <InputBox icon={Tree_nut} />
                         </View>
@@ -166,8 +187,8 @@ export default Profile;
 
 const styles = StyleSheet.create({
   safeAreaContainer: {
-    flex: 1, 
-    backgroundColor: globalColors.JetBlack
+    flex: 1,
+    backgroundColor: globalColors.JetBlack,
   },
   container: {
     flexGrow: 1,
@@ -192,7 +213,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: m(25),
     paddingVertical: m(30),
     zIndex: 1,
-    backgroundColor: globalColors.JetBlack,
   },
   title: {
     fontFamily: 'Inter',
@@ -279,7 +299,7 @@ const styles = StyleSheet.create({
     bottom: m(0),
     backgroundColor: globalColors.Charcoal,
     width: '100%',
-    height:'15%'
+    height: '15%',
   },
   textButton: {
     fontFamily: 'Supreme Variable',

@@ -1,7 +1,7 @@
 import {View, Text, TouchableOpacity, Animated, StyleSheet} from 'react-native';
 import React, {useRef, useState} from 'react';
 import {globalColors} from '../Assets/themes/globalColors';
-import { m } from 'walstar-rn-responsive';
+import {m} from 'walstar-rn-responsive';
 
 const ToggleButton = ({value, onValueChange}) => {
   const thumbAnim = useRef(new Animated.Value(value ? 1 : 0)).current;
@@ -21,11 +21,13 @@ const ToggleButton = ({value, onValueChange}) => {
 
   const thumbPosition = thumbAnim.interpolate({
     inputRange: [0, 1],
-    outputRange: [2, 20],
+    outputRange: [-3, 23],
   });
 
   const trackColor = isOn ? globalColors.MintGreen : globalColors.DarkGray;
-  const circleColour =isOn? globalColors.White : globalColors.ExtremeLightGreay;
+  const circleColour = isOn
+    ? globalColors.White
+    : globalColors.ExtremeLightGreay;
 
   return (
     <TouchableOpacity
@@ -35,7 +37,7 @@ const ToggleButton = ({value, onValueChange}) => {
         style={[
           styles.thumb,
           {
-            backgroundColor: circleColour
+            backgroundColor: circleColour,
           },
           {
             transform: [{translateX: thumbPosition}],
@@ -50,7 +52,7 @@ export default ToggleButton;
 
 const styles = StyleSheet.create({
   switchContainer: {
-    width: m(68),
+    width: m(64),
     height: m(38),
     borderRadius: m(20),
     justifyContent: 'center',
@@ -61,10 +63,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   thumb: {
-    width: m(28),
-    height: m(28),
+    width: m(26),
+    height: m(26),
     borderRadius: m(14),
-    position: 'realtive',
+    position: 'relative',
     left: -10,
+    backgroundColor: globalColors.White,
+    shadowColor: globalColors.JetBlack,
+    shadowOffset: {width: 0, height: 6},
+    shadowOpacity: 0.3,
+    shadowRadius: 20,
+    elevation: 20,
   },
 });
