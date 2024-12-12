@@ -15,11 +15,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {globalColors} from '../Assets/themes/globalColors';
 import {useRoute} from '@react-navigation/native';
 import {m} from 'walstar-rn-responsive';
-import {useDispatch, useSelector} from 'react-redux';
-import {clearStore, scanInfo} from '../Redux/slices/ScanSlice';
-import RNFetchBlob from 'rn-fetch-blob';
-import LottieView from 'lottie-react-native';
-import SyncLoader from '../Assets/loader.json';
+import {useSelector} from 'react-redux';
 
 const mark = require('../Assets/images/Ellipse.png');
 const markSymbol = require('../Assets/images/Vector.png');
@@ -30,7 +26,6 @@ const menuIcon = require('../Assets/images/menuicon.png');
 
 const MatchScreen = ({navigation}) => {
   const route = useRoute();
-  const dispatch = useDispatch();
   const {imageUrl, originalImageUrl} = route.params;
 
   const [highlightedRows, setHighlightedRows] = useState([
@@ -41,9 +36,6 @@ const MatchScreen = ({navigation}) => {
   const ingredients = useSelector(
     state => state?.scandata?.scanData?.ingredients || [],
   );
-
-  const loader = useSelector(state => state?.scandata?.isLoading);
-
   const harmfulIngredients = useSelector(
     state => state?.scandata?.scanData?.harmful_ingredients || [],
   );
@@ -61,51 +53,6 @@ const MatchScreen = ({navigation}) => {
     const visibleIndex = Math.floor(contentOffsetY / rowHeight);
     setHighlightedRows([String(visibleIndex + 1), String(visibleIndex + 2)]);
   };
-
-  const getMimeType = filePath => {
-    const fileExtension = filePath.split('.').pop().toLowerCase();
-
-    const mimeTypes = {
-      jpg: 'image/jpeg',
-      jpeg: 'image/jpeg',
-      png: 'image/png',
-      webp: 'image/webp',
-      json: 'application/json',
-      html: 'text/html',
-    };
-    return mimeTypes[fileExtension] || 'application/octet-stream';
-  };
-
-  useEffect(() => {
-    const uploadImage = async () => {
-      console.log(imageUrl, '<=== imageUrl');
-      if (imageUrl) {
-        try {
-          const fileExists = await RNFetchBlob.fs.exists(imageUrl);
-          if (!fileExists) {
-            console.error('File not found');
-            return;
-          }
-          const imageBase64 = await RNFetchBlob.fs.readFile(imageUrl, 'base64');
-          const mimeType = getMimeType(imageUrl);
-          const fileObject = {
-            uri: imageUrl,
-            name: 'image.jpg',
-            type: mimeType,
-          };
-
-          const formData = new FormData();
-          formData.append('file', fileObject);
-          dispatch(clearStore());
-
-          dispatch(scanInfo(formData));
-        } catch (error) {
-          console.error('Error converting image URL to file:', error);
-        }
-      }
-    };
-    uploadImage();
-  }, [dispatch, imageUrl]);
 
   const renderIcon = () => {
     if (!harmfulIngredients || harmfulIngredients.length === 0) {
@@ -140,107 +87,93 @@ const MatchScreen = ({navigation}) => {
         barStyle="light-content"
         backgroundColor={globalColors.Charcoal}
       />
-      {loader ? (
-        <View style={styles.loaderContainer}>
-          <LottieView
-            source={SyncLoader}
-            style={styles.lottie}
-            autoPlay
-            loop
-            resizeMode="contain"
-          />
-        </View>
-      ) : (
-        <>
-          <View style={styles.fixedTopContainer}>
-            {/* <TouchableOpacity onPress={() => navigation.DrawerNav()}> */}
-            <Image source={menuIcon} style={styles.sidebar} />
-            {/* </TouchableOpacity> */}
-          </View>
-          <ScrollView
-            contentContainerStyle={styles.scrollContainer}
-            onScroll={handleScroll}
-            scrollEventThrottle={16}
-            style={styles.mainScroll}>
-            <ImageBackground
-              source={{uri: originalImageUrl}}
-              style={styles.backgroundImage}
-              resizeMode="cover"
-              blurRadius={2}>
-              <View style={styles.upperContainer}>
-                <View style={styles.sampleImageContainer}>
-                  <Image
-                    source={{uri: imageUrl}}
-                    style={[
-                      styles.sampleImage,
-                      {
-                        borderWidth: m(3),
-                        borderColor:
-                          !harmfulIngredients || harmfulIngredients.length == 0
-                            ? globalColors.MintGreen
-                            : hasHighRisk
-                            ? globalColors.GoldenYellow
-                            : globalColors.VividRed,
-                      },
-                    ]}
-                  />
-                  <View style={styles.markContainer}>{renderIcon()}</View>
-                </View>
-                <View style={styles.titleContainer}>
-                  <Text style={styles.title}>This product contains a</Text>
-                  <Text style={styles.title}>flagged ingredient.</Text>
-                </View>
-              </View>
-              <LinearGradient
-                colors={[
-                  globalColors.TransparentBlack,
-                  globalColors.Charcoal,
-                  globalColors.Charcoal,
-                ]}>
-                <View style={styles.cardDiv}>
-                  <View style={styles.cardContainer}>
-                    <Text style={styles.cardTitle}>Titanium dioxide</Text>
-                    <Text style={styles.cardPara}>
-                      Titanium oxide is banned in foods in the EU and
-                      California. Nanoparticles of titanium oxide (nano-TiO₂) is
-                      often used in sunscreen.
-                    </Text>
-                  </View>
-                </View>
-              </LinearGradient>
-            </ImageBackground>
-            <View style={styles.bottomContainer}>
-              <Text style={styles.listTitle}>Ingredients of interest</Text>
-              <View style={styles.flatListView}>
-                {ingredients?.map((item, index) => {
-                  const rowId = String(index + 1);
-                  return (
-                    <View style={styles.row} key={item.id}>
-                      <Text
-                        style={[
-                          styles.listItem,
-                          highlightedRows.includes(rowId) &&
-                            styles.topThreeListItem,
-                        ]}>
-                        {item}
-                      </Text>
-                    </View>
-                  );
-                })}
-              </View>
+      <View style={styles.fixedTopContainer}>
+        {/* <TouchableOpacity onPress={() => navigation.DrawerNav()}> */}
+        <Image source={menuIcon} style={styles.sidebar} />
+        {/* </TouchableOpacity> */}
+      </View>
+      <ScrollView
+        contentContainerStyle={styles.scrollContainer}
+        onScroll={handleScroll}
+        scrollEventThrottle={16}
+        style={styles.mainScroll}>
+        <ImageBackground
+          source={{uri: originalImageUrl}}
+          style={styles.backgroundImage}
+          resizeMode="cover"
+          blurRadius={2}>
+          <View style={styles.upperContainer}>
+            <View style={styles.sampleImageContainer}>
+              <Image
+                source={{uri: imageUrl}}
+                style={[
+                  styles.sampleImage,
+                  {
+                    borderWidth: m(3),
+                    borderColor:
+                      !harmfulIngredients || harmfulIngredients.length == 0
+                        ? globalColors.MintGreen
+                        : hasHighRisk
+                        ? globalColors.GoldenYellow
+                        : globalColors.VividRed,
+                  },
+                ]}
+              />
+              <View style={styles.markContainer}>{renderIcon()}</View>
             </View>
-          </ScrollView>
+            <View style={styles.titleContainer}>
+              <Text style={styles.title}>This product contains a</Text>
+              <Text style={styles.title}>flagged ingredient.</Text>
+            </View>
+          </View>
           <LinearGradient
-            colors={['transparent', globalColors.Charcoal]}
-            style={styles.gradientOverlay}
-          />
-          <View style={styles.fixedButtonContainer}>
-            <View style={styles.scanButtonView}>
-              <Image source={scanIcon} style={styles.scanIcon} />
+            colors={[
+              globalColors.TransparentBlack,
+              globalColors.Charcoal,
+              globalColors.Charcoal,
+            ]}>
+            <View style={styles.cardDiv}>
+              <View style={styles.cardContainer}>
+                <Text style={styles.cardTitle}>Titanium dioxide</Text>
+                <Text style={styles.cardPara}>
+                  Titanium oxide is banned in foods in the EU and California.
+                  Nanoparticles of titanium oxide (nano-TiO₂) is often used in
+                  sunscreen.
+                </Text>
+              </View>
             </View>
+          </LinearGradient>
+        </ImageBackground>
+        <View style={styles.bottomContainer}>
+          <Text style={styles.listTitle}>Ingredients of interest</Text>
+          <View style={styles.flatListView}>
+            {ingredients?.map((item, index) => {
+              const rowId = String(index + 1);
+              return (
+                <View style={styles.row} key={item.id}>
+                  <Text
+                    style={[
+                      styles.listItem,
+                      highlightedRows.includes(rowId) &&
+                        styles.topThreeListItem,
+                    ]}>
+                    {item}
+                  </Text>
+                </View>
+              );
+            })}
           </View>
-        </>
-      )}
+        </View>
+      </ScrollView>
+      <LinearGradient
+        colors={['transparent', globalColors.Charcoal]}
+        style={styles.gradientOverlay}
+      />
+      <View style={styles.fixedButtonContainer}>
+        <View style={styles.scanButtonView}>
+          <Image source={scanIcon} style={styles.scanIcon} />
+        </View>
+      </View>
     </SafeAreaView>
   );
 };
