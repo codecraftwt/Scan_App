@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   StatusBar,
   ScrollView,
+  SafeAreaView,
 } from 'react-native';
 import ImageEditor from '@react-native-community/image-editor';
 import {openCamera, openPicker} from 'react-native-image-crop-picker';
@@ -14,12 +15,16 @@ import LottieView from 'lottie-react-native';
 import SyncLoader from '../Assets/loader.json';
 import {globalColors} from '../Assets/themes/globalColors';
 import {m} from 'walstar-rn-responsive';
+import {useDispatch} from 'react-redux';
+import {clearStore, scanInfo} from '../Redux/slices/ScanSlice';
+import RNFetchBlob from 'rn-fetch-blob';
 
 const ScanImage = require('../Assets/images/helper.png');
 const galleryImage = require('../Assets/images/Group-9.png');
 
 const CameraScreen = ({navigation}) => {
   const [isProcessing, setIsProcessing] = useState(false);
+  const dispatch = useDispatch();
   const processImage = async (imagePath, img) => {
     try {
       const cropWidth = img.width * 0.9;
@@ -63,16 +68,19 @@ const CameraScreen = ({navigation}) => {
       const image = await openPicker({cropping: false});
       setIsProcessing(true);
       const processedImageUri = await processImage(image.path, image);
-      await navigation.navigate('match', {
-        imageUrl: processedImageUri,
-        originalImageUrl: image.path,
-      });
+      await uploadImage(processedImageUri);
+      setTimeout(async () => {
+        await navigation.navigate('match', {
+          imageUrl: processedImageUri,
+          originalImageUrl: image.path,
+        });
+      }, 6000);
     } catch (error) {
       console.log('Picker error: ', error);
     } finally {
       setTimeout(() => {
         setIsProcessing(false);
-      }, 2000);
+      }, 7000);
     }
   };
 
@@ -81,61 +89,115 @@ const CameraScreen = ({navigation}) => {
       const image = await openCamera({cropping: false});
       setIsProcessing(true);
       const processedImageUri = await processImage(image.path, image);
-      await navigation.navigate('match', {
-        imageUrl: processedImageUri,
-        originalImageUrl: image.path,
-      });
+      await uploadImage(processedImageUri);
+      setTimeout(() => {
+        navigation.navigate('match', {
+          imageUrl: processedImageUri,
+          originalImageUrl: image.path,
+        });
+      }, 6000);
     } catch (error) {
       console.log('Camera error: ', error);
     } finally {
       setTimeout(() => {
         setIsProcessing(false);
-      }, 2000);
+      }, 7000);
+    }
+  };
+
+  const getMimeType = filePath => {
+    const fileExtension = filePath.split('.').pop().toLowerCase();
+
+    const mimeTypes = {
+      jpg: 'image/jpeg',
+      jpeg: 'image/jpeg',
+      png: 'image/png',
+      webp: 'image/webp',
+      json: 'application/json',
+      html: 'text/html',
+    };
+    return mimeTypes[fileExtension] || 'application/octet-stream';
+  };
+
+  const uploadImage = async imageUrl => {
+    dispatch(clearStore());
+    if (imageUrl) {
+      try {
+        const fileExists = await RNFetchBlob.fs.exists(imageUrl);
+        if (!fileExists) {
+          console.error('File not found');
+          return;
+        }
+        const imageBase64 = await RNFetchBlob.fs.readFile(imageUrl, 'base64');
+        const mimeType = getMimeType(imageUrl);
+        const fileObject = {
+          uri: imageUrl,
+          name: 'image.jpg',
+          type: mimeType,
+        };
+
+        const formData = new FormData();
+        formData.append('file', fileObject);
+
+        dispatch(scanInfo(formData));
+      } catch (error) {
+        console.error('Error converting image URL to file:', error);
+      }
     }
   };
 
   return (
     <>
-      <StatusBar
-        barStyle="light-content"
-        backgroundColor={globalColors.Black}
-      />
-      {isProcessing ? (
-        <View style={styles.loaderContainer}>
-          <LottieView
-            source={SyncLoader}
-            style={styles.lottie}
-            autoPlay
-            loop
-            resizeMode="contain"
-          />
-        </View>
-      ) : (
-        <>
-          <ScrollView>
-            <View style={styles.container}>
-              <Text style={styles.title}>Scan the label</Text>
-              <View style={styles.imageContainer}>
-                <Image source={ScanImage} style={styles.image} />
+      <SafeAreaView style={styles.safeAreaContainer}>
+        <StatusBar
+          barStyle="light-content"
+          backgroundColor={globalColors.Black}
+        />
+        {isProcessing ? (
+          <View style={styles.loaderContainer}>
+            <LottieView
+              source={SyncLoader}
+              style={styles.lottie}
+              autoPlay
+              loop
+              resizeMode="contain"
+            />
+          </View>
+        ) : (
+          <>
+            <ScrollView>
+              <View style={styles.container}>
+                <Text style={styles.title}>Scan the label</Text>
+                <View style={styles.imageContainer}>
+                  <Image source={ScanImage} style={styles.image} />
+                </View>
+                <Text style={styles.subText}>
+                  Focus on the ingredients list.
+                </Text>
+                <View style={styles.buttonView}>
+                  <TouchableOpacity
+                    style={styles.button}
+                    onPress={captureImage}>
+                    <Text style={styles.buttonText}>Scan now</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={selectImage}>
+                    <Image source={galleryImage} style={styles.galleryImage} />
+                  </TouchableOpacity>
+                </View>
               </View>
-              <Text style={styles.subText}>Focus on the ingredients list.</Text>
-              <View style={styles.buttonView}>
-                <TouchableOpacity style={styles.button} onPress={captureImage}>
-                  <Text style={styles.buttonText}>Scan now</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={selectImage}>
-                  <Image source={galleryImage} style={styles.galleryImage} />
-                </TouchableOpacity>
-              </View>
-            </View>
-          </ScrollView>
-        </>
-      )}
+            </ScrollView>
+          </>
+        )}
+      </SafeAreaView>
     </>
   );
 };
 
 const styles = StyleSheet.create({
+  safeAreaContainer: {
+    flex: 1,
+    backgroundColor: globalColors.Black,
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -194,7 +256,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: m(65),
+    marginTop: m(50),
   },
   button: {
     width: m(245),

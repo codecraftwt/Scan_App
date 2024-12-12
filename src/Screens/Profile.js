@@ -25,136 +25,334 @@ import InputBox from '../Utils/inputBox';
 
 const Profile = ({navigation}) => {
   const [isSwitchOn, setIsSwitchOn] = useState(false);
+  const [isScrolling, setIsScrolling] = useState(false);
+  const [isSelected, setSelectedAllergens] = useState({
+    milk: false,
+    egg: false,
+    peanut: false,
+    gluten: false,
+    fish: false,
+    soy: false,
+    shellfish: false,
+    treeNut: false,
+  });
+
+  const handlePress = allergen => {
+    setSelectedAllergens(prevState => ({
+      ...prevState,
+      [allergen]: !prevState[allergen],
+    }));
+  };
+
+  const handleScroll = event => {
+    const offsetY = event.nativeEvent.contentOffset.y;
+    if (offsetY > 0) {
+      setIsScrolling(true);
+    } else {
+      setIsScrolling(false);
+    }
+  };
 
   return (
     <>
-      <StatusBar
-        barStyle="light-content"
-        backgroundColor={globalColors.JetBlack}
-      />
       <SafeAreaView style={styles.safeAreaContainer}>
-        <View style={styles.container}>
-          <View style={styles.topContainer}>
-            <Text style={styles.title}>Your profile</Text>
-            <Text style={styles.subtext}>
-              ScanAware will alert you if it finds ingredients that matches
-              these preferences.
-            </Text>
-          </View>
-          <ScrollView contentContainerStyle={styles.scrollContainer}>
-            <View style={styles.middleContainer}>
-              <View style={[styles.typeContainer, styles.row]}>
-                <Text style={styles.type}>Chemicals</Text>
-                <ToggleButton
-                  value={isSwitchOn}
-                  onValueChange={setIsSwitchOn}
-                />
-              </View>
-              <View style={styles.mainBoxContaniner}>
-                <View style={{paddingVertical: 20}}>
-                  <View style={[styles.typeContainer2]}>
-                    <Text style={styles.type}>Allergens</Text>
-                    <ToggleButton
-                      value={isSwitchOn}
-                      onValueChange={setIsSwitchOn}
-                    />
-                  </View>
-                  <View style={styles.unitBox}>
-                    <View style={styles.boxContainer}>
-                      <View
-                        style={[
-                          styles.boxstyle,
-                          {borderColor: globalColors.White},
-                        ]}>
-                        <InputBox icon={Milk} />
-                      </View>
-                      <View
-                        style={[
-                          styles.boxstyle,
-                          {borderColor: globalColors.MintGreen},
-                        ]}>
-                        <InputBox icon={Egg} />
-                      </View>
-                      <View
-                        style={[
-                          styles.boxstyle,
-                          {borderColor: globalColors.White},
-                        ]}>
-                        <InputBox icon={Peanut} />
-                      </View>
-                      <View
-                        style={[
-                          styles.boxstyle,
-                          {borderColor: globalColors.White},
-                        ]}>
-                        <InputBox icon={Gluten} />
-                      </View>
+        <StatusBar
+          barStyle="light-content"
+          backgroundColor={
+            isScrolling ? globalColors.JetBlack : globalColors.Charcoal
+          }
+        />
+        <SafeAreaView style={styles.safeAreaContainer}>
+          <View style={styles.container}>
+            <View
+              style={[
+                styles.topContainer,
+                isScrolling
+                  ? {
+                      backgroundColor: globalColors.JetBlack,
+                      ...styles.shadowStyle,
+                    }
+                  : {backgroundColor: globalColors.Charcoal},
+              ]}>
+              <Text style={styles.title}>Your profile</Text>
+              <Text style={styles.subtext}>
+                ScanAware will alert you if it finds ingredients that matches
+                these preferences.
+              </Text>
+            </View>
+            <ScrollView
+              contentContainerStyle={styles.scrollContainer}
+              onScroll={handleScroll}
+              scrollEventThrottle={16}>
+              <View style={styles.middleContainer}>
+                <View style={[styles.typeContainer, styles.row]}>
+                  <Text style={styles.type}>Chemicals</Text>
+                  <ToggleButton
+                    value={isSwitchOn}
+                    onValueChange={setIsSwitchOn}
+                  />
+                </View>
+                <View style={styles.mainBoxContaniner}>
+                  <View style={{paddingVertical: 20}}>
+                    <View style={[styles.typeContainer2]}>
+                      <Text style={styles.type}>Vegetarian</Text>
+                      <ToggleButton
+                        value={isSwitchOn}
+                        onValueChange={setIsSwitchOn}
+                      />
                     </View>
-                    <View style={styles.boxContainer}>
-                      <View
-                        style={[
-                          styles.boxstyle,
-                          {borderColor: globalColors.White},
-                        ]}>
-                        <InputBox icon={Fish} />
+                    <View style={styles.unitBox}>
+                      <View style={styles.boxContainer}>
+                        <TouchableOpacity onPress={() => handlePress('milk')}>
+                          <View style={styles.foodContainer}>
+                            <View
+                              style={[
+                                styles.boxstyle,
+                                {
+                                  borderColor: isSelected.milk
+                                    ? globalColors.MintGreen
+                                    : globalColors.DarkGray,
+                                },
+                              ]}>
+                              <InputBox icon={Milk} />
+                            </View>
+                            <Text
+                              style={[
+                                styles.foodName,
+                                {
+                                  color: isSelected.milk
+                                    ? globalColors.White
+                                    : globalColors.MediumGray,
+                                },
+                              ]}>
+                              Milk
+                            </Text>
+                          </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => handlePress('egg')}>
+                          <View style={styles.foodContainer}>
+                            <View
+                              style={[
+                                styles.boxstyle,
+                                {
+                                  borderColor: isSelected.egg
+                                    ? globalColors.MintGreen
+                                    : globalColors.DarkGray,
+                                },
+                              ]}>
+                              <InputBox icon={Egg} />
+                            </View>
+                            <Text
+                              style={[
+                                styles.foodName,
+                                {
+                                  color: isSelected.egg
+                                    ? globalColors.White
+                                    : globalColors.MediumGray,
+                                },
+                              ]}>
+                              Egg
+                            </Text>
+                          </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => handlePress('peanut')}>
+                          <View style={styles.foodContainer}>
+                            <View
+                              style={[
+                                styles.boxstyle,
+                                {
+                                  borderColor: isSelected.peanut
+                                    ? globalColors.MintGreen
+                                    : globalColors.DarkGray,
+                                },
+                              ]}>
+                              <InputBox icon={Peanut} />
+                            </View>
+                            <Text
+                              style={[
+                                styles.foodName,
+                                {
+                                  color: isSelected.peanut
+                                    ? globalColors.White
+                                    : globalColors.MediumGray,
+                                },
+                              ]}>
+                              Peanut
+                            </Text>
+                          </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => handlePress('gluten')}>
+                          <View style={styles.foodContainer}>
+                            <View
+                              style={[
+                                styles.boxstyle,
+                                {
+                                  borderColor: isSelected.gluten
+                                    ? globalColors.MintGreen
+                                    : globalColors.DarkGray,
+                                },
+                              ]}>
+                              <InputBox icon={Gluten} />
+                            </View>
+                            <Text
+                              style={[
+                                styles.foodName,
+                                {
+                                  color: isSelected.gluten
+                                    ? globalColors.White
+                                    : globalColors.MediumGray,
+                                },
+                              ]}>
+                              Gluten
+                            </Text>
+                          </View>
+                        </TouchableOpacity>
                       </View>
-                      <View
-                        style={[
-                          styles.boxstyle,
-                          {borderColor: globalColors.White},
-                        ]}>
-                        <InputBox icon={Soy} />
-                      </View>
-                      <View
-                        style={[
-                          styles.boxstyle,
-                          {borderColor: globalColors.White},
-                        ]}>
-                        <InputBox icon={Shellfish} />
-                      </View>
-                      <View
-                        style={[
-                          styles.boxstyle,
-                          {borderColor: globalColors.White},
-                        ]}>
-                        <InputBox icon={Tree_nut} />
+                      <View style={styles.boxContainer}>
+                        <TouchableOpacity onPress={() => handlePress('fish')}>
+                          <View style={styles.foodContainer}>
+                            <View
+                              style={[
+                                styles.boxstyle,
+                                {
+                                  borderColor: isSelected.fish
+                                    ? globalColors.MintGreen
+                                    : globalColors.DarkGray,
+                                },
+                                ,
+                              ]}>
+                              <InputBox icon={Fish} />
+                            </View>
+                            <Text
+                              style={[
+                                styles.foodName,
+                                {
+                                  color: isSelected.fish
+                                    ? globalColors.White
+                                    : globalColors.MediumGray,
+                                },
+                              ]}>
+                              Fish
+                            </Text>
+                          </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => handlePress('soy')}>
+                          <View style={styles.foodContainer}>
+                            <View
+                              style={[
+                                styles.boxstyle,
+                                {
+                                  borderColor: isSelected.soy
+                                    ? globalColors.MintGreen
+                                    : globalColors.DarkGray,
+                                },
+                              ]}>
+                              <InputBox icon={Soy} />
+                            </View>
+                            <Text
+                              style={[
+                                styles.foodName,
+                                {
+                                  color: isSelected.soy
+                                    ? globalColors.White
+                                    : globalColors.MediumGray,
+                                },
+                              ]}>
+                              Soy
+                            </Text>
+                          </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={() => handlePress('shellfish')}>
+                          <View style={styles.foodContainer}>
+                            <View
+                              style={[
+                                styles.boxstyle,
+                                {
+                                  borderColor: isSelected.shellfish
+                                    ? globalColors.MintGreen
+                                    : globalColors.DarkGray,
+                                },
+                              ]}>
+                              <InputBox icon={Shellfish} />
+                            </View>
+                            <Text
+                              style={[
+                                styles.foodName,
+                                {
+                                  color: isSelected.shellfish
+                                    ? globalColors.White
+                                    : globalColors.MediumGray,
+                                },
+                              ]}>
+                              Shellfish
+                            </Text>
+                          </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={() => handlePress('treeNut')}>
+                          <View style={styles.foodContainer}>
+                            <View
+                              style={[
+                                styles.boxstyle,
+                                {
+                                  borderColor: isSelected.treeNut
+                                    ? globalColors.MintGreen
+                                    : globalColors.DarkGray,
+                                },
+                              ]}>
+                              <InputBox icon={Tree_nut} />
+                            </View>
+                            <Text
+                              style={[
+                                styles.foodName,
+                                {
+                                  color: isSelected.treeNut
+                                    ? globalColors.White
+                                    : globalColors.MediumGray,
+                                },
+                              ]}>
+                              Tree Nut
+                            </Text>
+                          </View>
+                        </TouchableOpacity>
                       </View>
                     </View>
                   </View>
                 </View>
+                <View style={[styles.typeContainer, styles.row]}>
+                  <Text style={styles.type}>Vegan</Text>
+                  <ToggleButton
+                    value={isSwitchOn}
+                    onValueChange={setIsSwitchOn}
+                  />
+                </View>
+                <View style={[styles.typeContainer, styles.row]}>
+                  <Text style={styles.type}>Allergens</Text>
+                  <ToggleButton
+                    value={isSwitchOn}
+                    onValueChange={setIsSwitchOn}
+                  />
+                </View>
               </View>
-              <View style={[styles.typeContainer, styles.row]}>
-                <Text style={styles.type}>Vegan</Text>
-                <ToggleButton
-                  value={isSwitchOn}
-                  onValueChange={setIsSwitchOn}
-                />
-              </View>
-              <View style={[styles.typeContainer, styles.row]}>
-                <Text style={styles.type}>Vegetarian</Text>
-                <ToggleButton
-                  value={isSwitchOn}
-                  onValueChange={setIsSwitchOn}
-                />
-              </View>
+            </ScrollView>
+            <LinearGradient
+              colors={['transparent', globalColors.Charcoal]}
+              style={styles.gradientOverlay}
+            />
+            <View style={styles.buttonsContainer}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('cameraScreen')}>
+                <Text style={styles.textButton}>SKIP</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.navigate('cameraScreen')}>
+                <Text style={styles.buttontext}>Save profile</Text>
+              </TouchableOpacity>
             </View>
-          </ScrollView>
-          <LinearGradient
-            colors={['transparent', globalColors.Charcoal]}
-            style={styles.gradientOverlay}
-          />
-          <View style={styles.buttonsContainer}>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('cameraScreen')}>
-              <Text style={styles.textButton}>SKIP</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => navigation.navigate('cameraScreen')}>
-              <Text style={styles.buttontext}>Save profile</Text>
-            </TouchableOpacity>
           </View>
-        </View>
+        </SafeAreaView>
       </SafeAreaView>
     </>
   );
@@ -163,6 +361,10 @@ const Profile = ({navigation}) => {
 export default Profile;
 
 const styles = StyleSheet.create({
+  safeAreaContainer: {
+    flex: 1,
+    backgroundColor: globalColors.JetBlack,
+  },
   container: {
     flexGrow: 1,
     justifyContent: 'center',
@@ -170,7 +372,7 @@ const styles = StyleSheet.create({
     backgroundColor: globalColors.Charcoal,
   },
   scrollContainer: {
-    paddingTop: m(180),
+    paddingTop: m(160),
     paddingBottom: m(150),
   },
   middleContainer: {
@@ -186,7 +388,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: m(25),
     paddingVertical: m(30),
     zIndex: 1,
-    backgroundColor: globalColors.JetBlack,
+    transition: 'background-color 0.2s ease',
+  },
+  shadowStyle: {
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
   },
   title: {
     fontFamily: 'Inter',
@@ -252,7 +461,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    paddingVertical: m(10),
+    paddingVertical: m(8),
     width: '100%',
   },
   boxstyle: {
@@ -269,12 +478,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
-    marginTop: m(10),
-    paddingTop: m(20),
     position: 'absolute',
-    bottom: m(30),
+    bottom: m(0),
     backgroundColor: globalColors.Charcoal,
     width: '100%',
+    height: '15%',
   },
   textButton: {
     fontFamily: 'Supreme Variable',
@@ -314,6 +522,19 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     height: m(50),
-    zIndex: 2,
+    zIndex: 1,
+    // backgroundColor:'blue'
+  },
+  foodContainer: {
+    alignItems: 'center',
+  },
+  foodName: {
+    fontFamily: 'Inter',
+    fontWeight: '400',
+    fontSize: 14,
+    lineHeight: 16,
+    letterSpacing: 0.24,
+    color: globalColors.MediumGray,
+    paddingTop: 10,
   },
 });

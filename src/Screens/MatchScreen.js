@@ -15,9 +15,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {globalColors} from '../Assets/themes/globalColors';
 import {useRoute} from '@react-navigation/native';
 import {m} from 'walstar-rn-responsive';
-import {useDispatch, useSelector} from 'react-redux';
-import {clearStore, scanInfo} from '../Redux/slices/ScanSlice';
-import RNFetchBlob from 'rn-fetch-blob';
+import {useSelector} from 'react-redux';
 
 const mark = require('../Assets/images/Ellipse.png');
 const markSymbol = require('../Assets/images/Vector.png');
@@ -28,7 +26,6 @@ const menuIcon = require('../Assets/images/menuicon.png');
 
 const MatchScreen = ({navigation}) => {
   const route = useRoute();
-  const dispatch = useDispatch();
   const {imageUrl, originalImageUrl} = route.params;
 
   const [highlightedRows, setHighlightedRows] = useState([
@@ -39,7 +36,6 @@ const MatchScreen = ({navigation}) => {
   const ingredients = useSelector(
     state => state?.scandata?.scanData?.ingredients || [],
   );
-
   const harmfulIngredients = useSelector(
     state => state?.scandata?.scanData?.harmful_ingredients || [],
   );
@@ -57,51 +53,6 @@ const MatchScreen = ({navigation}) => {
     const visibleIndex = Math.floor(contentOffsetY / rowHeight);
     setHighlightedRows([String(visibleIndex + 1), String(visibleIndex + 2)]);
   };
-
-  const getMimeType = filePath => {
-    const fileExtension = filePath.split('.').pop().toLowerCase();
-
-    const mimeTypes = {
-      jpg: 'image/jpeg',
-      jpeg: 'image/jpeg',
-      png: 'image/png',
-      webp: 'image/webp',
-      json: 'application/json',
-      html: 'text/html',
-    };
-    return mimeTypes[fileExtension] || 'application/octet-stream';
-  };
-
-  useEffect(() => {
-    const uploadImage = async () => {
-      console.log(imageUrl, '<=== imageUrl');
-      if (imageUrl) {
-        try {
-          const fileExists = await RNFetchBlob.fs.exists(imageUrl);
-          if (!fileExists) {
-            console.error('File not found');
-            return;
-          }
-          const imageBase64 = await RNFetchBlob.fs.readFile(imageUrl, 'base64');
-          const mimeType = getMimeType(imageUrl);
-          const fileObject = {
-            uri: imageUrl,
-            name: 'image.jpg',
-            type: mimeType,
-          };
-
-          const formData = new FormData();
-          formData.append('file', fileObject);
-          dispatch(clearStore());
-
-          dispatch(scanInfo(formData));
-        } catch (error) {
-          console.error('Error converting image URL to file:', error);
-        }
-      }
-    };
-    uploadImage();
-  }, [dispatch, imageUrl]);
 
   const renderIcon = () => {
     if (!harmfulIngredients || harmfulIngredients.length === 0) {
@@ -138,7 +89,7 @@ const MatchScreen = ({navigation}) => {
       />
       <View style={styles.fixedTopContainer}>
         {/* <TouchableOpacity onPress={() => navigation.DrawerNav()}> */}
-          <Image source={menuIcon} style={styles.sidebar} />
+        <Image source={menuIcon} style={styles.sidebar} />
         {/* </TouchableOpacity> */}
       </View>
       <ScrollView
@@ -235,6 +186,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: globalColors.Charcoal,
+  },
+  loaderContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: '100%',
+    backgroundColor: globalColors.GunmetalGray,
+  },
+  lottie: {
+    width: '100%',
+    height: '100%',
   },
   mainScroll: {
     flex: 1,

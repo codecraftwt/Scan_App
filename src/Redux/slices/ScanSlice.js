@@ -23,7 +23,6 @@ export const scanInfo = createAsyncThunk(
       const errorMessage =
         error.response?.data?.message || error.message || 'Unknown error';
       console.error('Error Message:', errorMessage);
-
       return rejectWithValue(errorMessage);
     }
   },
